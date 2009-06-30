@@ -1,0 +1,54 @@
+#the number of patterns to be recognized
+8
+
+#pattern 1
+a
+Data/Pattern/a.patt
+40.0
+0.0 0.0
+
+#pattern 2
+b
+Data/Pattern/b.patt
+40.0
+0.0 0.0
+
+#pattern 3
+c
+Data/Pattern/c.patt
+40.0
+0.0 0.0
+
+
+#pattern 4
+d
+Data/Pattern/d.patt
+40.0
+0.0 0.0
+
+#pattern 5
+f
+Data/Pattern/f.patt
+40.0
+0.0 0.0
+
+#pattern 6
+hiro
+Data/Pattern/hiro.patt
+80.0
+0.0 0.0
+
+#pattern 7
+g
+Data/Pattern/g.patt
+40.0
+0.0 0.0
+
+#pattern 8
+x
+Data/Pattern/g.patt
+40.0
+0.0 0.0
+
+
+
