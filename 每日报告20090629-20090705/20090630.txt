@@ -1,0 +1,21 @@
+本日工作：
+85' 制定详细月、周计划
+15' 更新svn;安装visual assist
+25' 了解pthread类库的使用
+
+165' 阅读熟悉代码
+25' 编写CVD::Thread类的子类框架
+15' 编写ARGame子类框架
+70' 交流
+30' 阅读电子书《Why programs fail》
+30' 阅读OpenGL FBO资料
+15' Daily report
+
+不足：
+对程序结构不够了解。在调试程序前未检查程序质量。
+应该尽早进行交流，编码须符合规范。
+
+
+明日计划：
+1.编写GestureData数据结构，保存分析完成后的手势数据(150')
+2.继续编写GestureAnalyzer类，使其能产生GestureData的数据序列。(250')
