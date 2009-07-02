@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "ATANCamera.h"
 #include "MapMaker.h"
+#include "GestureAnalyzer.h"
 #include "Tracker.h"
 #include "ARDriver.h"
 #include "EyeGame.h"
@@ -44,6 +45,8 @@ System::System()
   mpGame = new TeapotGame;
   mpARDriver = new ARDriver(*mpCamera, mVideoSource.Size(), mGLWindow, *mpGame);
   mpMapViewer = new MapViewer(*mpMap, mGLWindow);
+
+  mpGestureAnalyzer = new GestureAnalyzer();
   
   GUI.ParseLine("GLWindow.AddMenu Menu Menu");
   GUI.ParseLine("Menu.ShowMenu Root");
@@ -74,11 +77,13 @@ void System::Run()
 	  mpARDriver->Init();
 	  bFirstFrame = false;
 	}
-      
+
+	  //Setup rendering window
       mGLWindow.SetupViewport();
       mGLWindow.SetupVideoOrtho();
       mGLWindow.SetupVideoRasterPosAndZoom();
       
+	  //Reset ARDriver if map's invalid
       if(!mpMap->IsGood())
 	mpARDriver->Reset();
       
@@ -87,9 +92,14 @@ void System::Run()
       
       bool bDrawMap = mpMap->IsGood() && *gvnDrawMap;
       bool bDrawAR = mpMap->IsGood() && *gvnDrawAR;
-      glDrawPixels(mimFrameRGB);
+
+      //Draw camera frame
+	  glDrawPixels(mimFrameRGB);
+
+	  //Tracking
       mpTracker->TrackFrame(mimFrameBW, !bDrawAR && !bDrawMap);
       
+	  //Draw tracking map or draw AR objects( ARGame::drawStuff() is invoked in mpARDriver->Render() ).
       if(bDrawMap)
 	mpMapViewer->DrawMap(mpTracker->GetCurrentPose());
       else if(bDrawAR)
@@ -101,6 +111,8 @@ void System::Run()
 	sCaption = mpMapViewer->GetMessageForUser();
       else
 	sCaption = mpTracker->GetMessageForUser();
+
+	  //Render menus, swap buffer and handle events.
       //mGLWindow.DrawCaption(sCaption);
       mGLWindow.DrawMenus();
       mGLWindow.swap_buffers();

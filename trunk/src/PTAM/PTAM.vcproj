@@ -197,6 +197,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GestureAnalyzer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GestureGame.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GLWindow2.h"
 				>
 			</File>
@@ -322,6 +330,14 @@
 			</File>
 			<File
 				RelativePath=".\EyeGame.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\GestureAnalyzer.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\GestureGame.cc"
 				>
 			</File>
 			<File

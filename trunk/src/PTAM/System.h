@@ -24,6 +24,7 @@ class Tracker;
 class ARDriver;
 class ARGame;
 class MapViewer;
+class GestureAnalyzer;
 
 class System
 {
@@ -44,6 +45,7 @@ private:
   ARDriver *mpARDriver;
   ARGame *mpGame;
   MapViewer *mpMapViewer;
+  GestureAnalyzer *mpGestureAnalyzer;
   
   bool mbDone;
 
