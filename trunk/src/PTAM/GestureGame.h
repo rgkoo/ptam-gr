@@ -4,6 +4,11 @@
 
 #include "ARGame.h"
 
+
+/**
+* GestureGame is a subclass of ARGame,
+* which implements a virtual 3d-game by gesture recognition.
+*/
 class GestureGame:public ARGame{
 public:
 	GestureGame(){}

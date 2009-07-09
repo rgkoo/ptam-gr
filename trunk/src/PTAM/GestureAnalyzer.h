@@ -19,7 +19,9 @@ public:
 	bool ResetDone();      // Returns true if the has been done.
 
 protected:
-	virtual void run();
+	virtual void run();	// Load image sequence and recognize gesture
+
+	//void analyze(); //fake method generating 
 
 
 	
