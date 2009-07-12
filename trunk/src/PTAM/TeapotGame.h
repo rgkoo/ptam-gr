@@ -5,13 +5,19 @@
 #include "ARGame.h"
 #include "Dog.h"
 
-class TeapotGame : public ARGame
+#include "GestureGame.h"
+
+
+
+class TeapotGame : public ARGame, public GestureGame
 {
 public:
 	TeapotGame();
 	void DrawStuff(Vector<3> v3CameraPos);
 	void Reset();
 	void Init();
+
+	void onGesture(GestureData& gesture);
 
 
 protected:
