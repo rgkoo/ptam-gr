@@ -3,6 +3,9 @@
 #include <TooN/numerics.h>
 #include "OpenGL.h"
 
+/**
+* ARGame interface.
+*/
 class ARGame
 {
 public:

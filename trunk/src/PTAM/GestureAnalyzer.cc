@@ -1,4 +1,6 @@
 
+#include <TooN/helpers.h>
+
 #include "GestureAnalyzer.h"
 
 //#define __DEBUG
@@ -45,6 +47,9 @@ void GestureAnalyzer::run()
 		//GUI.ParseLine("test");
 		std::cout<<"test"<<std::endl;
 		#endif
+
+		analyze();
+		CHECK_RESET;
 	}
 }
 
@@ -54,3 +59,21 @@ GestureAnalyzer::GestureAnalyzer()
 	start();
 }
 
+void GestureAnalyzer::analyze() /* Invoked by run(), fake method generating */
+{
+	RGBImage* image;
+	//TODO:do synchronize here
+	if(mqRGBImageQueue.size() > 0){
+		image = mqRGBImageQueue.front();
+		//analyze the image
+		mqRGBImageQueue.pop();
+
+		GestureData* gestureData = new GestureData;
+
+		//TODO:
+		gestureData->mCenterPosition = makeVector(4,4,0);
+
+		//TODO:do synchronize here
+		mqGestureDataQueue.push(gestureData);
+	}
+}

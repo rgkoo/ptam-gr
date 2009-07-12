@@ -10,6 +10,7 @@
 #include "ARDriver.h"
 #include "EyeGame.h"
 #include "TeapotGame.h"
+#include "GestureGameDriver.h"
 #include "MapViewer.h"
 
 using namespace CVD;
@@ -47,6 +48,7 @@ System::System()
   mpMapViewer = new MapViewer(*mpMap, mGLWindow);
 
   mpGestureAnalyzer = new GestureAnalyzer();
+  //mpGestureGame = new GestureGameDriver(mpGame, mpGestureAnalyzer);
   
   GUI.ParseLine("GLWindow.AddMenu Menu Menu");
   GUI.ParseLine("Menu.ShowMenu Root");
@@ -77,6 +79,12 @@ void System::Run()
 	  mpARDriver->Init();
 	  bFirstFrame = false;
 	}
+
+
+	  //TODO: add image every N frames
+	  //add image to gesture analyzer
+	  mpGestureAnalyzer->addImage(mimFrameRGB);
+
 
 	  //Setup rendering window
       mGLWindow.SetupViewport();
