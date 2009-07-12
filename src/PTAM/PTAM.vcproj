@@ -201,7 +201,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GestureData.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GestureGame.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GestureGameDriver.h"
 				>
 			</File>
 			<File
@@ -337,7 +345,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\GestureGame.cc"
+				RelativePath=".\GestureGameDriver.cc"
 				>
 			</File>
 			<File
