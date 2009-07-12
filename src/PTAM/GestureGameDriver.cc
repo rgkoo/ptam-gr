@@ -7,5 +7,8 @@
 
 void GestureGameDriver::update()
 {
+	//fetch gesture result from analyzer
+
+	//drive gesture game
 	
 }
