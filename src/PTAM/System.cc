@@ -131,9 +131,12 @@ void System::Run()
       else
 	sCaption = mpTracker->GetMessageForUser();
 
-	  //Render menus, swap buffer and handle events.
+	  //Render menus, fps stats, swap buffer and handle events.
       //mGLWindow.DrawCaption(sCaption);
-      mGLWindow.DrawMenus();
+      
+	  mGLWindow.DrawMenus();
+	  mGLWindow.DrawFPSStats();
+
       mGLWindow.swap_buffers();
       mGLWindow.HandlePendingEvents();
     }

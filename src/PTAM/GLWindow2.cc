@@ -6,6 +6,9 @@
 #include <gvars3/instances.h>
 #include <TooN/helpers.h>
 
+//lexical cast
+#include <boost/lexical_cast.hpp>
+
 using namespace CVD;
 using namespace std;
 using namespace GVars3;
@@ -103,7 +106,6 @@ void GLWindow2::DrawMenus()
       nTop+=nHeight+1;
     }
   
-  PrintString(ImageRef(0,10), string("hello world!"));
 }
 
 void GLWindow2::SetupUnitOrtho()
@@ -338,7 +340,9 @@ void GLWindow2::DrawFPSStats()
 	//convert to seconds
 	frameInterval /= 1000;
 
-	//PrintString(ImageRef(20,20), string(	1/frameInterval));
+	//set color
+	glColor4f(0,1,0,1);
+	PrintString(ImageRef(0,10),string("FPS:") + boost::lexical_cast<string>( 1/frameInterval ));
 
 
 	lastFrameTime = mTimer.getTime();
