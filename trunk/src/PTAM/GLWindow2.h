@@ -11,6 +11,8 @@
 #include <cvd/glwindow.h>
 #include <TooN/numerics.h>
 
+#include "SimpleTimer.h"
+
 class GLWindowMenu;
 
 
@@ -36,6 +38,7 @@ public:
   // Text display functions:
   void PrintString(CVD::ImageRef irPos, std::string s);
   void DrawCaption(std::string s);
+  void DrawFPSStats();
   
   // Map viewer mouse interface:
   std::pair<TooN::Vector<6>, TooN::Vector<6> > GetMousePoseUpdate();
@@ -62,7 +65,9 @@ protected:
   TooN::Vector<6> mvMCPoseUpdate;
   TooN::Vector<6> mvLeftPoseUpdate;
   
-
+  // Timer for fps stats
+  SimpleTimer mTimer;
+  float lastFrameTime;
 };
 
 

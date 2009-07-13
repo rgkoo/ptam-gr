@@ -17,6 +17,10 @@ using namespace CVD;
 using namespace std;
 using namespace GVars3;
 
+//extern variables
+extern pthread_mutex_t imageQueueMutex;
+
+
 
 System::System()
   : mGLWindow(mVideoSource.Size(), "PTAM")
@@ -43,12 +47,13 @@ System::System()
   mpMap = new Map;
   mpMapMaker = new MapMaker(*mpMap, *mpCamera);
   mpTracker = new Tracker(mVideoSource.Size(), *mpCamera, *mpMap, *mpMapMaker);
-  mpGame = new TeapotGame;
+  TeapotGame* teapotGame =  new TeapotGame;
+  mpGame = teapotGame;
   mpARDriver = new ARDriver(*mpCamera, mVideoSource.Size(), mGLWindow, *mpGame);
   mpMapViewer = new MapViewer(*mpMap, mGLWindow);
 
   mpGestureAnalyzer = new GestureAnalyzer();
-  //mpGestureGame = new GestureGameDriver(mpGame, mpGestureAnalyzer);
+  mpGestureGameDriver = new GestureGameDriver(teapotGame, mpGestureAnalyzer);
   
   GUI.ParseLine("GLWindow.AddMenu Menu Menu");
   GUI.ParseLine("Menu.ShowMenu Root");
@@ -81,9 +86,15 @@ void System::Run()
 	}
 
 
+
 	  //TODO: add image every N frames
 	  //add image to gesture analyzer
 	  mpGestureAnalyzer->addImage(mimFrameRGB);
+
+	  //update gesture game status
+	  mpGestureGameDriver->update();
+
+
 
 
 	  //Setup rendering window

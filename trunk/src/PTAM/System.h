@@ -25,6 +25,7 @@ class ARDriver;
 class ARGame;
 class MapViewer;
 class GestureAnalyzer;
+class GestureGame;
 class GestureGameDriver;
 
 class System
@@ -47,7 +48,7 @@ private:
   ARGame *mpGame;
   MapViewer *mpMapViewer;
   GestureAnalyzer *mpGestureAnalyzer;
-  GestureGameDriver *mpGestureGame;
+  GestureGameDriver *mpGestureGameDriver;
   
   bool mbDone;
 
