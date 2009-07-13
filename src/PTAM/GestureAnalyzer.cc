@@ -128,6 +128,7 @@ GestureData GestureAnalyzer::getGesture()
 		gesture = mqGestureDataQueue.front();
 		//pop from the queue
 		mqGestureDataQueue.pop_front();
+	//release lock
 	pthread_mutex_unlock(&resultQueueMutex);
 
 	//set as valid gesture

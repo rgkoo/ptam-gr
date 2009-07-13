@@ -85,7 +85,11 @@ int cur_action_frame=Bored_Start_Frame;
 bool is_idle_finished=false;
 int startframe,endframe;
 
-int lastIdleType=0;  //0:turn, 1:walk to virtual marker 2:bored
+#define IDLETYPE_TURN 0
+#define IDLETYPE_WALKTOVIRTUALMARKER 1
+#define IDLETYPE_BORED 2
+
+int lastIdleType=IDLETYPE_TURN;  //0:turn, 1:walk to virtual marker 2:bored
 int turndirection=1; //逆时针为1，顺时针为-1
 
 int repeattime=5;  //吃东西重复几次
@@ -102,7 +106,7 @@ int numx=(SCREEN_RIGHT_X-0.15-SCREEN_LEFT_X)/interval;
 static int numy=(SCREEN_TOP_Y-0.12-SCREEN_BOTTOM_Y)/interval;
 static float leftx=SCREEN_LEFT_X+offset+0.02, rightx=leftx+numx*interval,
 bottomy=SCREEN_BOTTOM_Y+offset, topy=bottomy+numy*interval;
-
+ 
 template<class T>
 static T square(T t)
 {
@@ -345,13 +349,13 @@ void TeapotGame::RenderFrame()
 	//根据狗的位置和朝向来回走
 	//0:turn, 1:walk to virtual marker 2:bored
 
-	if(lastIdleType==0)
+	if(lastIdleType==IDLETYPE_TURN)
 	{  //turn
 		float an;
 		if((an=CalAngelDiff())>10)
 		{		
 			Turn(By_Walk);
-			lastIdleType=0;			
+			lastIdleType=IDLETYPE_TURN;			
 		}else
 		{
 			float targetx=dog->targetmarker.X-dog->position[0];
@@ -361,15 +365,15 @@ void TeapotGame::RenderFrame()
 			dog->direction[0]=targetx/tmp;
 			dog->direction[1]=targety/tmp;
 			DrawDog(Walk_End_Frame,Walk_End_Frame,0);
-			lastIdleType=1;  //begin to walk to target			
+			lastIdleType=IDLETYPE_WALKTOVIRTUALMARKER;  //begin to walk to target			
 		}
 		is_idle_finished=true;	
 		return;
-	}else if(lastIdleType==1)
+	}else if(lastIdleType==IDLETYPE_WALKTOVIRTUALMARKER)
 	{
 		if(GotoTargetAnimation(By_Walk))
 		{
-			lastIdleType=2;
+			lastIdleType=IDLETYPE_BORED;
 			SetAnimation(Action_Bored);			
 			DrawDog(Walk_End_Frame,Walk_End_Frame,0);
 		}
@@ -380,7 +384,7 @@ void TeapotGame::RenderFrame()
 		if(ActionAnimation())
 		{
 			SetVirtualTarget();
-			lastIdleType=0;
+			lastIdleType=IDLETYPE_TURN;
 			cur_go_frame=Walk_Start_Frame;
 			DrawDog(Walk_End_Frame,Walk_End_Frame,0);
 			is_idle_finished=true;		
@@ -415,6 +419,7 @@ void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
 
+	//set up light and material
 	GLfloat af[4]; 
 	af[0]=0.3; af[1]=0.3; af[2]=0.3; af[3]=1.0;
 	glLightfv(GL_LIGHT0, GL_AMBIENT, af);
