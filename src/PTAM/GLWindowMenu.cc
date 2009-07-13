@@ -156,7 +156,7 @@ void GLWindowMenu::FillBox(int l, int r, int t, int b)
 
 void GLWindowMenu::Render(int nTop, int nHeight, int nWidth, GLWindow2 &glw)
 {
-  /*if(!*mgvnEnabled)
+  if(!*mgvnEnabled)
     return;
 
   mnWidth = nWidth;
@@ -245,7 +245,7 @@ void GLWindowMenu::Render(int nTop, int nHeight, int nWidth, GLWindow2 &glw)
   if(msCurrentSubMenu == "Root")
     glw.PrintString(ir, msTitle+":");
   else
-    glw.PrintString(ir, msCurrentSubMenu+":");*/
+    glw.PrintString(ir, msCurrentSubMenu+":");
 };
 
 

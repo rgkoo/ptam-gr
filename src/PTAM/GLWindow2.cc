@@ -36,6 +36,8 @@ GLWindow2::GLWindow2(ImageRef irSize, string sTitle)
   glSetFont("sans");
   Zero(mvMCPoseUpdate);
   Zero(mvLeftPoseUpdate);
+
+  mTimer.initTimer();
 };
 
 
@@ -101,6 +103,7 @@ void GLWindow2::DrawMenus()
       nTop+=nHeight+1;
     }
   
+  PrintString(ImageRef(0,10), string("hello world!"));
 }
 
 void GLWindow2::SetupUnitOrtho()
@@ -229,8 +232,10 @@ void GLWindow2::on_mouse_down(GLWindow& win, CVD::ImageRef where, int state, int
 
 void GLWindow2::on_event(GLWindow& win, int event)
 {
-  if(event==EVENT_CLOSE)
-    GUI.ParseLine("quit");
+	if(event==EVENT_CLOSE){
+		GUI.ParseLine("quit");
+		exit(0);
+	}
 }
 
 pair<Vector<6>, Vector<6> > GLWindow2::GetMousePoseUpdate()
@@ -324,5 +329,20 @@ void GLWindow2::on_key_down(GLWindow&, int k)
   if(s!="")
     GUI.ParseLine("try KeyPress "+s);
 }
+
+void GLWindow2::DrawFPSStats()
+{
+	float thisFrameTime = mTimer.getTime();
+	//frame interval is in milliseconds
+	float frameInterval = thisFrameTime - lastFrameTime;
+	//convert to seconds
+	frameInterval /= 1000;
+
+	//PrintString(ImageRef(20,20), string(	1/frameInterval));
+
+
+	lastFrameTime = mTimer.getTime();
+}
+
 #endif
 

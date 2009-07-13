@@ -16,8 +16,8 @@
 //gesture data definition
 #include "GestureData.h"
 
-//std queue
-#include <queue>
+//std dequeue
+#include <deque>
 
 
 typedef CVD::Image<CVD::Rgb<CVD::byte> > RGBImage;
@@ -29,14 +29,11 @@ public:
 	void RequestReset();   // Request that the we reset. Called by the system.
 	bool ResetDone();      // Returns true if the has been done.
 
-	void addImage(RGBImage& imageRef)// Invoked by system thread to add camera image.
-	{
-		RGBImage* image = new RGBImage;
-		*image = imageRef;
-		mqRGBImageQueue.push(image);
-	}
+	void addImage(RGBImage& imageRef);// Invoked by system thread to add camera image.;
 
-	std::queue<GestureData*>& getGestureDataQueue(){
+	GestureData getGesture();	//get gesture data result, if no gesture result exists, return gesture data whose valid flag is set to false
+
+	std::deque<GestureData>& getGestureDataQueue(){
 		return mqGestureDataQueue;
 	}
 
@@ -54,8 +51,8 @@ protected:
 	bool mbResetRequested;   // A reset has been requested
 	bool mbResetDone;        // The reset was done.
 
-	std::queue<RGBImage*> mqRGBImageQueue;		//Queue of image to be processed
-	std::queue<GestureData*> mqGestureDataQueue;	//Queue of gesture analysis result
+	std::deque<RGBImage> mqRGBImageQueue;		//Queue of image to be processed
+	std::deque<GestureData> mqGestureDataQueue;	//Queue of gesture analysis result
 };
 
 

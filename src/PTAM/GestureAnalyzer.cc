@@ -3,7 +3,7 @@
 
 #include "GestureAnalyzer.h"
 
-//#define __DEBUG
+#define __DEBUG
 
 #ifdef __DEBUG
 #include "gvars3/instances.h"
@@ -17,6 +17,11 @@ using namespace GVars3;
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
+
+
+pthread_mutex_t imageQueueMutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t resultQueueMutex = PTHREAD_MUTEX_INITIALIZER;
+
 
 
 void GestureAnalyzer::reset()
@@ -45,7 +50,7 @@ void GestureAnalyzer::run()
 		#ifdef __DEBUG
 		//just for test
 		//GUI.ParseLine("test");
-		std::cout<<"test"<<std::endl;
+		//std::cout<<"test"<<std::endl;
 		#endif
 
 		analyze();
@@ -61,19 +66,77 @@ GestureAnalyzer::GestureAnalyzer()
 
 void GestureAnalyzer::analyze() /* Invoked by run(), fake method generating */
 {
-	RGBImage* image;
-	//TODO:do synchronize here
+	RGBImage image;
+	GestureData gestureData;
+	
 	if(mqRGBImageQueue.size() > 0){
-		image = mqRGBImageQueue.front();
-		//analyze the image
-		mqRGBImageQueue.pop();
 
-		GestureData* gestureData = new GestureData;
+		//do synchronize here
+		pthread_mutex_lock(&imageQueueMutex);
 
-		//TODO:
-		gestureData->mCenterPosition = makeVector(4,4,0);
+	#ifdef __DEBUG
+			cout<<"image queue size:"<<mqRGBImageQueue.size()<<endl;
+	#endif
+			//get image to analyze
+			image = mqRGBImageQueue.front();
+			//pop out from the queue
+			mqRGBImageQueue.pop_front();
 
-		//TODO:do synchronize here
-		mqGestureDataQueue.push(gestureData);
+			//in case that image processing is too slow
+			if(mqRGBImageQueue.size() > 10){
+				mqRGBImageQueue.clear();
+			}
+
+		//release image queue lock
+		pthread_mutex_unlock(&imageQueueMutex);
+
+
+		//TODO: do real gesture recognition
+		for(int i=0;i<50000000;i++){
+			;	
+		}
+		gestureData.mCenterPosition = makeVector(4,4,0);
+
+		//do synchronize here
+		pthread_mutex_lock(&resultQueueMutex);
+			mqGestureDataQueue.push_back(gestureData);
+		pthread_mutex_unlock(&resultQueueMutex);
 	}
+}
+
+void GestureAnalyzer::addImage( RGBImage& imageRef ) /* Invoked by system thread to add camera image. */
+{
+	//do synchronize
+	pthread_mutex_lock(&imageQueueMutex);
+
+		//RGBImage* image = new RGBImage;
+		//*image = imageRef;
+		mqRGBImageQueue.push_back(imageRef);
+
+	//release lock
+	pthread_mutex_unlock(&imageQueueMutex);
+}
+
+GestureData GestureAnalyzer::getGesture()
+{
+	GestureData gesture;
+	if(mqGestureDataQueue.size() > 0){
+	
+	//do synchronize here
+	pthread_mutex_lock(&resultQueueMutex);
+		//get gesture data
+		gesture = mqGestureDataQueue.front();
+		//pop from the queue
+		mqGestureDataQueue.pop_front();
+	pthread_mutex_unlock(&resultQueueMutex);
+
+	//set as valid gesture
+	gesture.mbIsValid = true;
+
+	}
+	else{
+		gesture.mbIsValid = false;
+	}
+
+	return gesture;
 }
