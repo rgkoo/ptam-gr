@@ -100,11 +100,16 @@ void GestureAnalyzer::analyze() /* Invoked by run(), fake method generating */
 
 
 
-		////TODO: do real gesture recognition
-		//for(int i=0;i<50000000;i++){
-		//	;	
-		//}
+		//TODO: do real gesture recognition
+		for(int i=0;i<50000000;i++){
+			;	
+		}
 		gestureData.mCenterPosition = makeVector(4,4,0);
+
+	
+		//must release image here
+		cvReleaseImage(&pCVImage);
+
 
 		//do synchronize here
 		pthread_mutex_lock(&resultQueueMutex);
@@ -133,6 +138,9 @@ GestureData GestureAnalyzer::getGesture()
 	
 	//do synchronize here
 	pthread_mutex_lock(&resultQueueMutex);
+#ifdef __DEBUG
+	cout<<"result queue size:"<<mqGestureDataQueue.size()<<endl;
+#endif
 		//get gesture data
 		gesture = mqGestureDataQueue.front();
 		//pop from the queue

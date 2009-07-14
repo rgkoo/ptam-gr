@@ -353,6 +353,7 @@ void TeapotGame::RenderFrame()
 	//0:turn, 1:walk to virtual marker 2:bored
 
 	RenderPlaneGrids();
+	RenderTargetMarker();
 
 	if(lastIdleType==IDLETYPE_TURN)
 	{  //turn
@@ -481,6 +482,11 @@ void TeapotGame::Init()
 	dog=new Dog();
 	SetVirtualTarget();
 	//glutFullScreen();
+
+
+	quadratic = gluNewQuadric();				// 创建二次几何体
+	gluQuadricNormals(quadratic, GLU_SMOOTH);		// 使用平滑法线
+	gluQuadricTexture(quadratic, GL_TRUE);		// 使用纹理
 	
 };
 
@@ -525,10 +531,39 @@ void TeapotGame::onGesture( GestureData& gesture )
 void TeapotGame::RenderPlaneGrids()
 {
 	glColor3f(1.0f,1.0f,1.0f);
-	glBegin(GL_QUADS);
-	glVertex3f(SCREEN_MIN_X, SCREEN_MIN_Y, 0);
-	glVertex3f(SCREEN_MAX_X, SCREEN_MIN_Y, 0);
-	glVertex3f(SCREEN_MAX_X, SCREEN_MAX_Y, 0);
-	glVertex3f(SCREEN_MIN_X, SCREEN_MAX_Y, 0);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_LINES);
+	for(float x = SCREEN_MIN_X; x <= SCREEN_MAX_X; x += (SCREEN_MAX_X-SCREEN_MIN_X)/20){
+		glVertex3f(x, SCREEN_MIN_Y, 0);
+		glVertex3f(x, SCREEN_MAX_Y, 0);
+	}
+	for(float y = SCREEN_MIN_Y; y <= SCREEN_MAX_Y; y += (SCREEN_MAX_Y-SCREEN_MIN_Y)/20){
+		glVertex3f(SCREEN_MIN_X, y, 0);
+		glVertex3f(SCREEN_MAX_X, y, 0);
+	}
 	glEnd();
+	//glBegin(GL_QUADS);
+	//glVertex3f(SCREEN_MIN_X, SCREEN_MIN_Y, 0);
+	//glVertex3f(SCREEN_MAX_X, SCREEN_MIN_Y, 0);
+	//glVertex3f(SCREEN_MAX_X, SCREEN_MAX_Y, 0);
+	//glVertex3f(SCREEN_MIN_X, SCREEN_MAX_Y, 0);
+	//glEnd();
+	glEnable(GL_LIGHTING);
+}
+
+void TeapotGame::RenderTargetMarker()
+{
+	glPushMatrix();
+
+	glDisable(GL_LIGHTING);
+	//red ball 
+	glColor3f(1.0f,0.0f,0.0f);
+	//move to target marker
+	glTranslatef(dog->targetmarker.X, dog->targetmarker.Y, dog->targetmarker.Z);
+	//draw sphere
+	gluSphere(quadratic,0.1f,32,32);
+	glEnable(GL_LIGHTING);
+
+	glPopMatrix();
+
 }
