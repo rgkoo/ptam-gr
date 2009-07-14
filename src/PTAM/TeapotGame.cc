@@ -352,6 +352,8 @@ void TeapotGame::RenderFrame()
 	//根据狗的位置和朝向来回走
 	//0:turn, 1:walk to virtual marker 2:bored
 
+	RenderPlaneGrids();
+
 	if(lastIdleType==IDLETYPE_TURN)
 	{  //turn
 		float an;
@@ -518,4 +520,15 @@ void TeapotGame::MakeShadowTex()
 void TeapotGame::onGesture( GestureData& gesture )
 {
 
+}
+
+void TeapotGame::RenderPlaneGrids()
+{
+	glColor3f(1.0f,1.0f,1.0f);
+	glBegin(GL_QUADS);
+	glVertex3f(SCREEN_MIN_X, SCREEN_MIN_Y, 0);
+	glVertex3f(SCREEN_MAX_X, SCREEN_MIN_Y, 0);
+	glVertex3f(SCREEN_MAX_X, SCREEN_MAX_Y, 0);
+	glVertex3f(SCREEN_MIN_X, SCREEN_MAX_Y, 0);
+	glEnd();
 }

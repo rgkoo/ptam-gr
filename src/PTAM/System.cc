@@ -47,7 +47,7 @@ System::System()
   mpMap = new Map;
   mpMapMaker = new MapMaker(*mpMap, *mpCamera);
   mpTracker = new Tracker(mVideoSource.Size(), *mpCamera, *mpMap, *mpMapMaker);
-  TeapotGame* teapotGame =  new TeapotGame;
+  EyeGame* teapotGame =  new EyeGame;
   mpGame = teapotGame;
   mpARDriver = new ARDriver(*mpCamera, mVideoSource.Size(), mGLWindow, *mpGame);
   mpMapViewer = new MapViewer(*mpMap, mGLWindow);
@@ -144,6 +144,7 @@ void System::Run()
 
 void System::GUICommandCallBack(void *ptr, string sCommand, string sParams)
 {
-  if(sCommand=="quit" || sCommand == "exit")
-    static_cast<System*>(ptr)->mbDone = true;
+	if(sCommand=="quit" || sCommand == "exit"){
+		static_cast<System*>(ptr)->mbDone = true;
+	}
 }

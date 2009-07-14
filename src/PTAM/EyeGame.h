@@ -12,14 +12,17 @@
 #include <TooN/numerics.h>
 #include "OpenGL.h"
 #include "ARGame.h"
+#include "GestureGame.h"
 
-class EyeGame : public ARGame
+class EyeGame : public ARGame, public GestureGame
 {
  public:
   EyeGame();
   void DrawStuff(Vector<3> v3CameraPos);
   void Reset();
   void Init();
+
+  void onGesture(GestureData& gesture);
 
   
  protected:
