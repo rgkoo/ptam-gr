@@ -445,6 +445,62 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Maths"
+			>
+			<File
+				RelativePath=".\Maths\COLOR.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\COLOR.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\Maths.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\MATRIX4X4.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\MATRIX4X4.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\PLANE.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\PLANE.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\VECTOR2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\VECTOR2D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\VECTOR3D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\VECTOR3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\VECTOR4D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Maths\VECTOR4D.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
