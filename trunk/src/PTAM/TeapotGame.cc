@@ -89,8 +89,11 @@ int startframe,endframe;
 #define IDLETYPE_WALKTOVIRTUALMARKER 1
 #define IDLETYPE_BORED 2
 
+#define TURN_CLOCKWISE 1
+#define TURN_COUNTERCLOCKWISE -1
+
 int lastIdleType=IDLETYPE_TURN;  //0:turn, 1:walk to virtual marker 2:bored
-int turndirection=1; //逆时针为1，顺时针为-1
+int turndirection=TURN_CLOCKWISE; //逆时针为1，顺时针为-1
 
 int repeattime=5;  //吃东西重复几次
 
@@ -219,9 +222,9 @@ float TeapotGame::CalAngelDiff()
 	float diry=dog->direction[1];
 	float re=tdx*diry-tdy*dirx;
 	if(re>0)
-		turndirection=-1;
+		turndirection=TURN_COUNTERCLOCKWISE;
 	else
-		turndirection=1;  //转向
+		turndirection=TURN_CLOCKWISE;  //转向
 
 	float up=tdx*dirx+tdy*diry;
 	float down=sqrtf(tdx*tdx+tdy*tdy)*sqrtf(dirx*dirx+diry*diry);
