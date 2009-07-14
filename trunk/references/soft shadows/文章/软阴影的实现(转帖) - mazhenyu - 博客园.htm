@@ -1,0 +1,1110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0062)http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html -->
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<TITLE>软阴影的实现(转帖)  - mazhenyu - 博客园</TITLE>
+<META name="keywords" content="directX ,directX ,软阴影的实现,转帖,mazhenyu,博客园,博客,3D入魔">
+<META name="description" content="[翻译]一种软阴影的实现方法软阴影www.GameDev.net作者：Anirudh.SShastryhttp://www.gamedev.net/reference/articles/article2193.asp译者：赟赟带图片的word文档在附件中介绍最初，动态阴影技术只有在有限的几种情况下才...">
+<LINK type="text/css" rel="stylesheet" href="./软阴影的实现(转帖) - mazhenyu - 博客园_files/common.css">
+<LINK type="text/css" rel="stylesheet" href="./软阴影的实现(转帖) - mazhenyu - 博客园_files/style.css">
+<LINK type="text/css" rel="stylesheet" href="./软阴影的实现(转帖) - mazhenyu - 博客园_files/common2.css">
+<LINK title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/mazhenyu/rss">
+<LINK title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/mazhenyu/rsd.xml">   
+<SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/common.js" type="text/javascript"></SCRIPT>
+<SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/jquery.js" type="text/javascript"></SCRIPT>
+<LINK type="text/css" rel="stylesheet" href="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shCore.css">
+<LINK type="text/css" rel="stylesheet" href="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shThemeDefault.css">
+</HEAD><BODY>
+    <FORM name="Form1" method="post" action="./软阴影的实现(转帖) - mazhenyu - 博客园_files/软阴影的实现(转帖) - mazhenyu - 博客园.htm" onsubmit="javascript:return WebForm_OnSubmit();" id="Form1">
+<DIV>
+<INPUT type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<INPUT type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<INPUT type="hidden" name="__VIEWSTATE" id="
+__VIEWSTATE" value="">
+</DIV>
+
+<SCRIPT type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</SCRIPT>
+
+
+<SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/WebResource.axd" type="text/javascript"></SCRIPT>
+
+<SCRIPT language="JavaScript">
+									function ctlent(evt,id)
+											{
+												if(evt.ctrlKey && evt.keyCode == 13)
+												{	
+													try
+													{
+														TempSave(id);
+													}
+													catch(ex)
+													{
+													}
+													finally
+													{
+													    __doPostBack('AjaxHolder$PostComment$btnSubmit','')
+													}
+												}
+		
+												}</SCRIPT>
+												<SCRIPT language="JavaScript">function SetReplyAuhor(author){document.getElementById('AjaxHolder_PostComment_tbComment').value+="@"+author+"\n";document.getElementById('AjaxHolder_PostComment_tbComment').focus();return false}</SCRIPT>
+<SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/ScriptResource.axd" type="text/javascript"></SCRIPT>
+<SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/ScriptResource(1).axd" type="text/javascript"></SCRIPT>
+<SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/ScriptResource(2).axd" type="text/javascript"></SCRIPT>
+<SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/js" type="text/javascript"></SCRIPT>
+<SCRIPT type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</SCRIPT>
+
+        
+<!--done-->
+<DIV id="header">
+	
+<!--done-->
+<DIV class="header">
+	<DIV class="headerText">
+		<A id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/mazhenyu/">mazhenyu</A><BR>
+		男，28，北京 邮箱：malin213@tom.com
+VC++ .net OpenGL
+QQ:274955617
+	</DIV>
+</DIV>
+
+</DIV>
+
+<DIV id="mytopmenu">
+	
+		<DIV id="mylinks">
+<!--done-->
+<A id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</A>&nbsp;&nbsp;
+<A id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/mazhenyu/">首页</A>&nbsp;&nbsp;
+<A href="http://space.cnblogs.com/" class="menu">社区</A>&nbsp;&nbsp;
+<A id="MyLinks1_NewPostLink" class="menu" href="http://www.cnblogs.com/mazhenyu/admin/EditPosts.aspx?opt=1">新随笔</A>&nbsp;&nbsp;
+<A id="MyLinks1_ContactLink" class="menu" href="http://www.cnblogs.com/mazhenyu/contact.aspx?id=1">联系</A>&nbsp;&nbsp;
+<A id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/mazhenyu/rss">订阅</A><A id="MyLinks1_XMLLink" href="http://www.cnblogs.com/mazhenyu/rss"><IMG src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml.gif" alt="订阅" style="border-width:0px;"></A>&nbsp;&nbsp;
+<A id="MyLinks1_Admin" class="menu" href="http://www.cnblogs.com/mazhenyu/admin/EditPosts.aspx">管理</A>
+</DIV>
+		<DIV id="mystats">
+<!--done-->
+随笔-63&nbsp;
+评论-19&nbsp;
+文章-0&nbsp;
+trackbacks-0
+</DIV>
+	
+</DIV>
+<DIV id="centercontent">
+	
+					<SCRIPT type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('AjaxHolder$scriptmanager1', document.getElementById('Form1'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls(['tAjaxHolder$UpdatePanel1'], [], [], 90);
+//]]>
+</SCRIPT>
+
+<!--done-->
+<DIV class="post">
+	<DIV class="postTitle">
+		<A id="AjaxHolder_ctl01_TitleUrl" class="postTitle2" href="./软阴影的实现(转帖) - mazhenyu - 博客园_files/软阴影的实现(转帖) - mazhenyu - 博客园.htm">软阴影的实现(转帖) </A>
+	</DIV>
+	<IMG src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/icon1.gif"> <STRONG>[翻译]一种软阴影的实现方法</STRONG><BR>
+<BR>
+软阴影<BR>www.GameDev.net&nbsp;作者：Anirudh.S&nbsp;Shastry&nbsp;&nbsp;<BR>http://www.gamedev.net/reference/articles/article2193.asp<BR>译者：赟赟<BR>带图片的word文档在附件中
+<P><BR>介绍<BR>最
+初，动态阴影技术只有在有限的几种情况下才能实现。但是，随着强大的可编程图形硬件的面世，动态阴影技术已经完全取代了以前的如light&nbsp;map这样的
+静态阴影技术及像projected&nbsp;shadows这样的半动态阴影技术。目前两种流行的动态阴影技术分别是shadow&nbsp;volumes和
+shadow&nbsp;mapping。</P>
+<P>近况<BR>shadow&nbsp;volumes技术是一种基于几何形体的技术，它需要几何体在一定方向的灯光下
+的轮廓去产生一个封闭的容积，然后通过光线的投射就可以决定场景的阴影部分（常常使用模板缓冲去模拟光线的投射）。这项技术是像素精确的，不会产生任何的
+锯齿现象，但是与其他的技术一样，它也有缺点。最主要的两个问题一是极度依赖几何形体，二是需要非常高的填充率。由于这些缺点，使得
+shadow&nbsp;mapping技术渐渐地变得更为流行起来。<BR>阴影映射技术是一种图像空间的技术，它首先在以光源位置作为视点的情况下渲染整个场景
+的深度信息，然后再使用这些深度信息去决定场景的哪一部分是处于阴影之中。虽然这项技术有许多优点，但它有锯齿现象并且依赖z-缓冲技术。不过它的优点足
+以抵消它的这些缺点，因此本文选用了这项技术。</P>
+<P>软阴影<BR>硬阴影破坏了场景的真实性，因此，我们必须仿造软阴影来提升场景的可视效果。许多狂热的学者都拿出了描述软阴影技术的论文。但实际上，这些技术大部分都是很难在一个较为复杂的场景下实现实时效果。直到我们拥有了能克服这些技术局限性的硬件后，我们才真正的采用了这些方法。<BR>本文采用了基于图像空间的方法，并利用shadow&nbsp;mapping技术来产生软阴影。这个方法不能产生完美的阴影，因为没有真正的模拟出本影和半影，但它不仅仅可以解决阴影映射技术的锯齿现象，还能以赏心悦目的软阴影来提升场景的可视效果。</P>
+<P>那么它如何工作？<BR>首
+先，我们生成阴影映射图（shadow&nbsp;map），具体方法是以光源位置为视点，将场景的深度信息渲染到浮点格式的缓冲中去。然后我们不是像通常那样在阴
+影下渲染场景，而是将阴影区域渲染到一幅屏幕大小的缓冲中去，这样就可以使用bloom&nbsp;filter进行模糊并将它投射回屏幕空间中使其显示在屏幕上。
+是不是很简单？<BR>本文只处理了聚光灯源这种情况，但可以很方便的推广到点光源上。<BR>下面是具体步骤：<BR>通过将深度信息写入浮点纹理的方法产生阴影映射图（shadow&nbsp;map）。<BR>深度比较后将场景的阴影部分渲染到定点纹理，此时不要任何的灯光。<BR>使用bloom&nbsp;filter模糊上一步的纹理，本文采用了separable&nbsp;Gaussian&nbsp;filter，也可用其他的方法。<BR>在所有的光源下将上一步模糊后的纹理投射到屏幕空间中，从而得到最终的效果。<BR>步骤一：渲染阴影映射图（shadow&nbsp;map）<BR>首
+先，我们需要创建一个能保存屏幕深度信息的纹理。因为要把这幅纹理作为render&nbsp;target，所以我们还要创建一个表面（surface）来保存纹
+理的表面信息。由于深度信息值的范围很大因此这幅纹理必须是浮点类型的。R32F的格式有足够的精度可以满足我们的需要。下面是创建纹理的代码片断：<BR>//&nbsp;Create&nbsp;the&nbsp;shadow&nbsp;map&nbsp;<BR>if(&nbsp;FAILED(&nbsp;g_pd3dDevice-&gt;CreateTexture(&nbsp;SHADOW_MAP_SIZE,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHADOW_MAP_SIZE,&nbsp;1,&nbsp;D3DUSAGE_RENDERTARGET,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D3DFMT_R32F,&nbsp;D3DPOOL_DEFAULT,&nbsp;&amp;g_pShadowMap,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NULL&nbsp;)&nbsp;)&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;MessageBox(&nbsp;g_hWnd,&nbsp;"Unable&nbsp;to&nbsp;create&nbsp;shadow&nbsp;map!",<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Error",&nbsp;MB_OK&nbsp;|&nbsp;MB_IConERROR&nbsp;);<BR>&nbsp;&nbsp;&nbsp;return&nbsp;E_FAIL;<BR>}</P>
+<P>//&nbsp;Grab&nbsp;the&nbsp;texture's&nbsp;surface<BR>g_pShadowMap-&gt;GetSurfaceLevel(&nbsp;0,&nbsp;&amp;g_pShadowSurf&nbsp;);</P>
+<P>为了完成阴影映射图，我们要把场景的深度信息渲染到阴影映射图中。为此在光源的世界-视点-投影变换矩阵（world-view-projection&nbsp;matrix）下渲染整个场景。下面是构造这些矩阵的代码：<BR>//&nbsp;Ordinary&nbsp;view&nbsp;matrix&nbsp;<BR>D3DXMatrixLookAtLH(&nbsp;&amp;matView,&nbsp;&amp;vLightPos,&nbsp;&amp;vLightAim,&nbsp;&amp;g_vUp&nbsp;);<BR>//&nbsp;Projection&nbsp;matrix&nbsp;for&nbsp;the&nbsp;light<BR>D3DXMatrixPerspectiveFovLH(&nbsp;&amp;matProj,&nbsp;D3DXToRadian(30.0f),<BR>1.0f,&nbsp;1.0f,&nbsp;1024.0f&nbsp;);<BR>//
+实际上作者在例程中使用的是D3DXMatrixOrthoLH(&nbsp;&amp;matProj,&nbsp;45.0f,&nbsp;45.0f,&nbsp;1.0f,
+&nbsp;1024.0f&nbsp;)。这个函数所构造的project矩阵与D3DXMatrixPerspectiveFovLH（）构造的不同之处在于：它没有透视
+效果。即物体的大小与视点和物体的距离没有关系。显然例程中模拟的是平行光源（direction&nbsp;light），而这里模拟的是聚光灯源
+（spot&nbsp;light不知翻译得对不对？）<BR>//&nbsp;Concatenate&nbsp;the&nbsp;world&nbsp;matrix&nbsp;with&nbsp;the&nbsp;above&nbsp;<BR>//&nbsp;two&nbsp;to&nbsp;get&nbsp;the&nbsp;required&nbsp;matrix<BR>matLightViewProj&nbsp;=&nbsp;matWorld&nbsp;*&nbsp;matView&nbsp;*&nbsp;matProj;</P>
+<P>下面是渲染场景深度的顶点渲染和像素渲染的代码：</P>
+<P>//&nbsp;Shadow&nbsp;generation&nbsp;vertex&nbsp;shader<BR>struct&nbsp;VSOUTPUT_SHADOW<BR>{<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vPosition&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;POSITION;<BR>&nbsp;&nbsp;&nbsp;float&nbsp;&nbsp;fDepth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD0;<BR>};</P>
+<P>VSOUTPUT_SHADOW&nbsp;VS_Shadow(&nbsp;float4&nbsp;inPosition&nbsp;:&nbsp;POSITION&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;struct<BR>&nbsp;&nbsp;&nbsp;VSOUTPUT_SHADOW&nbsp;OUT&nbsp;=&nbsp;(VSOUTPUT_SHADOW)0;<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;transformed&nbsp;position<BR>&nbsp;&nbsp;&nbsp;OUT.vPosition&nbsp;=&nbsp;mul(&nbsp;inPosition,&nbsp;g_matLightViewProj&nbsp;);<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;scene&nbsp;depth<BR>&nbsp;&nbsp;&nbsp;OUT.fDepth&nbsp;=&nbsp;OUT.vPosition.z;<BR>&nbsp;&nbsp;&nbsp;return&nbsp;OUT;<BR>}<BR>这里我们将顶点的位置与变换矩阵相乘，并将变换后的z值作为深度。在像素渲染中将深度值以颜色（color）的方式输出。<BR>float4&nbsp;&nbsp;PS_Shadow(&nbsp;VSOUTPUT_SHADOW&nbsp;IN&nbsp;)&nbsp;:&nbsp;COLOR0<BR>{<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;scene&nbsp;depth<BR>&nbsp;&nbsp;&nbsp;return&nbsp;float4(&nbsp;IN.fDepth,&nbsp;IN.fDepth,&nbsp;IN.fDepth,&nbsp;1.0f&nbsp;);<BR>}<BR>瞧，我们完成了阴影映射图，下面就是以颜色方式输出的阴影映射图，深蓝色部分表明较小的深度值，浅蓝色部分表明较大的深度值。<BR>&nbsp;<BR>步骤二：将带阴影的场景渲染到缓冲中<BR>下面，我们要把场景的带阴影的部分渲染到并不立即显示的缓冲中，使我们可以进行模糊处理，然后再将它投射回屏幕。首先把场景的阴影部分渲染到一幅屏幕大小的定点纹理中。<BR>//&nbsp;Create&nbsp;the&nbsp;screen-sized&nbsp;buffer&nbsp;map&nbsp;<BR>if(&nbsp;FAILED(&nbsp;g_pd3dDevice-&gt;CreateTexture(&nbsp;SCREEN_WIDTH,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SCREEN_HEIGHT,&nbsp;1,&nbsp;D3DUSAGE_RENDERTARGET,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D3DFMT_A8R8G8B8,&nbsp;D3DPOOL_DEFAULT,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;g_pScreenMap,&nbsp;NULL&nbsp;)&nbsp;)&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;MessageBox(&nbsp;g_hWnd,&nbsp;"Unable&nbsp;to&nbsp;create&nbsp;screen&nbsp;map!",<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Error",&nbsp;MB_OK&nbsp;|&nbsp;MB_IConERROR&nbsp;);<BR>&nbsp;&nbsp;&nbsp;return&nbsp;E_FAIL;<BR>}<BR>//&nbsp;Grab&nbsp;the&nbsp;texture's&nbsp;surface<BR>g_pScreenMap-&gt;GetSurfaceLevel(&nbsp;0,&nbsp;&amp;&nbsp;g_pScreenSurf&nbsp;);<BR>为了获得投影纹理坐标（projective&nbsp;texture&nbsp;coordinates），我们需要一个纹理矩阵，作用是把投影空间（projection&nbsp;space）中的位置变换到纹理空间（texture&nbsp;space）中去。<BR>//&nbsp;Generate&nbsp;the&nbsp;texture&nbsp;matrix<BR>float&nbsp;fTexOffs&nbsp;=&nbsp;0.5&nbsp;+&nbsp;(0.5&nbsp;/&nbsp;(float)SHADOW_MAP_SIZE);<BR>D3DXMATRIX&nbsp;matTexAdj(&nbsp;0.5f,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.0f,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.0f,&nbsp;&nbsp;0.0f,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.0f,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-0.5f,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.0f,&nbsp;&nbsp;0.0f,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.0f,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.0f,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.0f,&nbsp;&nbsp;0.0f,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fTexOffs,&nbsp;fTexOffs,&nbsp;0.0f,&nbsp;1.0f&nbsp;);<BR>//这个矩阵是把projection&nbsp;space中范围为[-1，1]的x,y坐标值转换到纹理空间中<BR>//[0，1]的范围中去。注意y轴的方向改变了。那个(0.5&nbsp;/&nbsp;(float)SHADOW_MAP_SIZE)<BR>//的值有什么作用我还不清楚，原文也没有说明。</P>
+<P>matTexture&nbsp;=&nbsp;matLightViewProj&nbsp;*&nbsp;matTexAdj;</P>
+<P>我们像往常那样通过深度的比较来获得阴影因数，但随后并不是像平常那样输出整个照亮了的场景，我们只输出阴影因数。下面的顶点渲染和像素渲染完成这个工作。<BR>//&nbsp;Shadow&nbsp;mapping&nbsp;vertex&nbsp;shader<BR>struct&nbsp;VSOUTPUT_UNLIT<BR>{<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vPosition&nbsp;&nbsp;&nbsp;:&nbsp;POSITION;<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vTexCoord&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD0;<BR>&nbsp;&nbsp;&nbsp;float&nbsp;&nbsp;fDepth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD1;<BR>};</P>
+<P>VSOUTPUT_UNLIT&nbsp;VS_Unlit(&nbsp;float4&nbsp;inPosition&nbsp;:&nbsp;POSITION&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;struct<BR>&nbsp;&nbsp;&nbsp;VSOUTPUT_UNLIT&nbsp;OUT&nbsp;=&nbsp;(VSOUTPUT_UNLIT)0;</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;transformed&nbsp;position<BR>&nbsp;&nbsp;&nbsp;OUT.vPosition&nbsp;=&nbsp;mul(&nbsp;inPosition,&nbsp;g_matWorldViewProj&nbsp;);</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;projective&nbsp;texture&nbsp;coordinates<BR>&nbsp;&nbsp;&nbsp;OUT.vTexCoord&nbsp;=&nbsp;mul(&nbsp;inPosition,&nbsp;g_matTexture&nbsp;);</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;scene&nbsp;depth<BR>&nbsp;&nbsp;&nbsp;OUT.fDepth&nbsp;=&nbsp;mul(&nbsp;inPosition,&nbsp;g_matLightViewProj&nbsp;).z;</P>
+<P>&nbsp;&nbsp;&nbsp;return&nbsp;OUT;<BR>}<BR>我们采用percentage&nbsp;closer&nbsp;filtering&nbsp;(PCF)来平滑锯齿边缘。为了完成“PCF”，我们简单的对周围8个纹理点进行采样，并取得它们深度比较的平均值。<BR>//&nbsp;Shadow&nbsp;mapping&nbsp;pixel&nbsp;shader<BR>//注意这里采用的是tex2Dproj（）函数以及转换到纹理空间的向量（x,y,z,w）对纹理进//行采样。这与d3d9sdk中shadowmap例子用tex2D()及向量（x,y）进行采样不同。具体//区别及原因很容易从程序中看出，我就不再啰嗦了。<BR>float4&nbsp;&nbsp;PS_Unlit(&nbsp;VSOUTPUT_UNLIT&nbsp;IN&nbsp;)&nbsp;:&nbsp;COLOR0<BR>{<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Generate&nbsp;the&nbsp;9&nbsp;texture&nbsp;co-ordinates&nbsp;for&nbsp;a&nbsp;3x3&nbsp;PCF&nbsp;kernel<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vTexCoords[9];<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Texel&nbsp;size<BR>&nbsp;&nbsp;&nbsp;float&nbsp;fTexelSize&nbsp;=&nbsp;1.0f&nbsp;/&nbsp;1024.0f;</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Generate&nbsp;the&nbsp;tecture&nbsp;co-ordinates&nbsp;for&nbsp;the&nbsp;specified&nbsp;depth-map&nbsp;size<BR>&nbsp;&nbsp;&nbsp;//&nbsp;4&nbsp;3&nbsp;5<BR>&nbsp;&nbsp;&nbsp;//&nbsp;1&nbsp;0&nbsp;2<BR>&nbsp;&nbsp;&nbsp;//&nbsp;7&nbsp;6&nbsp;8<BR>&nbsp;&nbsp;&nbsp;VTexCoords[0]&nbsp;=&nbsp;IN.vTexCoord;<BR>&nbsp;&nbsp;&nbsp;vTexCoords[1]&nbsp;=&nbsp;IN.vTexCoord&nbsp;+&nbsp;float4(&nbsp;-fTexelSize,&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;vTexCoords[2]&nbsp;=&nbsp;IN.vTexCoord&nbsp;+&nbsp;float4(&nbsp;&nbsp;fTexelSize,&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;vTexCoords[3]&nbsp;=&nbsp;IN.vTexCoord&nbsp;+&nbsp;float4(&nbsp;0.0f,&nbsp;-fTexelSize,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;vTexCoords[6]&nbsp;=&nbsp;IN.vTexCoord&nbsp;+&nbsp;float4(&nbsp;0.0f,&nbsp;&nbsp;fTexelSize,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;vTexCoords[4]&nbsp;=&nbsp;IN.vTexCoord&nbsp;+&nbsp;float4(&nbsp;-fTexelSize,&nbsp;-fTexelSize,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;vTexCoords[5]&nbsp;=&nbsp;IN.vTexCoord&nbsp;+&nbsp;float4(&nbsp;&nbsp;fTexelSize,&nbsp;-fTexelSize,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;vTexCoords[7]&nbsp;=&nbsp;IN.vTexCoord&nbsp;+&nbsp;float4(&nbsp;-fTexelSize,&nbsp;&nbsp;fTexelSize,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;vTexCoords[8]&nbsp;=&nbsp;IN.vTexCoord&nbsp;+&nbsp;float4(&nbsp;&nbsp;fTexelSize,&nbsp;&nbsp;fTexelSize,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Sample&nbsp;each&nbsp;of&nbsp;them&nbsp;checking&nbsp;whether&nbsp;the&nbsp;pixel&nbsp;under&nbsp;test&nbsp;is&nbsp;shadowed&nbsp;or&nbsp;not<BR>&nbsp;&nbsp;&nbsp;float&nbsp;fShadowTerms[9];<BR>&nbsp;&nbsp;&nbsp;float&nbsp;fShadowTerm&nbsp;=&nbsp;0.0f;<BR>&nbsp;&nbsp;&nbsp;for(&nbsp;int&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;9;&nbsp;i++&nbsp;)<BR>&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;float&nbsp;A&nbsp;=&nbsp;tex2Dproj(&nbsp;ShadowSampler,&nbsp;vTexCoords[i]&nbsp;).r;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;float&nbsp;B&nbsp;=&nbsp;(IN.fDepth&nbsp;-&nbsp;0.1f);</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Texel&nbsp;is&nbsp;shadowed<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fShadowTerms[i]&nbsp;=&nbsp;A&nbsp;&lt;&nbsp;B&nbsp;?&nbsp;0.0f&nbsp;:&nbsp;1.0f;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fShadowTerm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+=&nbsp;fShadowTerms[i];<BR>&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Get&nbsp;the&nbsp;average<BR>&nbsp;&nbsp;&nbsp;fShadowTerm&nbsp;/=&nbsp;9.0f;<BR>&nbsp;&nbsp;&nbsp;return&nbsp;fShadowTerm;<BR>}<BR>屏幕缓冲完成了，我们还需要进行模糊工作。<BR>&nbsp;<BR>步骤三：对屏幕缓冲进行模糊<BR>我
+们采用seperable&nbsp;gaussian&nbsp;filter模糊屏幕缓冲。但我们也可以用Poisson&nbsp;filter。这次的
+render&nbsp;targets是A8R8G8B8的纹理和相关的表面。我们需要两个render&nbsp;targets，一个进行水平阶段，一个进行垂直阶段。<BR>//&nbsp;Create&nbsp;the&nbsp;blur&nbsp;maps<BR>for(&nbsp;int&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;2;&nbsp;i++&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;if(&nbsp;FAILED(&nbsp;g_pd3dDevice-&gt;CreateTexture(&nbsp;SCREEN_WIDTH,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SCREEN_HEIGHT,&nbsp;1,&nbsp;D3DUSAGE_RENDERTARGET,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D3DFMT_A8R8G8B8,&nbsp;D3DPOOL_DEFAULT,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;g_pBlurMap[i],&nbsp;NULL&nbsp;)&nbsp;)&nbsp;)<BR>&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MessageBox(&nbsp;g_hWnd,&nbsp;"Unable&nbsp;to&nbsp;create&nbsp;blur&nbsp;map!",<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Error",&nbsp;MB_OK&nbsp;|&nbsp;MB_IConERROR&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;E_FAIL;<BR>&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;//&nbsp;Grab&nbsp;the&nbsp;texture's&nbsp;surface<BR>&nbsp;&nbsp;&nbsp;g_pBlurMap[i]-&gt;GetSurfaceLevel(&nbsp;0,&nbsp;&amp;&nbsp;g_pBlurSurf[i]&nbsp;);<BR>}<BR>我们用下面的代码生成15个高斯偏移量（Gaussian&nbsp;offsets）及他们的权重（corresponding&nbsp;weights）。<BR>float&nbsp;GetGaussianDistribution(&nbsp;float&nbsp;x,&nbsp;float&nbsp;y,&nbsp;float&nbsp;rho&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;float&nbsp;g&nbsp;=&nbsp;1.0f&nbsp;/&nbsp;sqrt(&nbsp;2.0f&nbsp;*&nbsp;3.141592654f&nbsp;*&nbsp;rho&nbsp;*&nbsp;rho&nbsp;);<BR>&nbsp;&nbsp;&nbsp;return&nbsp;g&nbsp;*&nbsp;exp(&nbsp;-(x&nbsp;*&nbsp;x&nbsp;+&nbsp;y&nbsp;*&nbsp;y)&nbsp;/&nbsp;(2&nbsp;*&nbsp;rho&nbsp;*&nbsp;rho)&nbsp;);<BR>}</P>
+<P>void&nbsp;GetGaussianOffsets(&nbsp;bool&nbsp;bHorizontal,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D3DXVECTOR2&nbsp;vViewportTexelSize,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D3DXVECTOR2*&nbsp;vSampleOffsets,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;float*&nbsp;fSampleWeights&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Get&nbsp;the&nbsp;center&nbsp;texel&nbsp;offset&nbsp;and&nbsp;weight<BR>&nbsp;&nbsp;&nbsp;fSampleWeights[0]&nbsp;=&nbsp;1.0f&nbsp;*&nbsp;GetGaussianDistribution(&nbsp;0,&nbsp;0,&nbsp;2.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;vSampleOffsets[0]&nbsp;=&nbsp;D3DXVECTOR2(&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Get&nbsp;the&nbsp;offsets&nbsp;and&nbsp;weights&nbsp;for&nbsp;the&nbsp;remaining&nbsp;taps<BR>&nbsp;&nbsp;&nbsp;if(&nbsp;bHorizontal&nbsp;)<BR>&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(&nbsp;int&nbsp;i&nbsp;=&nbsp;1;&nbsp;i&nbsp;&lt;&nbsp;15;&nbsp;i&nbsp;+=&nbsp;2&nbsp;)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vSampleOffsets[i&nbsp;+&nbsp;0]&nbsp;=&nbsp;D3DXVECTOR2(&nbsp;i&nbsp;*&nbsp;vViewportTexelSize.x,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vSampleOffsets[i&nbsp;+&nbsp;1]&nbsp;=&nbsp;D3DXVECTOR2(&nbsp;-i&nbsp;*&nbsp;vViewportTexelSize.x,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fSampleWeights[i&nbsp;+&nbsp;0]&nbsp;=&nbsp;2.0f&nbsp;*&nbsp;GetGaussianDistribution(&nbsp;float(i&nbsp;+&nbsp;0),&nbsp;0.0f,&nbsp;3.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fSampleWeights[i&nbsp;+&nbsp;1]&nbsp;=&nbsp;2.0f&nbsp;*&nbsp;GetGaussianDistribution(&nbsp;float(i&nbsp;+&nbsp;1),&nbsp;0.0f,&nbsp;3.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;else&nbsp;<BR>&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(&nbsp;int&nbsp;i&nbsp;=&nbsp;1;&nbsp;i&nbsp;&lt;&nbsp;15;&nbsp;i&nbsp;+=&nbsp;2&nbsp;)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vSampleOffsets[i&nbsp;+&nbsp;0]&nbsp;=&nbsp;D3DXVECTOR2(&nbsp;0.0f,&nbsp;i&nbsp;*&nbsp;vViewportTexelSize.y&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vSampleOffsets[i&nbsp;+&nbsp;1]&nbsp;=&nbsp;D3DXVECTOR2(&nbsp;0.0f,&nbsp;-i&nbsp;*&nbsp;vViewportTexelSize.y&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fSampleWeights[i&nbsp;+&nbsp;0]&nbsp;=&nbsp;2.0f&nbsp;*&nbsp;GetGaussianDistribution(&nbsp;0.0f,&nbsp;float(i&nbsp;+&nbsp;0),&nbsp;3.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fSampleWeights[i&nbsp;+&nbsp;1]&nbsp;=&nbsp;2.0f&nbsp;*&nbsp;GetGaussianDistribution(&nbsp;0.0f,&nbsp;float(i&nbsp;+&nbsp;1),&nbsp;3.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;}<BR>}<BR>为了模糊屏幕缓冲，我们将模糊映射图（blur&nbsp;map）作为render&nbsp;target，使用下面的顶点渲染和像素渲染代码渲染一个与屏幕等大的方块。<BR>//&nbsp;作者在程序中预先定义的屏幕大小是1024&nbsp;*&nbsp;768，而随后定义的与屏幕等大的方块为：<BR>//&nbsp;	pVertices[0].p&nbsp;=&nbsp;D3DXVECTOR4(&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f,&nbsp;1.0f&nbsp;);<BR>//	pVertices[1].p&nbsp;=&nbsp;D3DXVECTOR4(&nbsp;0.0f,&nbsp;768&nbsp;/&nbsp;2,&nbsp;0.0f,&nbsp;1.0f&nbsp;);<BR>//	pVertices[2].p&nbsp;=&nbsp;D3DXVECTOR4(&nbsp;1024&nbsp;/&nbsp;2,&nbsp;0.0f,&nbsp;0.0f,&nbsp;1.0f&nbsp;);<BR>//	pVertices[3].p&nbsp;=&nbsp;D3DXVECTOR4(&nbsp;1024&nbsp;/&nbsp;2,&nbsp;768&nbsp;/&nbsp;2,&nbsp;0.0f,&nbsp;1.0f&nbsp;);<BR>//&nbsp;&nbsp;这种方法与d3dsdk中HDRLight中获得render&nbsp;target&nbsp;的width&nbsp;and&nbsp;height然后再构造的//&nbsp;&nbsp;方法不同：<BR>//&nbsp;svQuad[0].p&nbsp;=&nbsp;D3DXVECTOR4(-0.5f,&nbsp;-0.5f,&nbsp;0.5f,&nbsp;1.0f);<BR>//&nbsp;svQuad[1].p&nbsp;=&nbsp;D3DXVECTOR4(Width-0.5f,&nbsp;-0.5f,&nbsp;0.5f,&nbsp;1.0f);<BR>//&nbsp;svQuad[2].p&nbsp;=&nbsp;D3DXVECTOR4(-0.5f,&nbsp;Height-0.5f,&nbsp;0.5f,&nbsp;1.0f);<BR>//&nbsp;svQuad[3].p&nbsp;=&nbsp;D3DXVECTOR4(Width-0.5f,fHeight-0.5f,&nbsp;0.5f,&nbsp;1.0f);<BR>//&nbsp;而一般定义的窗口大小往往与从render&nbsp;target获得的width&nbsp;and&nbsp;height不相同。<BR>//&nbsp;而二者的fvf都是D3DFVF_XYZRHW。这两种方法有什么区别我一直没想通。</P>
+<P>//&nbsp;Gaussian&nbsp;filter&nbsp;vertex&nbsp;shader<BR>struct&nbsp;VSOUTPUT_BLUR<BR>{<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vPosition&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;POSITION;<BR>&nbsp;&nbsp;&nbsp;float2&nbsp;vTexCoord&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD0;<BR>};</P>
+<P>VSOUTPUT_BLUR&nbsp;VS_Blur(&nbsp;float4&nbsp;inPosition&nbsp;:&nbsp;POSITION,&nbsp;float2&nbsp;inTexCoord&nbsp;:&nbsp;TEXCOORD0&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;struct<BR>&nbsp;&nbsp;&nbsp;VSOUTPUT_BLUR&nbsp;OUT&nbsp;=&nbsp;(VSOUTPUT_BLUR)0;<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;position<BR>&nbsp;&nbsp;&nbsp;OUT.vPosition&nbsp;=&nbsp;inPosition;<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;texture&nbsp;coordinates<BR>&nbsp;&nbsp;&nbsp;OUT.vTexCoord&nbsp;=&nbsp;inTexCoord;<BR>&nbsp;&nbsp;&nbsp;return&nbsp;OUT;<BR>}<BR>//&nbsp;Horizontal&nbsp;blur&nbsp;pixel&nbsp;shader<BR>float4&nbsp;PS_BlurH(&nbsp;VSOUTPUT_BLUR&nbsp;IN&nbsp;):&nbsp;COLOR0<BR>{<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Accumulated&nbsp;color<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vAccum&nbsp;=&nbsp;float4(&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Sample&nbsp;the&nbsp;taps&nbsp;(g_vSampleOffsets&nbsp;holds&nbsp;the&nbsp;texel&nbsp;offsets<BR>&nbsp;&nbsp;&nbsp;//&nbsp;and&nbsp;g_fSampleWeights&nbsp;holds&nbsp;the&nbsp;texel&nbsp;weights)<BR>&nbsp;&nbsp;&nbsp;for(int&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;15;&nbsp;i++&nbsp;)<BR>&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vAccum&nbsp;+=&nbsp;tex2D(&nbsp;ScreenSampler,&nbsp;IN.vTexCoord&nbsp;+&nbsp;g_vSampleOffsets[i]&nbsp;)&nbsp;*&nbsp;g_fSampleWeights[i];<BR>&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;return&nbsp;vAccum;<BR>}</P>
+<P>//&nbsp;Vertical&nbsp;blur&nbsp;pixel&nbsp;shader<BR>float4&nbsp;PS_BlurV(&nbsp;VSOUTPUT_BLUR&nbsp;IN&nbsp;):&nbsp;COLOR0<BR>{<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Accumulated&nbsp;color<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vAccum&nbsp;=&nbsp;float4(&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f,&nbsp;0.0f&nbsp;);<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Sample&nbsp;the&nbsp;taps&nbsp;(g_vSampleOffsets&nbsp;holds&nbsp;the&nbsp;texel&nbsp;offsets&nbsp;and<BR>&nbsp;&nbsp;&nbsp;//&nbsp;g_fSampleWeights&nbsp;holds&nbsp;the&nbsp;texel&nbsp;weights)<BR>&nbsp;&nbsp;&nbsp;for(&nbsp;int&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;15;&nbsp;i++&nbsp;)<BR>&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vAccum&nbsp;+=&nbsp;tex2D(&nbsp;BlurHSampler,&nbsp;IN.vTexCoord&nbsp;+&nbsp;g_vSampleOffsets[i]&nbsp;)&nbsp;*&nbsp;g_fSampleWeights[i];<BR>&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;return&nbsp;vAccum;<BR>}<BR>这里，模糊映射图已经完成了，为了增加阴影的模糊程度，增加了纹理上点的采样距离。最后一步自然是将模糊后的纹理图投射回屏幕空间使其显示在屏幕上。<BR>&nbsp;<BR>After&nbsp;first&nbsp;Gaussian&nbsp;pass<BR>&nbsp;<BR>After&nbsp;second&nbsp;Gaussian&nbsp;pass<BR>步骤四：渲染带阴影的场景<BR>为了将模糊后的纹理投射到屏幕上，我们像平常那样渲染场景，但投影模糊后的纹理时要使用屏幕空间的坐标。我们使用裁剪空间的坐标和一些数学方法来产生屏幕空间的坐标。下面的顶点渲染和像素渲染将完成这个工作：<BR>struct&nbsp;VSOUTPUT_SCENE<BR>{<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vPosition&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;POSITION;<BR>&nbsp;&nbsp;&nbsp;float2&nbsp;vTexCoord&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD0;<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vProjCoord&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD1;<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vScreenCoord&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD2;<BR>&nbsp;&nbsp;&nbsp;float3&nbsp;vNormal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD3;<BR>&nbsp;&nbsp;&nbsp;float3&nbsp;vLightVec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD4;<BR>&nbsp;&nbsp;&nbsp;float3&nbsp;vEyeVec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;TEXCOORD5;<BR>};<BR>//&nbsp;Scene&nbsp;vertex&nbsp;shader<BR>VSOUTPUT_SCENE&nbsp;VS_Scene(&nbsp;float4&nbsp;inPosition&nbsp;:&nbsp;POSITION,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;float3&nbsp;inNormal&nbsp;:&nbsp;NORMAL,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;float2&nbsp;inTexCoord&nbsp;:&nbsp;TEXCOORD0&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;VSOUTPUT_SCENE&nbsp;OUT&nbsp;=&nbsp;(VSOUTPUT_SCENE)0;<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;transformed&nbsp;position<BR>&nbsp;&nbsp;&nbsp;OUT.vPosition&nbsp;=&nbsp;mul(&nbsp;inPosition,&nbsp;g_matWorldViewProj&nbsp;);</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;texture&nbsp;coordinates<BR>&nbsp;&nbsp;&nbsp;OUT.vTexCoord&nbsp;=&nbsp;inTexCoord;</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;projective&nbsp;texture&nbsp;coordinates&nbsp;(we&nbsp;use&nbsp;this<BR>&nbsp;&nbsp;&nbsp;//&nbsp;to&nbsp;project&nbsp;the&nbsp;spot&nbsp;texture&nbsp;down&nbsp;onto&nbsp;the&nbsp;scene)<BR>&nbsp;&nbsp;&nbsp;//&nbsp;这个是用来产生light&nbsp;map的纹理坐标的。最终效果图中地面上光照效果就是用<BR>//&nbsp;&nbsp;这个坐标配合上一幅这样的light&nbsp;map实现的。<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;OUT.vProjCoord&nbsp;=&nbsp;mul(&nbsp;inPosition,&nbsp;g_matTexture&nbsp;);</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;screen-space&nbsp;texture&nbsp;coordinates<BR>&nbsp;&nbsp;&nbsp;//&nbsp;这个就是将裁剪空间的坐标转换到屏幕空间的坐标，方法和将裁剪空间的坐标转换<BR>//&nbsp;&nbsp;纹理空间的坐标的方法很相似。<BR>&nbsp;&nbsp;&nbsp;OUT.vScreenCoord.x&nbsp;=&nbsp;(&nbsp;OUT.vPosition.x&nbsp;*&nbsp;0.5&nbsp;+&nbsp;OUT.vPosition.w&nbsp;*&nbsp;0.5&nbsp;);<BR>&nbsp;&nbsp;&nbsp;OUT.vScreenCoord.y&nbsp;=&nbsp;(&nbsp;OUT.vPosition.w&nbsp;*&nbsp;0.5&nbsp;-&nbsp;OUT.vPosition.y&nbsp;*&nbsp;0.5&nbsp;);<BR>&nbsp;&nbsp;&nbsp;OUT.vScreenCoord.z&nbsp;=&nbsp;OUT.vPosition.w;<BR>&nbsp;&nbsp;&nbsp;OUT.vScreenCoord.w&nbsp;=&nbsp;OUT.vPosition.w;</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Get&nbsp;the&nbsp;world&nbsp;space&nbsp;vertex&nbsp;position<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vWorldPos&nbsp;=&nbsp;mul(&nbsp;inPosition,&nbsp;g_matWorld&nbsp;);</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Output&nbsp;the&nbsp;world&nbsp;space&nbsp;normal<BR>&nbsp;&nbsp;&nbsp;OUT.vNormal&nbsp;=&nbsp;mul(&nbsp;inNormal,&nbsp;g_matWorldIT&nbsp;);</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Move&nbsp;the&nbsp;light&nbsp;vector&nbsp;into&nbsp;tangent&nbsp;space<BR>&nbsp;&nbsp;&nbsp;OUT.vLightVec&nbsp;=&nbsp;g_vLightPos.xyz&nbsp;-&nbsp;vWorldPos.xyz;</P>
+<P>&nbsp;&nbsp;&nbsp;//&nbsp;Move&nbsp;the&nbsp;eye&nbsp;vector&nbsp;into&nbsp;tangent&nbsp;space<BR>&nbsp;&nbsp;&nbsp;OUT.vEyeVec&nbsp;=&nbsp;g_vEyePos.xyz&nbsp;-&nbsp;vWorldPos.xyz;<BR>&nbsp;&nbsp;&nbsp;return&nbsp;OUT;<BR>}<BR>float4&nbsp;PS_Scene(&nbsp;VSOUTPUT_SCENE&nbsp;IN&nbsp;)&nbsp;:&nbsp;COLOR0<BR>{<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Normalize&nbsp;the&nbsp;normal,&nbsp;light&nbsp;and&nbsp;eye&nbsp;vectors<BR>&nbsp;&nbsp;&nbsp;IN.vNormal&nbsp;&nbsp;&nbsp;=&nbsp;normalize(&nbsp;IN.vNormal&nbsp;);<BR>&nbsp;&nbsp;&nbsp;IN.vLightVec&nbsp;=&nbsp;normalize(&nbsp;IN.vLightVec&nbsp;);<BR>&nbsp;&nbsp;&nbsp;IN.vEyeVec&nbsp;&nbsp;&nbsp;=&nbsp;normalize(&nbsp;IN.vEyeVec&nbsp;);<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Sample&nbsp;the&nbsp;color&nbsp;and&nbsp;normal&nbsp;maps<BR>&nbsp;&nbsp;&nbsp;float4&nbsp;vColor&nbsp;&nbsp;=&nbsp;tex2D(&nbsp;ColorSampler,&nbsp;IN.vTexCoord&nbsp;);<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Compute&nbsp;the&nbsp;ambient,&nbsp;diffuse&nbsp;and&nbsp;specular&nbsp;lighting&nbsp;terms<BR>&nbsp;&nbsp;&nbsp;float&nbsp;ambient&nbsp;&nbsp;=&nbsp;0.0f;<BR>&nbsp;&nbsp;&nbsp;float&nbsp;diffuse&nbsp;&nbsp;=&nbsp;max(&nbsp;dot(&nbsp;IN.vNormal,&nbsp;IN.vLightVec&nbsp;),&nbsp;0&nbsp;);<BR>&nbsp;&nbsp;&nbsp;float&nbsp;specular&nbsp;=&nbsp;pow(max(dot(&nbsp;2&nbsp;*&nbsp;dot(&nbsp;IN.vNormal,&nbsp;IN.vLightVec&nbsp;)&nbsp;*&nbsp;IN.vNormal<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;IN.vLightVec,&nbsp;IN.vEyeVec&nbsp;),&nbsp;0&nbsp;),&nbsp;8&nbsp;);<BR>&nbsp;&nbsp;&nbsp;if(&nbsp;diffuse&nbsp;==&nbsp;0&nbsp;)&nbsp;specular&nbsp;=&nbsp;0;<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Grab&nbsp;the&nbsp;shadow&nbsp;term<BR>&nbsp;&nbsp;&nbsp;float&nbsp;fShadowTerm&nbsp;=&nbsp;tex2Dproj(&nbsp;BlurVSampler,&nbsp;IN.vScreenCoord&nbsp;);<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Grab&nbsp;the&nbsp;spot&nbsp;term<BR>&nbsp;&nbsp;&nbsp;float&nbsp;fSpotTerm&nbsp;=&nbsp;tex2Dproj(&nbsp;SpotSampler,&nbsp;IN.vProjCoord&nbsp;);<BR>&nbsp;&nbsp;&nbsp;//&nbsp;Compute&nbsp;the&nbsp;final&nbsp;color<BR>&nbsp;&nbsp;&nbsp;return&nbsp;(ambient&nbsp;*&nbsp;vColor)&nbsp;+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(diffuse&nbsp;*&nbsp;vColor&nbsp;*&nbsp;g_vLightColor&nbsp;*&nbsp;fShadowTerm&nbsp;*&nbsp;fSpotTerm)&nbsp;+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(specular&nbsp;*&nbsp;vColor&nbsp;*&nbsp;g_vLightColor.a&nbsp;*&nbsp;fShadowTerm&nbsp;*&nbsp;fSpotTerm);<BR>}<BR>终于完成了。看上去不错。该技术的优点一是解决了锯齿问题，二是在多光源，低内存下实现了软阴影。另外该技术与阴影生成方法无关，可以很容易的在shadow&nbsp;volumes技术中采用这项技术。缺点是由于进行了模糊处理而需要一些填充率。<BR>下面是不同阶段的效果比较图：<BR>&nbsp;<BR>谢谢你阅读这篇文章，如有疑问欢迎来信anidex@yahoo.com.&nbsp;（这是原作者的信箱）</P>
+（汗，好多东西心里明白，但翻译出来就是不满意。各位要是看不明白就找出原文研究吧。）<BR>参考文献<BR>·	Hardware&nbsp;Shadow&nbsp;Mapping.&nbsp;Cass&nbsp;Everitt,&nbsp;Ashu&nbsp;Rege&nbsp;and&nbsp;Cem&nbsp;Cebenoyan.&nbsp;<BR>·	Hardware-accelerated&nbsp;Rendering&nbsp;of&nbsp;Antialiased&nbsp;Shadows&nbsp;with&nbsp;Shadow&nbsp;Maps.&nbsp;Stefan&nbsp;Brabec&nbsp;and&nbsp;Hans-Peter&nbsp;Seidel.<BR><BR>
+	<DIV class="postDesc">posted on 2007-07-31 11:01 <A href="http://www.cnblogs.com/mazhenyu/">3D入魔</A> 阅读(601) <A href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html#Post">评论(1)</A> &nbsp;<A href="http://www.cnblogs.com/mazhenyu/admin/EditPosts.aspx?postid=837321">编辑</A> <A href="http://www.cnblogs.com/mazhenyu/AddToFavorite.aspx?id=837321">收藏</A> <A href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html#" onclick="PutInWz();return false;">网摘</A>  所属分类: <A href="http://www.cnblogs.com/mazhenyu/category/97081.html">directX </A><A href="http://www.cnblogs.com/mazhenyu/category/97082.html">游戏开发</A></DIV>
+</DIV>
+<IMG src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/837321.html" width="1" height="1">
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html"
+dc:identifier="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html"
+dc:title=""
+trackback:ping="http://www.cnblogs.com/mazhenyu/services/trackbacks/837321.aspx" />
+</rdf:RDF>
+-->
+
+
+<DIV id="AjaxHolder_UpdatePanel1">
+	    
+    <A name="pagedcomment"></A>
+<!--done-->
+<BR>
+<B>评论:</B>
+<DIV class="feedbackNoItems"></DIV>
+	
+
+		<DIV class="feedbackItem">
+			<DIV class="feedbackListSubtitle">
+			<A title="permalink: re: 软阴影的实现(转帖) " href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html#1415907">#1楼</A>&nbsp;<A name="1415907" id="comment_anchor_1415907"></A><A name="Post"></A>
+				2008-12-28 19:12 | <A id="AjaxHolder_Comments_CommentList_ctl00_NameLink" target="_blank">dianer [未注册用户]</A><BR>
+				<DIV align="left"><SPAN id="span_comment_1415907">图片在哪里？附件在哪里？</SPAN><BR>&nbsp;&nbsp;<A onclick="return SetReplyAuhor(&quot;dianer&quot;)" href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html#post">回复</A>&nbsp;&nbsp;<A onclick="GetQuote(1415907);return false" href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html#post">引用</A>&nbsp;&nbsp;<A id="AjaxHolder_Comments_CommentList_ctl00_DeleteLink" href="javascript:__doPostBack('AjaxHolder$Comments$CommentList$ctl00$DeleteLink','')"></A>&nbsp;&nbsp;<A id="AjaxHolder_Comments_CommentList_ctl00_EditLink"></A></DIV>
+			</DIV>
+			
+			
+		</DIV>
+	
+
+
+
+
+<STYLE>
+    td
+    {
+        font-size: 12px;
+    }
+    .commentTextBox
+    {
+        font-family: Verdana;
+        font-size: 13px;
+    }
+    a.blue:visited, a.blue:active, a.blue:link, a.blue:hover
+    {
+        color: blue;
+    }
+</STYLE>
+<!--Beging Temp Save-->
+<STYLE>
+    .userData
+    {
+        behavior: url(#default#userdata);
+    }
+</STYLE>
+<DIV class="userData" id="CommentsPersistDiv">
+</DIV>
+
+<SCRIPT type="text/javascript">
+    function pageLoad() {
+        Sys.WebForms.PageRequestManager.getInstance().add_initializeRequest(handleInitializeRequest);
+        //Sys.WebForms.PageRequestManager.getInstance().add_endRequest(handleEndRequest);
+    }
+
+    function handleInitializeRequest(sender, args) {
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        var eid = args.get_postBackElement().id;
+        /*if (eid.indexOf("DeleteLink")>0) 
+        {
+        args.get_postBackElement().innerHTML = "<font color='red'>正在删除...</font>";         
+        }    
+        else */
+        if (eid.indexOf("btnSubmit") > 0) {
+            document.getElementById("AjaxHolder_PostComment_ltSubmitMsg").innerHTML = "正在提交...";
+            document.getElementById("AjaxHolder_PostComment_btnSubmit").disabled = true;
+        }
+        else if (eid.indexOf("refreshList") > 0) {
+            document.getElementById("AjaxHolder_PostComment_refreshList").innerHTML = "<font color='red'>正在刷新...</font>";
+        }
+
+    }
+
+    function TempSave(ElementID) {
+        try {
+            CommentsPersistDiv.setAttribute("CommentContent", document.getElementById(ElementID).value);
+            CommentsPersistDiv.save("CommentXMLStore");
+        }
+        catch (ex) {
+        }
+
+    }
+    function Restore(ElementID) {
+        CommentsPersistDiv.load("CommentXMLStore");
+        document.getElementById(ElementID).value = CommentsPersistDiv.getAttribute("CommentContent");
+    }	
+			
+			
+</SCRIPT>
+ 
+<!--Ene TempSave-->
+<DIV id="divRefreshComments" style="text-align: right; margin-right: 10px; margin-bottom: 5px;
+    font-size: 12px">
+    <A id="AjaxHolder_PostComment_refreshList" href="javascript:__doPostBack('AjaxHolder$PostComment$refreshList','')">刷新评论列表</A>&nbsp;&nbsp;
+    <A href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html?switchskin=1#skinlist">切换模板</A></DIV>
+<DIV class="commentform">
+<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/google_service.js">
+</SCRIPT>
+<SCRIPT type="text/javascript">
+    try {
+        GS_googleAddAdSenseService("ca-pub-4210569241504288");
+        GS_googleEnableAllServices();
+    }
+    catch (e) { }
+</SCRIPT><SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/test_gam_domain.js"></SCRIPT><SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/google_ads.js"></SCRIPT>
+<SCRIPT type="text/javascript">
+    try {
+        GA_googleAddSlot("ca-pub-4210569241504288", "cnblogs_commentbox_up");
+        GA_googleAddSlot("ca-pub-4210569241504288", "cnblogs_blogpost_bottom");
+    }
+    catch (e) { }
+</SCRIPT>
+<SCRIPT type="text/javascript">
+    try {
+        GA_googleFetchAds();
+    } catch (e) { }
+</SCRIPT>
+    
+    <SPAN id="AjaxHolder_PostComment_ltSubmitMsg" style="color:Red;"></SPAN>
+    <BR>
+    <A name="Feedback"></A>
+    <DIV id="comment_tip">发表评论</DIV>
+    <DIV id="AjaxHolder_PostComment_panelAD">
+		
+            </DIV><TABLE cellspacing="1" cellpadding="1" border="0" style="width: 600px">
+        <TBODY><TR>
+            <TD colspan="3">
+                <DIV id="AjaxHolder_PostComment_panelADUper">
+		
+                    
+<BR>
+<SCRIPT type="text/javascript">
+    try {
+        GA_googleFillSlot("cnblogs_commentbox_up");
+    }
+    catch (e) { }
+</SCRIPT><SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/ads"></SCRIPT><DIV id="google_ads_div_cnblogs_commentbox_up">
+<IFRAME id="google_ads_iframe_cnblogs_commentbox_up" name="google_ads_iframe_cnblogs_commentbox_up" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: initial; border-color: initial; "></IFRAME></DIV>
+<SCRIPT>GA_googleCreateDomIframe('google_ads_div_cnblogs_commentbox_up' ,'cnblogs_commentbox_up');</SCRIPT>
+<BR>
+<BR>
+
+                
+	</DIV>
+            </TD>
+        </TR>
+        <TR>
+            <TD>
+                
+            </TD>
+            <TD>
+            </TD>
+            <TD>
+            </TD>
+        </TR>
+        
+        <TR>
+            <TD width="55">
+                姓名
+            </TD>
+            <TD colspan="2">
+                <INPUT name="AjaxHolder$PostComment$tbName" type="text" id="AjaxHolder_PostComment_tbName" class="tb_comment_name"> <A href="http://passport.cnblogs.com/login.aspx?ReturnUrl=http%3a%2f%2fwww.cnblogs.com%2fmazhenyu%2farchive%2f2007%2f07%2f31%2f837321.html">[登录]</A> <A href="http://passport.cnblogs.com/register.aspx?ReturnUrl=http%3a%2f%2fwww.cnblogs.com%2fmazhenyu%2farchive%2f2007%2f07%2f31%2f837321.html%23Top">[注册]</A><SPAN id="AjaxHolder_PostComment_RequiredFieldValidator2" style="color:Red;visibility:hidden;">请输入你的姓名</SPAN>
+            </TD>
+        </TR>
+        <TR>
+            <TD>
+                主页
+            </TD>
+            <TD>
+                <INPUT name="AjaxHolder$PostComment$tbUrl" type="text" id="AjaxHolder_PostComment_tbUrl" class="commenttb">
+            </TD>
+            <TD>
+            </TD>
+        </TR>
+        <TR id="AjaxHolder_PostComment_trEmail">
+		<TD>
+                Email
+            </TD>
+		<TD colspan="2">
+                <INPUT name="AjaxHolder$PostComment$tbEmail" type="text" id="AjaxHolder_PostComment_tbEmail" class="commenttb">(仅博主可见)<SPAN id="AjaxHolder_PostComment_revContactMail" style="color:Red;visibility:hidden;">邮件地址无效</SPAN>
+            </TD>
+	</TR>
+	
+        <TR>
+            <TD align="left" colspan="3">
+                <TABLE id="AjaxHolder_PostComment_tbCaptchaImage" class="CommentForm" cellspacing="0" cellpadding="0" border="0">
+		<TBODY><TR>
+			<TD colspan="3">
+                            <SPAN id="AjaxHolder_PostComment_Requiredfieldvalidator4" style="color:Red;display:none;">请输入验证码</SPAN>
+                            <SPAN id="AjaxHolder_PostComment_lblImage" style="color:Red;font-weight:bold;"></SPAN>
+                        </TD>
+		</TR>
+		<TR>
+			<TD>
+                            验证码
+                        </TD>
+			<TD colspan="2">
+                            <INPUT name="AjaxHolder$PostComment$CodeNumberTextBox" type="text" id="AjaxHolder_PostComment_CodeNumberTextBox" style="width: 100px">*&nbsp;&nbsp;<IMG src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/JpegImage.aspx" alt="验证码" align="absmiddle"><A id="AjaxHolder_PostComment_lkbChangeCode" href="javascript:__doPostBack('AjaxHolder$PostComment$lkbChangeCode','')">看不清,换一张</A>
+                            
+                        </TD>
+		</TR>
+	</TBODY></TABLE>
+	
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3" style="text-align: left">
+                <DIV style="width: 600px;">
+                    <DIV class="divPostCommentBox">
+                        内容(请不要发表任何与政治相关的内容)
+                        <SPAN id="AjaxHolder_PostComment_RequiredFieldValidator3" style="color:Red;visibility:hidden;">请输入评论内容</SPAN><BR>
+                        <TEXTAREA name="AjaxHolder$PostComment$tbComment" rows="2" cols="20" id="AjaxHolder_PostComment_tbComment" class="commentTextBox" onkeydown="ctlent(event,&#39;AjaxHolder_PostComment_tbComment&#39;)"></TEXTAREA>
+                    </DIV>
+                    <DIV class="CommentBoxNav">
+                        
+                        <A href="http://space.cnblogs.com/ing/" target="_blank" tabindex="-1">今天你闪了吗？</A><BR><BR>
+                        <!--<a href="http://space.cnblogs.com/q" target="_blank" tabindex="-1">博问</a><br />
+                        <br />
+                        <a href="http://wz.cnblogs.com" target="_blank" tabindex="-1">网摘</a><br />
+                        <br />
+                        <a href="http://job.cnblogs.com" target="_blank" tabindex="-1">招聘</a><br />
+                        <br />
+                        <a href="http://zzk.cnblogs.com" target="_blank" tabindex="-1">找找看</a><br />
+                        <br />-->
+                        
+                    </DIV>
+                </DIV>
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3">
+                <SPAN id="AjaxHolder_PostComment_Message" style="color:Red;"></SPAN>
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3">
+                <INPUT id="AjaxHolder_PostComment_chkRemember" type="checkbox" name="AjaxHolder$PostComment$chkRemember" checked="checked" tabindex="-1"><LABEL for="AjaxHolder_PostComment_chkRemember">Remember Me?</LABEL>
+            </TD>
+        </TR>
+        <TR>
+            <TD height="23">
+                <INPUT type="submit" name="AjaxHolder$PostComment$btnSubmit" value="提交" onclick="TempSave(&#39;AjaxHolder_PostComment_tbComment&#39;);WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;AjaxHolder$PostComment$btnSubmit&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="AjaxHolder_PostComment_btnSubmit" class="commentButton">
+                
+            </TD>
+            <TD colspan="2" height="23">
+                &nbsp;
+                <A id="AjaxHolder_PostComment_lnkLogin" href="http://passport.cnblogs.com/login.aspx?ReturnURL=http%3a%2f%2fwww.cnblogs.com%2fmazhenyu%2farchive%2f2007%2f07%2f31%2f837321.html">登录</A>&nbsp;&nbsp;<A id="AjaxHolder_PostComment_linkLoginComment" onclick="if(document.getElementById(&#39;AjaxHolder_PostComment_tbComment&#39;).value != &#39;&#39;) return confirm(&#39;未提交的评论内容将会丢失, 你真的要进入高级评论吗?&#39;);" href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html?login=1#Post">使用高级评论</A>&nbsp;&nbsp;
+                    
+                    <A href="http://passport.cnblogs.com/register.aspx?ReturnUrl=http%3a%2f%2fwww.cnblogs.com%2fmazhenyu%2farchive%2f2007%2f07%2f31%2f837321.html%23Bottom">新用户注册</A>&nbsp;&nbsp;
+                    
+                    <A href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html#Top">返回页首</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3" style="line-height:150%">
+                <LABEL class="CtrlEnter">
+                    [使用Ctrl+Enter键可以直接提交]</LABEL><BR>
+        导航: <A href="http://www.cnblogs.com/" target="_blank">网站首页</A> <A href="http://space.cnblogs.com/" target="_blank">社区</A>  <A href="http://news.cnblogs.com/" target="_blank">新闻</A> 
+        <A href="http://space.cnblogs.com/q/" target="_blank">博问</A> <A href="http://space.cnblogs.com/ing/" target="_blank">闪存</A> <A href="http://wz.cnblogs.com/" target="_blank">网摘</A> <A href="http://job.cnblogs.com/" target="_blank">招聘</A>
+        <A href="http://dotnet.cnblogs.com/" target="_blank">.NET频道</A> <A href="http://kb.cnblogs.com/" target="_blank">知识库</A>
+        <A href="http://zzk.cnblogs.com/" target="_blank">找找看</A> <A href="http://www.cnblogs.com/search.aspx" target="_blank">Google站内搜索</A>
+        
+            <BR><BR>
+            </TD>
+        </TR>
+        <TR>
+                <TD colspan="3" height="5">
+                    
+<SCRIPT type="text/javascript">
+    try {
+        GA_googleFillSlot("cnblogs_blogpost_bottom");
+    }
+    catch (e) { }
+</SCRIPT><SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/ads(1)"></SCRIPT><DIV id="google_ads_div_cnblogs_blogpost_bottom">
+<IFRAME id="google_ads_iframe_cnblogs_blogpost_bottom" name="google_ads_iframe_cnblogs_blogpost_bottom" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: initial; border-color: initial; "></IFRAME></DIV>
+<SCRIPT>GA_googleCreateDomIframe('google_ads_div_cnblogs_blogpost_bottom' ,'cnblogs_blogpost_bottom');</SCRIPT>
+		        <BR>	
+                </TD>
+            </TR>
+            <TR>
+                <TD colspan="3"> 
+			    <A href="http://www.china-pub.com/static07/0905/zh_youyueread_090521.asp?qudao=cnblogsbanner" target="_blank"><IMG src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/YU-D-S1P-28674_18.gif" border="0px;"></A>                   
+                <BR>
+                <A href="http://www.china-pub.com/itbook/" target="_blank">China-pub 计算机图书网上专卖店！6.5万品种
+                    2-8折！</A><BR>
+                <A href="http://www.china-pub.com/static07/0901/zh_jueba_090121.asp" target="_blank">China-Pub 计算机绝版图书按需印刷服务</A><BR>
+                </TD>
+            </TR>
+        
+	
+        <TR>
+            <TD colspan="3">
+                <BR><DIV id="relative_posts"><B>相关文章:</B><BR><SCRIPT language="javascript" type="text/javascript" charset="utf-8" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/RCS"></SCRIPT><A href="http://www.cnblogs.com/dudu/archive/2004/01/15/253.html" target="_blank">Windows 2000 常见进程功能描述[转帖]</A><BR><A href="http://www.cnblogs.com/singlepine/archive/2005/10/19/257954.html" target="_blank">Ajax实现无刷新三联动下拉框</A><BR><A href="http://space.cnblogs.com/group/topic/5293/" target="_blank">老板为什么不喜欢你？（转帖）</A><BR><A href="http://space.cnblogs.com/group/topic/1358/" target="_blank">[转帖]IT民工急需“两会代言人” </A></DIV>
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3">
+                <DIV id="div_a4_ads">
+                    <BR>
+                    <B>相关链接:</B>
+                    <SCRIPT type="text/javascript">
+                        var title = document.title;
+                        document.write("<div id=\"a4_ads_output\">");
+                        document.write("<script type='text/javascript' src='http://a4.yeshj.com/adwords/EN017?num=7&title=" + encodeURIComponent(title) + "&tag=" + encodeURIComponent(GetMeta("keywords")) + "'></scri" + "pt>");
+                        document.write("</div>");
+                    </SCRIPT><DIV id="a4_ads_output"><SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/EN017"></SCRIPT><A href="http://a4.yeshj.com/rd?aid=17183&zid=0&url=http%3a%2f%2fwww.hjbook.net%2fproduct%2f2801" target="_blank">博客园推荐:软件调试</A><BR><A href="http://a4.yeshj.com/rd?aid=17053&zid=0&url=http%3a%2f%2fspace.cnblogs.com%2fvote.aspx%3fid%3d1" target="_blank">欢迎参加博客园用户调查</A><BR><A href="http://a4.yeshj.com/rd?aid=17143&zid=0&url=http%3a%2f%2fwww.hjbook.net%2fproduct%2f2801%2f" target="_blank">博客园推荐图书:《软件调试 》</A><BR><A href="http://a4.yeshj.com/rd?aid=17142&zid=0&url=http%3a%2f%2fwww.hjbook.net%2fproduct%2f2805%2f" target="_blank">博客园推荐图书:《软件测试实践》</A><BR><A href="http://a4.yeshj.com/rd?aid=17181&zid=0&url=http%3a%2f%2fwww.hjbook.net%2fproduct%2f2805" target="_blank">博客园推荐:软件测试实践</A><BR><A href="http://a4.yeshj.com/rd?aid=15219&zid=0&url=http%3a%2f%2fwww.hjbook.net%2fproduct%2f2289" target="_blank">08年博客园纪念T恤珍藏版</A><BR><A href="http://a4.yeshj.com/rd?aid=25865&zid=0&url=http%3a%2f%2fdotnet.cnblogs.com%2f" target="_blank">博客园.NET频道，专业.NET技术门户</A><BR></DIV>
+
+                </DIV>
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3">
+                
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3">
+                
+
+<DIV class="itnews" id="itnews">
+<BR><B>最新IT新闻:</B><BR>
+
+            <A href="http://news.cnblogs.com/n/47791/" target="_blank">鲍尔默称传统媒体将在10年内消失</A><BR>
+	
+            <A href="http://news.cnblogs.com/n/47790/" target="_blank">必应将是微软的坟墓？</A><BR>
+	
+            <A href="http://news.cnblogs.com/n/47789/" target="_blank">传16GB和32GB版Zune HD将在9月8日上市</A><BR>
+	
+            <A href="http://news.cnblogs.com/n/47788/" target="_blank">微软发布节能网站——Hohm</A><BR>
+	
+            <A href="http://news.cnblogs.com/n/47781/" target="_blank">Mozilla：Firefox 3.5带动Web升级 月底推最终版</A><BR>
+	
+</DIV>
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3" height="5">
+                &nbsp;
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3" height="5">
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3" height="1">
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3">
+                
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="3">
+                
+            </TD>
+        </TR>
+    </TBODY></TABLE>
+</DIV>
+<DIV id="AjaxHolder_PostComment_ValidationSummary1" style="color:Red;display:none;">
+
+	</DIV>
+
+</DIV>
+<SCRIPT language="javascript">
+
+function GetQuote(id)
+{
+    //www.cnblogs.com.ICommentService.GetCommentText(id,SetQuote);
+    BlogServer.WebService.AjaxWS.GetComment(id,SetQuote);
+}
+
+ function SetQuote(result)
+{
+    document.getElementById('AjaxHolder_PostComment_tbComment').value+= ("--引用--------------------------------------------------\n"+result+"\n--------------------------------------------------------\n");
+    document.getElementById('AjaxHolder_PostComment_tbComment').focus(); 
+}
+
+function Favorite(entryID,title,url,element)
+{
+    document.getElementById(element.id).innerHTML = "<span style='color:red'>正在收藏...</span>";
+    BlogServer.WebService.AjaxWS.AddToFavorites(entryID,title,url,OnFavoriteSuccess);
+    document.getElementById(element.id).removeAttribute("href");
+    document.getElementById(element.id).removeAttribute("onclick");
+}
+
+function OnFavoriteSuccess(result)
+{
+    if(result == "请先登录")
+    {
+        window.location.href = "../../../../../login.aspx?ReturnUrl=" + window.location.href;
+    }
+    else
+    {
+        var returnstr = result.split(",");
+        var id = "lnkFavorite"+returnstr[0];
+        document.getElementById(id).innerHTML = "<span style='color:red'>" + returnstr[1] + "</span>";
+    }
+}
+
+var currenntDelElement;
+var curremntCommentID
+function DelComment(id, element) {
+    if (confirm("确认要删除该评论吗?")) {
+        currenntDelElementID = element.id;
+        curremntCommentID = id;
+        document.getElementById(element.id).innerHTML = "<span style='color:red'>正在删除...</span>";
+        BlogServer.WebService.AjaxWS.DelComment(id, del_comment_callback);
+    }
+    return false;
+}
+
+function del_comment_callback(response) {
+    document.getElementById("span_comment_" + curremntCommentID).innerHTML = '';
+    if (document.getElementById("comment_anchor_" + curremntCommentID) != null) {
+        document.getElementById("comment_anchor_" + curremntCommentID).parentNode.innerHTML = '';
+    }
+    if (document.getElementById(currenntDelElementID).parentNode != null) {
+        document.getElementById(currenntDelElementID).parentNode.innerHTML = "<span style='color:red'>删除成功!</span>";
+    }
+    
+    //window.location.reload();
+    //__doPostBack('AjaxHolder$PostComment$refreshList','');
+}
+</SCRIPT>
+
+				
+</DIV>
+<DIV id="leftcontent" style="display: inline; ">
+	
+		<DIV id="leftcontentcontainer">
+			
+			<TABLE id="Calendar1_entryCal" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0" style="border-width:1px;border-style:solid;border-collapse:collapse;">
+	<TBODY><TR><TD colspan="7" style="background-color:Silver;"><TABLE class="CalTitle" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;">
+		<TBODY><TR><TD class="CalNextPrev" style="width:15%;"><A href="javascript:__doPostBack('Calendar1$entryCal','V2708')" style="color:Black" title="Go to the previous month">&lt;</A></TD><TD align="center" style="width:70%;">2007年7月</TD><TD class="CalNextPrev" align="right" style="width:15%;"><A href="javascript:__doPostBack('Calendar1$entryCal','V2769')" style="color:Black" title="Go to the next month">&gt;</A></TD></TR>
+	</TBODY></TABLE></TD></TR><TR><TH class="CalDayHeader" align="center" abbr="日" scope="col">日</TH><TH class="CalDayHeader" align="center" abbr="一" scope="col">一</TH><TH class="CalDayHeader" align="center" abbr="二" scope="col">二</TH><TH class="CalDayHeader" align="center" abbr="三" scope="col">三</TH><TH class="CalDayHeader" align="center" abbr="四" scope="col">四</TH><TH class="CalDayHeader" align="center" abbr="五" scope="col">五</TH><TH class="CalDayHeader" align="center" abbr="六" scope="col">六</TH></TR><TR><TD class="CalOtherMonthDay" align="center" style="width:14%;">24</TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">25</TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">26</TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">27</TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">28</TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">29</TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">30</TD></TR><TR><TD class="CalWeekendDay" align="center" style="width:14%;">1</TD><TD align="center" style="width:14%;">2</TD><TD align="center" style="width:14%;">3</TD><TD align="center" style="width:14%;">4</TD><TD align="center" style="width:14%;">5</TD><TD align="center" style="width:14%;">6</TD><TD class="CalWeekendDay" align="center" style="width:14%;">7</TD></TR><TR><TD class="CalWeekendDay" align="center" style="width:14%;">8</TD><TD align="center" style="width:14%;">9</TD><TD align="center" style="width:14%;">10</TD><TD align="center" style="width:14%;">11</TD><TD align="center" style="width:14%;">12</TD><TD align="center" style="width:14%;">13</TD><TD class="CalWeekendDay" align="center" style="width:14%;">14</TD></TR><TR><TD class="CalWeekendDay" align="center" style="width:14%;">15</TD><TD align="center" style="width:14%;">16</TD><TD align="center" style="width:14%;">17</TD><TD align="center" style="width:14%;">18</TD><TD align="center" style="width:14%;">19</TD><TD align="center" style="width:14%;">20</TD><TD class="CalWeekendDay" align="center" style="width:14%;">21</TD></TR><TR><TD class="CalWeekendDay" align="center" style="width:14%;">22</TD><TD align="center" style="width:14%;">23</TD><TD align="center" style="width:14%;"><A href="http://www.cnblogs.com/mazhenyu/archive/2007/7/24.html"><U>24</U></A></TD><TD align="center" style="width:14%;"><A href="http://www.cnblogs.com/mazhenyu/archive/2007/7/25.html"><U>25</U></A></TD><TD align="center" style="width:14%;">26</TD><TD align="center" style="width:14%;">27</TD><TD class="CalWeekendDay" align="center" style="width:14%;">28</TD></TR><TR><TD class="CalWeekendDay" align="center" style="width:14%;">29</TD><TD align="center" style="width:14%;">30</TD><TD align="center" style="width:14%;"><A href="http://www.cnblogs.com/mazhenyu/archive/2007/7/31.html"><U>31</U></A></TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">1</TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">2</TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">3</TD><TD class="CalOtherMonthDay" align="center" style="width:14%;">4</TD></TR>
+</TBODY></TABLE>
+<BR>
+			
+<DIV class="catListInteraction">
+<H3 class="catListTitle">与我联系</H3>
+<UL>
+ <LI>
+     <A id="SingleColumn1_ctl00_lnkSendMsg" class="sendMsg" href="http://space.cnblogs.com/msg/send/3D%e5%85%a5%e9%ad%94">发短消息</A>
+ </LI>
+</UL>
+</DIV>
+<SCRIPT type="text/javascript">
+function zzk_go()
+{
+	var blogapp = 'mazhenyu';
+	var keystr = encodeURIComponent("blog:"+blogapp+" "+document.getElementById('q').value);
+    window.location = "http://zzk.cnblogs.com/s?w="+keystr;
+}
+function zzk_go_enter(event)
+{
+	if(event.keyCode == 13)
+	{
+	    zzk_go();
+	    return false;
+	}
+}
+</SCRIPT>
+<DIV class="mySearch">
+<H3 class="catListTitle">搜索</H3>
+<DIV class="div_my_zzk"><INPUT type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<INPUT onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></DIV>
+</DIV>
+<H3>常用链接</H3>
+<UL>
+
+		<LI><A id="SingleColumn1_ctl02_rptMainLinks_ctl00_lnkLinkItem" href="http://www.cnblogs.com/mazhenyu/MyPosts.html">我的随笔</A></LI>
+	
+		<LI><A id="SingleColumn1_ctl02_rptMainLinks_ctl01_lnkLinkItem" href="http://space.cnblogs.com/mazhenyu">我的空间</A></LI>
+	
+		<LI><A id="SingleColumn1_ctl02_rptMainLinks_ctl02_lnkLinkItem" href="http://space.cnblogs.com/msg/recent">我的短信</A></LI>
+	
+		<LI><A id="SingleColumn1_ctl02_rptMainLinks_ctl03_lnkLinkItem" href="http://www.cnblogs.com/mazhenyu/MyComments.html">我的评论</A></LI>
+	
+<LI><A id="itemListLink" onclick="this.blur();WarpClass(&#39;itemListLink&#39;, &#39;itemListLin_con&#39;);return false;" href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html#">更多链接</A></LI>
+</UL>
+<DIV id="itemListLin_con" style="display:none;">
+<UL>
+		<LI><A id="SingleColumn1_ctl02_repeaterLinks_ctl01_lnkLinkItem" title="我发表过评论的随笔" href="http://www.cnblogs.com/mazhenyu/OtherPosts.html">我的参与</A></LI>
+	
+		<LI><A id="SingleColumn1_ctl02_repeaterLinks_ctl02_lnkLinkItem" href="http://www.cnblogs.com/mazhenyu/MyNews.html">我的新闻</A></LI>
+	
+		<LI><A id="SingleColumn1_ctl02_repeaterLinks_ctl03_lnkLinkItem" href="http://www.cnblogs.com/mazhenyu/RecentComments.html">最新评论</A></LI>
+	
+		<LI><A id="SingleColumn1_ctl02_repeaterLinks_ctl04_lnkLinkItem" href="http://www.cnblogs.com/mazhenyu/tag/">我的标签</A></LI>
+	</UL>
+</DIV>
+<H3 class="catListTitle">留言簿</H3>
+<UL>
+	<LI><A id="SingleColumn1_ctl03_lnkMessages" href="http://www.cnblogs.com/mazhenyu/Contact.aspx?id=1">给我留言</A></LI>
+	<!--<li><a id="SingleColumn1_ctl03_lnkPublicMsgView" href="http://www.cnblogs.com/mazhenyu/default.aspx?opt=msg">查看公开留言</a></li>-->
+	<LI><A id="SingleColumn1_ctl03_lnkPrivateMsgView" href="http://www.cnblogs.com/mazhenyu/admin/MyMessages.aspx">查看留言</A></LI>
+</UL>
+
+
+<!--done-->
+
+		<H1 class="catListTitle">随笔分类</H1>
+		
+				<UL class="catList">
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl01_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/104909.html">C/C++(12)</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl01_RssLink" title="Subscribe to C/C++(12)" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/104909.html/rss"><IMG title="Subscribe to C/C++(12)" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl02_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/97081.html">directX (5)</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl02_RssLink" title="Subscribe to directX (5)" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/97081.html/rss"><IMG title="Subscribe to directX (5)" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl03_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/71046.html">OpenGL(6)</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl03_RssLink" title="Subscribe to OpenGL(6)" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/71046.html/rss"><IMG title="Subscribe to OpenGL(6)" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl04_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/71045.html">VC(13)</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl04_RssLink" title="Subscribe to VC(13)" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/71045.html/rss"><IMG title="Subscribe to VC(13)" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl05_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/71047.html">VRML</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl05_RssLink" title="Subscribe to VRML" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/71047.html/rss"><IMG title="Subscribe to VRML" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl06_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/104910.html">家庭理财：股票、基金(1)</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl06_RssLink" title="Subscribe to 家庭理财：股票、基金(1)" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/104910.html/rss"><IMG title="Subscribe to 家庭理财：股票、基金(1)" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl07_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/104912.html">天文软件:Stellarium(3)</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl07_RssLink" title="Subscribe to 天文软件:Stellarium(3)" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/104912.html/rss"><IMG title="Subscribe to 天文软件:Stellarium(3)" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl08_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/104911.html">系统设计/系统架构</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl08_RssLink" title="Subscribe to 系统设计/系统架构" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/104911.html/rss"><IMG title="Subscribe to 系统设计/系统架构" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl09_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/105376.html">笑话(1)</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl09_RssLink" title="Subscribe to 笑话(1)" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/105376.html/rss"><IMG title="Subscribe to 笑话(1)" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl10_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/97082.html">游戏开发(4)</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl10_RssLink" title="Subscribe to 游戏开发(4)" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/97082.html/rss"><IMG title="Subscribe to 游戏开发(4)" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl11_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/98043.html">杂谈杂感(7)</A><A id="SingleColumn1_Categories_CatList_ctl00_LinkList_ctl11_RssLink" title="Subscribe to 杂谈杂感(7)" class="listitem" href="http://www.cnblogs.com/mazhenyu/category/98043.html/rss"><IMG title="Subscribe to 杂谈杂感(7)" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				</UL>
+			
+	
+		<H1 class="catListTitle">随笔档案</H1>
+		
+				<UL class="catList">
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl01_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2009/06.html">2009年6月 (2)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl02_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2009/03.html">2009年3月 (4)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl03_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2008/10.html">2008年10月 (1)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl04_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2008/09.html">2008年9月 (6)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl05_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2008/07.html">2008年7月 (3)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl06_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2008/06.html">2008年6月 (1)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl07_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2008/01.html">2008年1月 (1)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl08_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2007/10.html">2007年10月 (3)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl09_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2007/09.html">2007年9月 (11)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl10_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2007/08.html">2007年8月 (3)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl11_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2007/07.html">2007年7月 (7)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl12_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2007/06.html">2007年6月 (3)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl13_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2007/03.html">2007年3月 (2)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl14_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2007/02.html">2007年2月 (1)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl15_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2006/10.html">2006年10月 (1)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl16_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2006/09.html">2006年9月 (1)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl17_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2006/08.html">2006年8月 (2)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl18_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2006/07.html">2006年7月 (5)</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl01_LinkList_ctl19_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/archive/2006/06.html">2006年6月 (2)</A></LI>
+			
+				</UL>
+			
+	
+		<H1 class="catListTitle">收藏夹</H1>
+		
+				<UL class="catList">
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl01_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/favorite/98052.html">OpenGL 技术</A><A id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl01_RssLink" title="Subscribe to OpenGL 技术" class="listitem" href="http://www.cnblogs.com/mazhenyu/favorite/98052.html/rss"><IMG title="Subscribe to OpenGL 技术" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl02_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/favorite/98053.html">VC 技术</A><A id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl02_RssLink" title="Subscribe to VC 技术" class="listitem" href="http://www.cnblogs.com/mazhenyu/favorite/98053.html/rss"><IMG title="Subscribe to VC 技术" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl03_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/favorite/98055.html">杂项</A><A id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl03_RssLink" title="Subscribe to 杂项" class="listitem" href="http://www.cnblogs.com/mazhenyu/favorite/98055.html/rss"><IMG title="Subscribe to 杂项" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl04_Link" class="listitem" href="http://www.cnblogs.com/mazhenyu/favorite/98054.html">职场生涯</A><A id="SingleColumn1_Categories_CatList_ctl02_LinkList_ctl04_RssLink" title="Subscribe to 职场生涯" class="listitem" href="http://www.cnblogs.com/mazhenyu/favorite/98054.html/rss"><IMG title="Subscribe to 职场生涯" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				</UL>
+			
+	
+		<H1 class="catListTitle">Direct3D技术</H1>
+		
+				<UL class="catList">
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl03_LinkList_ctl01_Link" class="listitem" href="http://http.download.nvidia.com/developer/SDK/Individual_Samples/samples.html">nvidia 开发人员学习网站</A><A id="SingleColumn1_Categories_CatList_ctl03_LinkList_ctl01_RssLink" title="Subscribe to nvidia 开发人员学习网站" class="listitem" href="http://http.download.nvidia.com/developer/SDK/Individual_Samples/samples.html"><IMG title="Subscribe to nvidia 开发人员学习网站" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl03_LinkList_ctl02_Link" class="listitem" href="http://www.zxbc.cn/html/cjj/">中国编程网</A><A id="SingleColumn1_Categories_CatList_ctl03_LinkList_ctl02_RssLink" title="Subscribe to 中国编程网" class="listitem" href="http://www.zxbc.cn/html/cjj/"><IMG title="Subscribe to 中国编程网" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			<LI style="margin-top:2px;">中国编程网</LI>
+				</UL>
+			
+	
+		<H1 class="catListTitle">OpenGL技术</H1>
+		
+				<UL class="catList">
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl04_LinkList_ctl01_Link" class="listitem" href="http://www.lighthouse3d.com/opengl">OpenGL 2.0 tutorial</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl04_LinkList_ctl02_Link" class="listitem" href="http://www.opengl.org/">opengl官方网站</A></LI>
+			
+				</UL>
+			
+	
+		<H1 class="catListTitle">VC技术</H1>
+		
+				<UL class="catList">
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl05_LinkList_ctl01_Link" class="listitem" href="http://www.host01.com/article/software/">编程教程在线</A></LI>
+			
+				</UL>
+			
+	
+		<H1 class="catListTitle">百家杂学</H1>
+		
+				<UL class="catList">
+			
+				</UL>
+			
+	
+		<H1 class="catListTitle">开源软件</H1>
+		
+				<UL class="catList">
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl07_LinkList_ctl01_Link" class="listitem" href="http://www.codesoso.com/default.aspx">源码搜搜</A></LI>
+			
+				</UL>
+			
+	
+		<H1 class="catListTitle">理财知识</H1>
+		
+				<UL class="catList">
+			
+				</UL>
+			
+	
+		<H1 class="catListTitle">其它技术</H1>
+		
+				<UL class="catList">
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl09_LinkList_ctl01_Link" class="listitem" href="http://www.image2003.com/">www.image2003.com</A></LI>
+			<LI style="margin-top:2px;">中国图像图形网</LI>
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl09_LinkList_ctl02_Link" class="listitem" href="http://www.dpminfo.net/search.asp?key=%E6%97%A0%E7%BC%9D%E6%8B%BC%E6%8E%A5&otype=msg&page=3">大屏幕信息咨询网</A></LI>
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl09_LinkList_ctl03_Link" class="listitem" href="http://www.cmmtc.com.cn/">中国影视影像技术网</A><A id="SingleColumn1_Categories_CatList_ctl09_LinkList_ctl03_RssLink" title="Subscribe to 中国影视影像技术网" class="listitem" href="http://www.cmmtc.com.cn/Article/ArticleShow.asp?ArticleID=65"><IMG title="Subscribe to 中国影视影像技术网" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			<LI style="margin-top:2px;">中国影视影像技术网
+</LI>
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl09_LinkList_ctl04_Link" class="listitem" href="http://www.proav-china.com/">专业视听</A><A id="SingleColumn1_Categories_CatList_ctl09_LinkList_ctl04_RssLink" title="Subscribe to 专业视听" class="listitem" href="http://www.proav-china.com/"><IMG title="Subscribe to 专业视听" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			
+				</UL>
+			
+	
+		<H1 class="catListTitle">企业文化及管理</H1>
+		
+				<UL class="catList">
+			
+				<LI class="catListItem"> <A id="SingleColumn1_Categories_CatList_ctl10_LinkList_ctl01_Link" class="listitem" href="http://lz.book.sohu.com/serialize-id-4415.html">笑着离开惠普</A><A id="SingleColumn1_Categories_CatList_ctl10_LinkList_ctl01_RssLink" title="Subscribe to 笑着离开惠普" class="listitem" href="http://lz.book.sohu.com/serialize-id-4415.html"><IMG title="Subscribe to 笑着离开惠普" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml(1).gif" style="border-width:0px;"></A></LI>
+			<LI style="margin-top:2px;">一本企业文化和企业管理及企业发展方面的好书</LI>
+				</UL>
+			
+	
+
+
+<H3 class="catListTitle">最新评论
+	<A id="SingleColumn1__22a265b_RSSHyperlink1" href="http://www.cnblogs.com/mazhenyu/CommentsRSS.aspx"><IMG src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/xml.gif" style="border-width:0px;"></A></H3>
+<DIV class="RecentComment" id="RecentComments">
+	
+			<UL>
+		
+			<LI style="word-break:break-all">
+				<A id="SingleColumn1__22a265b_CommentList_ctl01_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2007/07/31/837321.html#1415907">1.&nbsp;re: 软阴影的实现(转帖) </A>
+			</LI>
+			<LI style="word-break:break-all">
+				图片在哪里？附件在哪里？
+			</LI>
+			<LI style="text-align:right;margin-right:4px">
+				--dianer</LI>
+		
+			<LI style="word-break:break-all">
+				<A id="SingleColumn1__22a265b_CommentList_ctl02_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2006/08/28/488801.html#1407298">2.&nbsp;re: 遥控器编程</A>
+			</LI>
+			<LI style="word-break:break-all">
+				我的网站www.whwzjs.cn，网络方面的东西我们可以一起交流一下啊 
+			</LI>
+			<LI style="text-align:right;margin-right:4px">
+				--胡一刀12</LI>
+		
+			<LI style="word-break:break-all">
+				<A id="SingleColumn1__22a265b_CommentList_ctl03_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2006/06/23/433704.html#1405071">3.&nbsp;re: 开始学MapServer了</A>
+			</LI>
+			<LI style="word-break:break-all">
+				新手的问题：
+1、通过是template文件生成html是不是ms所谓的用户界面？
+2、可以用openlayers+c#mapscript进行协同开发否？
+3、service的方式读取mapfile是...
+			</LI>
+			<LI style="text-align:right;margin-right:4px">
+				--xq.cheng</LI>
+		
+			<LI style="word-break:break-all">
+				<A id="SingleColumn1__22a265b_CommentList_ctl04_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2008/09/27/1300029.html#1328402">4.&nbsp;re: [转载]使用命名管道实现进程间通信 </A>
+			</LI>
+			<LI style="word-break:break-all">
+				
+<BR>零点科技公司为您提供网站建设(网站制作)、网站推广相结合的建站方案;做网站(作网站)送域名;
+<BR>电话:86-027-51010908 网站：3个W.zerokj.com 
+			</LI>
+			<LI style="text-align:right;margin-right:4px">
+				--零点</LI>
+		
+			<LI style="word-break:break-all">
+				<A id="SingleColumn1__22a265b_CommentList_ctl05_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2008/09/27/1300029.html#1328379">5.&nbsp;网站建设</A>
+			</LI>
+			<LI style="word-break:break-all">
+				这个网站做的 不错 
+<BR>新闻也比较好，我顶了 ~
+<BR><A href="" target="_new" rel="nofollow"></A>
+			</LI>
+			<LI style="text-align:right;margin-right:4px">
+				--网站建设</LI>
+		
+			</UL>
+		
+</DIV>
+
+<H3 class="catListTitle">阅读排行榜</H3>
+<DIV class="RecentComment" id="TopViewPosts"> 
+	
+			<UL style="word-break:break-all">
+		
+			<LI>
+				<A id="SingleColumn1__fbf9aa_TopList_ctl01_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2007/09/21/900891.html">1.&nbsp;举例说明C++回调函数(callback)的使用 - 转帖(1537)</A>
+			</LI>
+		
+			<LI>
+				<A id="SingleColumn1__fbf9aa_TopList_ctl02_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2007/06/29/800157.html">2.&nbsp;vc中画刷效果SetROP2(R2_NOT)中遇到的一个问题 (1533)</A>
+			</LI>
+		
+			<LI>
+				<A id="SingleColumn1__fbf9aa_TopList_ctl03_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2007/09/21/900901.html">3.&nbsp;C++关键字new学习(1309)</A>
+			</LI>
+		
+			<LI>
+				<A id="SingleColumn1__fbf9aa_TopList_ctl04_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2007/09/18/897452.html">4.&nbsp;VC中海量文件读写类设计与应用(转)(941)</A>
+			</LI>
+		
+			<LI>
+				<A id="SingleColumn1__fbf9aa_TopList_ctl05_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2007/06/28/798710.html">5.&nbsp;64位进程调用32位dll的解决方法(889)</A>
+			</LI>
+		
+			</UL>
+		
+</DIV>
+
+<H3 class="catListTitle">评论排行榜</H3>
+<DIV class="RecentComment" id="TopCommentsPosts">
+	
+			<UL style="word-break:break-all">
+		
+			<LI>
+				<A id="SingleColumn1__2ef3577_TopList_ctl01_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2007/02/07/644108.html">1.&nbsp;刚花了10800大元买了一台IBM ThinkPad T60 dh2(港行水货)(3)</A>
+			</LI>
+		
+			<LI>
+				<A id="SingleColumn1__2ef3577_TopList_ctl02_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2006/07/18/453444.html">2.&nbsp;mapserver4.8.3艰难的编译过程！不保证看得懂喔(3)</A>
+			</LI>
+		
+			<LI>
+				<A id="SingleColumn1__2ef3577_TopList_ctl03_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2006/08/28/488801.html">3.&nbsp;遥控器编程(2)</A>
+			</LI>
+		
+			<LI>
+				<A id="SingleColumn1__2ef3577_TopList_ctl04_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2007/08/08/847480.html">4.&nbsp;转贴:"婴儿潮”只是一个真实的谎言。(2)</A>
+			</LI>
+		
+			<LI>
+				<A id="SingleColumn1__2ef3577_TopList_ctl05_Hyperlink1" href="http://www.cnblogs.com/mazhenyu/archive/2007/06/28/798710.html">5.&nbsp;64位进程调用32位dll的解决方法(2)</A>
+			</LI>
+		
+			</UL>
+		
+</DIV></DIV>
+	
+</DIV>
+
+<!--done-->
+<DIV class="footer">
+	Powered by: <A href="http://www.cnblogs.com/">博客园</A>	模板提供：<A href="http://blog.hjenglish.com/">沪江博客</A>
+	Copyright ©2009 3D入魔
+</DIV>
+
+
+
+    
+<SCRIPT type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("AjaxHolder_PostComment_ValidationSummary1"));
+var Page_Validators =  new Array(document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2"), document.getElementById("AjaxHolder_PostComment_revContactMail"), document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4"), document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3"));
+//]]>
+</SCRIPT>
+
+<SCRIPT type="text/javascript">
+//<![CDATA[
+var AjaxHolder_PostComment_RequiredFieldValidator2 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator2"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator2");
+AjaxHolder_PostComment_RequiredFieldValidator2.controltovalidate = "AjaxHolder_PostComment_tbName";
+AjaxHolder_PostComment_RequiredFieldValidator2.errormessage = "请输入你的姓名";
+AjaxHolder_PostComment_RequiredFieldValidator2.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator2.initialvalue = "";
+var AjaxHolder_PostComment_revContactMail = document.all ? document.all["AjaxHolder_PostComment_revContactMail"] : document.getElementById("AjaxHolder_PostComment_revContactMail");
+AjaxHolder_PostComment_revContactMail.controltovalidate = "AjaxHolder_PostComment_tbEmail";
+AjaxHolder_PostComment_revContactMail.errormessage = "邮件地址无效";
+AjaxHolder_PostComment_revContactMail.evaluationfunction = "RegularExpressionValidatorEvaluateIsValid";
+AjaxHolder_PostComment_revContactMail.validationexpression = "^([0-9a-zA-Z+-._]([+-._\\w]*[0-9a-zA-Z+-._])*@([0-9a-zA-Z][-\\w]*\\.)+[a-zA-Z]{2,9})$";
+var AjaxHolder_PostComment_Requiredfieldvalidator4 = document.all ? document.all["AjaxHolder_PostComment_Requiredfieldvalidator4"] : document.getElementById("AjaxHolder_PostComment_Requiredfieldvalidator4");
+AjaxHolder_PostComment_Requiredfieldvalidator4.controltovalidate = "AjaxHolder_PostComment_CodeNumberTextBox";
+AjaxHolder_PostComment_Requiredfieldvalidator4.errormessage = "请输入验证码";
+AjaxHolder_PostComment_Requiredfieldvalidator4.display = "Dynamic";
+AjaxHolder_PostComment_Requiredfieldvalidator4.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_Requiredfieldvalidator4.initialvalue = "";
+var AjaxHolder_PostComment_RequiredFieldValidator3 = document.all ? document.all["AjaxHolder_PostComment_RequiredFieldValidator3"] : document.getElementById("AjaxHolder_PostComment_RequiredFieldValidator3");
+AjaxHolder_PostComment_RequiredFieldValidator3.controltovalidate = "AjaxHolder_PostComment_tbComment";
+AjaxHolder_PostComment_RequiredFieldValidator3.errormessage = "请输入评论内容";
+AjaxHolder_PostComment_RequiredFieldValidator3.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+AjaxHolder_PostComment_RequiredFieldValidator3.initialvalue = "";
+var AjaxHolder_PostComment_ValidationSummary1 = document.all ? document.all["AjaxHolder_PostComment_ValidationSummary1"] : document.getElementById("AjaxHolder_PostComment_ValidationSummary1");
+AjaxHolder_PostComment_ValidationSummary1.showmessagebox = "True";
+AjaxHolder_PostComment_ValidationSummary1.showsummary = "False";
+//]]>
+</SCRIPT>
+
+
+<SCRIPT type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        
+document.getElementById('AjaxHolder_PostComment_ValidationSummary1').dispose = function() {
+    Array.remove(Page_ValidationSummaries, document.getElementById('AjaxHolder_PostComment_ValidationSummary1'));
+}
+Sys.Application.initialize();
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator2'));
+}
+
+document.getElementById('AjaxHolder_PostComment_revContactMail').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_revContactMail'));
+}
+
+document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_Requiredfieldvalidator4'));
+}
+
+document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('AjaxHolder_PostComment_RequiredFieldValidator3'));
+}
+//]]>
+</SCRIPT>
+</FORM>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shCore.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushBash.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushCpp.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushCSharp.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushCss.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushDelphi.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushDiff.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushGroovy.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushJava.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushJScript.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushPhp.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushPlain.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushPython.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushRuby.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushScala.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushSql.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushVb.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/shBrushXml.js"></SCRIPT> 
+    <SCRIPT type="text/javascript">
+     SyntaxHighlighter.all();
+    </SCRIPT>  
+    <SCRIPT type="text/javascript" src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/ShowHidden.js"></SCRIPT>
+<SCRIPT type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</SCRIPT><SCRIPT src="./软阴影的实现(转帖) - mazhenyu - 博客园_files/ga.js" type="text/javascript"></SCRIPT>
+<SCRIPT type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-476124-1");
+pageTracker._trackPageview();
+} catch(err) {}</SCRIPT>
+
+
+</BODY></HTML>

@@ -1,0 +1,14 @@
+var data=new Array();data[0]=new Array();data[0][0]='Windows 2000 常见进程功能描述[转帖]';data[0][1]='http://www.cnblogs.com/dudu/archive/2004/01/15/253.html';data[1]=new Array();data[1][0]='Ajax实现无刷新三联动下拉框';data[1][1]='http://www.cnblogs.com/singlepine/archive/2005/10/19/257954.html';data[2]=new Array();data[2][0]='老板为什么不喜欢你？（转帖）';data[2][1]='http://space.cnblogs.com/group/topic/5293/';data[3]=new Array();data[3][0]='[转帖]IT民工急需“两会代言人” ';data[3][1]='http://space.cnblogs.com/group/topic/1358/';
+if(data.length > 0)
+{
+    for(var i = 0; i < data.length; i++)
+    {
+        if (i > 0)
+            document.write("<br>");
+        document.write("<a href='");
+        document.write(data[i][1]);
+        document.write("' target='_blank'>");
+        document.write(data[i][0]);
+        document.write("</a>");
+    }
+}
