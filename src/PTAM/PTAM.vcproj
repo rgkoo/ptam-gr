@@ -197,6 +197,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\gesrec.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GestureAnalyzer.h"
 				>
 			</File>
@@ -262,6 +266,10 @@
 			</File>
 			<File
 				RelativePath=".\MiniPatch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OpenCVInterf.h"
 				>
 			</File>
 			<File
