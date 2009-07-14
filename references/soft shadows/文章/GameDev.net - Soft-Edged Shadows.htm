@@ -1,0 +1,523 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0057)http://www.gamedev.net/reference/articles/article2193.asp -->
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <TITLE>GameDev.net - Soft-Edged Shadows</TITLE>
+  <LINK rel="stylesheet" href="./GameDev.net - Soft-Edged Shadows_files/reference.css" type="text/css">
+  <LINK rel="icon" href="http://www.gamedev.net/pics/gdicon.png" type="image/png">
+</HEAD><BODY marginwidth="0" marginheight="0" leftmargin="0" topmargin="0" bgcolor="#FFFFFF" background="./GameDev.net - Soft-Edged Shadows_files/watermark.gif" text="#000000" link="#666699" alink="#000000" vlink="#666699"><SCRIPT src="./GameDev.net - Soft-Edged Shadows_files/quant.js" type="text/javascript"></SCRIPT><SCRIPT src="./GameDev.net - Soft-Edged Shadows_files/begin_8914.js" type="text/javascript"></SCRIPT><SCRIPT src="./GameDev.net - Soft-Edged Shadows_files/EventMonitor_8554.js" type="text/javascript"></SCRIPT>
+
+<TABLE border="0" cellpadding="3" cellspacing="0" width="100%">
+  <TBODY><TR>
+    <TD class="tblhdr">Soft-Edged Shadows</TD>
+    <TD class="tblhdr" nowrap="" align="right"><IMG src="./GameDev.net - Soft-Edged Shadows_files/littleg.gif" align="absbottom" width="16" height="16">&nbsp;<A href="http://www.gamedev.net/"><SPAN style="color: white; text-decoration: none">GameDev.net</SPAN></A></TD>
+  </TR>
+  <TR>
+    <TD colspan="2" align="center">
+<!-- Begin -  Site: GameDev.net Zone: GameDev.net variable width -->
+<SCRIPT language="javascript" type="text/javascript">
+<!--
+var browName = navigator.appName;
+var SiteID = 1;
+var browDateTime = (new Date()).getTime();
+if (browName=='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Get&amp;IFR=False&amp;Browser=NETSCAPE4&amp;PageID=55140&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+if (browName!='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Get&amp;IFR=False&amp;PageID=55140&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+// --> 
+</SCRIPT><SCRIPT language="javascript" src="./GameDev.net - Soft-Edged Shadows_files/a.aspx"></SCRIPT><SCRIPT language="JavaScript">
+var ShockMode = 0;
+if (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"] && navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin) {
+if (navigator.plugins && navigator.plugins["Shockwave Flash"])
+ShockMode = 1;
+}
+else if (navigator.userAgent && navigator.userAgent.indexOf("MSIE")>=0 
+&& (navigator.userAgent.indexOf("Windows 9")>=0 || navigator.userAgent.indexOf("Windows NT")>=0)) {
+document.write('<SCRIPT LANGUAGE=VBScript\> \n');
+document.write('on error resume next \n');
+document.write('ShockMode = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.4"))) ');
+document.write('<\/SCRIPT\> ');
+}
+if ( ShockMode ) {
+document.write('<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"');
+document.write(' codebase="http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0"');
+document.write(' ID=banner WIDTH="728" HEIGHT="90" >');
+document.write(' <PARAM NAME=movie VALUE="http://members.gamedev.net/dave/ads/Adobe/PPBU_Q309_Di11.5_Gamedev_Ft_Flash_728x90.swf?clickTag=http%3a%2f%2fwww.gamedev.net%2fbanman%2fa.aspx%3fTask%3dClick%26ZoneID%3d13%26CampaignID%3d662%26AdvertiserID%3d117%26BannerID%3d726%26SiteID%3d1%26RandomNumber%3d1692460017%26Keywords%3d"> ');
+document.write(' <param name="wmode" value="transparent"> ');
+document.write(' <PARAM NAME=quality VALUE=autohigh> ');
+document.write('<EMBED SRC="http://members.gamedev.net/dave/ads/Adobe/PPBU_Q309_Di11.5_Gamedev_Ft_Flash_728x90.swf?clickTag=http%3a%2f%2fwww.gamedev.net%2fbanman%2fa.aspx%3fTask%3dClick%26ZoneID%3d13%26CampaignID%3d662%26AdvertiserID%3d117%26BannerID%3d726%26SiteID%3d1%26RandomNumber%3d1692460017%26Keywords%3d"');
+document.write(' swLiveConnect=FALSE WIDTH="728" HEIGHT="90"');
+document.write(' QUALITY=autohigh wmode="transparent"');
+document.write(' TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash">');
+document.write('</EMBED>');
+document.write('</OBJECT>');
+} else if (!(navigator.appName && navigator.appName.indexOf("Netscape")>=0 && navigator.appVersion.indexOf("2.")>=0)){
+document.write('<A HREF="http://www.gamedev.net/banman/a.aspx?Task=Click&ZoneID=13&CampaignID=662&AdvertiserID=117&BannerID=726&SiteID=1&RandomNumber=1692460017&Keywords=" TARGET="_top"><IMG SRC="http://members.gamedev.net/dave/ads/Adobe/PPBU_Q309_Di11.5_Gamedev_Ft_GIF_728x90.gif" WIDTH="728" HEIGHT="90" BORDER="0"></A>');
+}
+</SCRIPT><OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0" id="banner" width="728" height="90"> <PARAM name="movie" value="http://members.gamedev.net/dave/ads/Adobe/PPBU_Q309_Di11.5_Gamedev_Ft_Flash_728x90.swf?clickTag=http%3a%2f%2fwww.gamedev.net%2fbanman%2fa.aspx%3fTask%3dClick%26ZoneID%3d13%26CampaignID%3d662%26AdvertiserID%3d117%26BannerID%3d726%26SiteID%3d1%26RandomNumber%3d1692460017%26Keywords%3d">  <PARAM name="wmode" value="transparent">  <PARAM name="quality" value="autohigh"> <EMBED src="http://members.gamedev.net/dave/ads/Adobe/PPBU_Q309_Di11.5_Gamedev_Ft_Flash_728x90.swf?clickTag=http%3a%2f%2fwww.gamedev.net%2fbanman%2fa.aspx%3fTask%3dClick%26ZoneID%3d13%26CampaignID%3d662%26AdvertiserID%3d117%26BannerID%3d726%26SiteID%3d1%26RandomNumber%3d1692460017%26Keywords%3d" swliveconnect="FALSE" width="728" height="90" quality="autohigh" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"></OBJECT>
+<NOEMBED></NOEMBED>
+<NOSCRIPT></NOSCRIPT>
+
+<NOSCRIPT></NOSCRIPT>
+<!-- End -  Site: GameDev.net Zone: GameDev.net variable width --></TD>
+  </TR>
+</TBODY></TABLE>
+<TABLE cellpadding="5" cellspacing="0" border="0" width="100%"><TBODY><TR><TD>
+
+    <P align="center"><SPAN class="title">Soft-Edged Shadows</SPAN>
+    
+          <BR><SPAN class="author">by Anirudh.S Shastry</SPAN>
+        </P>
+    <TABLE align="right" border="0" cellpadding="5" cellspacing="0" width="310"><TBODY><TR><TD align="center"><BR><SPAN class="maintext-2">ADVERTISEMENT</SPAN>
+<!-- Begin -  Site: GameDev.net Zone: GameDev.net Box -->
+<SCRIPT language="javascript" type="text/javascript">
+<!--
+var browName = navigator.appName;
+var SiteID = 1;
+var browDateTime = (new Date()).getTime();
+if (browName=='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Get&amp;IFR=False&amp;Browser=NETSCAPE4&amp;PageID=20483&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+if (browName!='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Get&amp;IFR=False&amp;PageID=20483&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+// --> 
+</SCRIPT><SCRIPT language="javascript" src="./GameDev.net - Soft-Edged Shadows_files/a(1).aspx"></SCRIPT><!-- JavaScript Only -->
+<SCRIPT language="JavaScript1.1" src="./GameDev.net - Soft-Edged Shadows_files/12124-72696-26654-0"></SCRIPT><OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" id="3355951" name="movie3355951" width="300" height="250"><PARAM name="FlashVars" value="clickTAG=http://altfarm.mediaplex.com/ad/ck/12124-72696-26654-0?mpt=1900024875&amp;clickTag=http://altfarm.mediaplex.com/ad/ck/12124-72696-26654-0?mpt=1900024875"><PARAM name="movie" value="http://img-cdn.mediaplex.com/0/12124/72696/IDGC_Level_Up_300x250_Flash_v2.swf"><PARAM name="wmode" value="opaque"><PARAM name="allowscriptaccess" value="always"><PARAM name="wmode" value="opaque"><PARAM name="allowscriptaccess" value="always"><EMBED wmode="opaque" allowscriptaccess="always" name="3355951" src="http://img-cdn.mediaplex.com/0/12124/72696/IDGC_Level_Up_300x250_Flash_v2.swf" flashvars="clickTAG=http://altfarm.mediaplex.com/ad/ck/12124-72696-26654-0?mpt=1900024875&amp;clickTag=http://altfarm.mediaplex.com/ad/ck/12124-72696-26654-0?mpt=1900024875" swliveconnect="FALSE" width="300" height="250" type="application/x-shockwave-flash" pluginspage=""></OBJECT>
+<NOSCRIPT></NOSCRIPT>
+<NOSCRIPT></NOSCRIPT>
+<!-- End -  Site: GameDev.net Zone: GameDev.net Box -->
+</TD></TR></TBODY></TABLE>
+  
+<H1>Introduction</H1>
+<P>Originally, dynamic shadowing techniques were possible only in a limited way. But with the advent of powerful programmable graphics hardware, dynamic shadow techniques have nearly completely replaced static techniques like light mapping and semi-dynamic techniques like projected shadows. Two popular dynamic shadowing techniques are shadow volumes and shadow mapping.</P>
+
+<H1>A closer look</H1>
+<P>The shadow volumes technique is a geometry based technique that requires the extrusion of the geometry in the direction of the light to generate a closed volume. Then, via ray casting, the shadowed portions of the scene can be determined (usually the stencil buffer is used to simulate ray-casting). This technique is pixel-accurate and doesn't suffer from any aliasing problems, but as with any technique, it suffers from its share of disadvantages. Two major problems with this technique are that it is heavily geometry dependent and fill-rate intensive. Because of this, shadow mapping is slowly becoming more popular.</P>
+<P>Shadow mapping on the other hand is an image space technique that involves rendering the scene depth from the light's point of view and using this depth information to determine which portions of the scene in shadow. Though this technique has several advantages, it suffers from aliasing artifacts and z-fighting. But there are solutions to this and since the advantages outweigh the disadvantages, this will be the technique of my choice in this article.</P>
+
+<H1>Soft shadows</H1>
+<IMG align="right" border="0" src="./GameDev.net - Soft-Edged Shadows_files/SoftShadows.jpg" width="320" height="240"><P>Hard shadows destroy the realism of a scene. Hence, we need to fake soft shadows in order to improve the visual quality of the scene. A lot of over-zealous PHD students have come up with papers describing soft shadowing techniques, but in reality, most of these techniques are not viable in real-time, at least when considering complex scenes. Until we have hardware that can overcome some of the limitations of these techniques, we will need to stick to more down-to-earth methods.</P>
+<P>In this article, I present an image space method to generate soft-edged shadows using shadow maps. This method doesn't generate perfectly soft shadows (no umbra-penumbra). But it not only solves the aliasing problems of shadow mapping, it improves the visual quality by achieving aesthetically pleasing soft edged shadows.</P>
+
+<H1>So how does it work?</H1>
+<P>First, we generate the shadow map as usual by rendering the scene depth from the light's point of view into a floating point buffer. Then, instead of rendering the scene with shadows, we render the shadowed regions into a screen-sized buffer. Now, we can blur this using a bloom filter and project it back onto the scene in screen space. Sounds simple right?</P>
+<P>In this article, we only deal with spot lights, but this technique can easily be extended to handle point lights as well.</P>
+<P>Here are the steps:</P>
+<UL>
+  <LI>Generate the shadow map as usual by writing the scene depth into a floating point buffer.
+  </LI><LI>Render the shadowed portions of the scene after depth comparison into fixed point texture, without any lighting.
+  </LI><LI>Blur the above buffer using a bloom filter (though we use a separable Gaussian filter in this article, any filter can be used).
+  </LI><LI>Project the blurred buffer onto the scene in screen space to get cool soft-edged shadows, along with full lighting.
+</LI></UL>
+
+<H1>Step 1: Rendering the shadow map</H1>
+<P>First, we need to create a texture that can hold the scene depth. Since we need to use this as a render target, we will also need to create a surface that holds the texture's surface data. The texture must be a floating point one because of the large range of depth values. The R32F format has sufficient precision and so we use it. Here's the codelet that is used to create the texture.</P>
+
+<PRE class="code"><SPAN class="codecomment">// Create the shadow map</SPAN>
+<SPAN class="codekeyword">if</SPAN>( FAILED( g_pd3dDevice-&gt;CreateTexture( SHADOW_MAP_SIZE, SHADOW_MAP_SIZE, 1,
+                                         D3DUSAGE_RENDERTARGET, D3DFMT_R32F,
+                                         D3DPOOL_DEFAULT, &amp;g_pShadowMap,
+                                         NULL ) ) )
+{
+   MessageBox( g_hWnd, "Unable to create shadow map!",
+               "Error", MB_OK | MB_ICONERROR );
+   <SPAN class="codekeyword">return</SPAN> E_FAIL;
+}
+
+<SPAN class="codecomment">// Grab the texture's surface</SPAN>
+g_pShadowMap-&gt;GetSurfaceLevel( 0, &amp;g_pShadowSurf );
+</PRE>
+
+<P>Now, to generate the shadow map, we need to render the scene's depth to the shadow map. To do this, we must render the scene with the light's world-view-projection matrix. Here's how we build that matrix.</P>
+
+<PRE class="code"><SPAN class="codecomment">// Ordinary view matrix</SPAN>
+D3DXMatrixLookAtLH( &amp;matView, &amp;vLightPos, &amp;vLightAim, &amp;g_vUp );
+<SPAN class="codecomment">// Projection matrix for the light</SPAN>
+D3DXMatrixPerspectiveFovLH( &amp;matProj, D3DXToRadian(30.0f), 1.0f, 1.0f, 1024.0f );
+<SPAN class="codecomment">// Concatenate the world matrix with the above two to get the required matrix</SPAN>
+matLightViewProj = matWorld * matView * matProj;
+</PRE>
+
+<P>Here are vertex and pixel shaders for rendering the scene depth.</P>
+
+<PRE class="code"><SPAN class="codecomment">// Shadow generation vertex shader</SPAN>
+<SPAN class="codekeyword">struct</SPAN> VSOUTPUT_SHADOW
+{
+   <SPAN class="codekeyword">float4</SPAN> vPosition    : POSITION;
+   <SPAN class="codekeyword">float</SPAN>  fDepth       : TEXCOORD0;
+};
+
+VSOUTPUT_SHADOW VS_Shadow( <SPAN class="codekeyword">float4</SPAN> inPosition : POSITION )
+{
+   <SPAN class="codecomment">// Output struct</SPAN>
+   VSOUTPUT_SHADOW OUT = (VSOUTPUT_SHADOW)0;
+   <SPAN class="codecomment">// Output the transformed position</SPAN>
+   OUT.vPosition = <SPAN class="codekeyword">mul</SPAN>( inPosition, g_matLightViewProj );
+   <SPAN class="codecomment">// Output the scene depth</SPAN>
+   OUT.fDepth = OUT.vPosition.z;
+   <SPAN class="codekeyword">return</SPAN> OUT;
+}
+</PRE>
+
+<P>Here, we multiply the position by the light's world-view-projection matrix (g_matLightViewProj) and use the transformed position's z-value as the depth. In the pixel shader, we output the depth as the color.</P>
+
+<PRE class="code"><SPAN class="codekeyword">float4</SPAN>  PS_Shadow( VSOUTPUT_SHADOW IN ) : COLOR0
+{
+   <SPAN class="codecomment">// Output the scene depth</SPAN>
+   <SPAN class="codekeyword">return float4</SPAN>( IN.fDepth, IN.fDepth, IN.fDepth, 1.0f );
+}
+</PRE>
+
+<P>Voila! We have the shadow map. Below is a color coded version of the shadow map, dark blue indicates smaller depth values, whereas light blue indicates larger depth values.</P>
+<P><IMG height="512" src="./GameDev.net - Soft-Edged Shadows_files/ShadowMap.jpg" width="512" align="middle" border="0"></P>
+
+<H1>Step 2: Rendering the shadowed scene into a buffer</H1>
+<P>Next, we need to render the shadowed portions of the scene to an offscreen buffer so that we can blur it and project it back onto the scene. To do that, we first render the shadowed portions of the scene into a screen-sized fixed point texture.</P>
+
+<PRE class="code"><SPAN class="codecomment">// Create the screen-sized buffer map</SPAN>
+<SPAN class="codekeyword">if</SPAN>( FAILED( g_pd3dDevice-&gt;CreateTexture( SCREEN_WIDTH, SCREEN_HEIGHT, 1,
+            D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &amp;g_pScreenMap, NULL ) ) )
+{
+   MessageBox( g_hWnd, "Unable to create screen map!",
+               "Error", MB_OK | MB_ICONERROR );
+   <SPAN class="codekeyword">return</SPAN> E_FAIL;
+}
+<SPAN class="codecomment">// Grab the texture's surface</SPAN>
+g_pScreenMap-&gt;GetSurfaceLevel( 0, &amp; g_pScreenSurf );
+</PRE>
+
+<P>To get the projective texture coordinates, we need a "texture" matrix that will map the position from projection space to texture space.</P>
+
+<PRE class="code"><SPAN class="codecomment">// Generate the texture matrix</SPAN>
+<SPAN class="codekeyword">float</SPAN> fTexOffs = 0.5 + (0.5 / (<SPAN class="codekeyword">float</SPAN>)SHADOW_MAP_SIZE);
+D3DXMATRIX matTexAdj( 0.5f,     0.0f,     0.0f, 0.0f,
+                      0.0f,     -0.5f,    0.0f, 0.0f,
+                      0.0f,     0.0f,     1.0f, 0.0f,
+                      fTexOffs, fTexOffs, 0.0f, 1.0f );
+
+matTexture = matLightViewProj * matTexAdj;
+</PRE>
+
+<P>We get the shadow factor as usual by depth comparison, but instead of outputting the completely lit scene, we output only the shadow factor. Here are the vertex and pixel shaders that do the job.</P>
+
+<PRE class="code"><SPAN class="codecomment">// Shadow mapping vertex shader</SPAN>
+<SPAN class="codekeyword">struct</SPAN> VSOUTPUT_UNLIT
+{
+   <SPAN class="codekeyword">float4</SPAN> vPosition   : POSITION;
+   <SPAN class="codekeyword">float4</SPAN> vTexCoord   : TEXCOORD0;
+   <SPAN class="codekeyword">float</SPAN>  fDepth      : TEXCOORD1;
+};
+
+VSOUTPUT_UNLIT VS_Unlit( <SPAN class="codekeyword">float4</SPAN> inPosition : POSITION )
+{
+   <SPAN class="codecomment">// Output struct</SPAN>
+   VSOUTPUT_UNLIT OUT = (VSOUTPUT_UNLIT)0;
+
+   <SPAN class="codecomment">// Output the transformed position</SPAN>
+   OUT.vPosition = <SPAN class="codekeyword">mul</SPAN>( inPosition, g_matWorldViewProj );
+
+   <SPAN class="codecomment">// Output the projective texture coordinates</SPAN>
+   OUT.vTexCoord = <SPAN class="codekeyword">mul</SPAN>( inPosition, g_matTexture );
+
+   <SPAN class="codecomment">// Output the scene depth</SPAN>
+   OUT.fDepth = mul( inPosition, g_matLightViewProj ).z;
+
+   <SPAN class="codekeyword">return</SPAN> OUT;
+}
+</PRE>
+
+<P>We use percentage closer filtering (PCF) to smoothen out the jagged edges. To "do" PCF, we simply sample the 8 (we're using a 3x3 PCF kernel here) surrounding texels along with the center texel and take the average of all the depth comparisons.</P>
+
+<PRE class="code"><SPAN class="codecomment">// Shadow mapping pixel shader</SPAN>
+<SPAN class="codekeyword">float4</SPAN>  PS_Unlit( VSOUTPUT_UNLIT IN ) : COLOR0
+{
+   <SPAN class="codecomment">// Generate the 9 texture co-ordinates for a 3x3 PCF kernel</SPAN>
+   <SPAN class="codekeyword">float4</SPAN> vTexCoords[9];
+   <SPAN class="codecomment">// Texel size</SPAN>
+   <SPAN class="codekeyword">float</SPAN> fTexelSize = 1.0f / 1024.0f;
+
+   <SPAN class="codecomment">// Generate the tecture co-ordinates for the specified depth-map size
+   // 4 3 5
+   // 1 0 2
+   // 7 6 8</SPAN>
+   vTexCoords[0] = IN.vTexCoord;
+   vTexCoords[1] = IN.vTexCoord + <SPAN class="codekeyword">float4</SPAN>( -fTexelSize, 0.0f, 0.0f, 0.0f );
+   vTexCoords[2] = IN.vTexCoord + <SPAN class="codekeyword">float4</SPAN>(  fTexelSize, 0.0f, 0.0f, 0.0f );
+   vTexCoords[3] = IN.vTexCoord + <SPAN class="codekeyword">float4</SPAN>( 0.0f, -fTexelSize, 0.0f, 0.0f );
+   vTexCoords[6] = IN.vTexCoord + <SPAN class="codekeyword">float4</SPAN>( 0.0f,  fTexelSize, 0.0f, 0.0f );
+   vTexCoords[4] = IN.vTexCoord + <SPAN class="codekeyword">float4</SPAN>( -fTexelSize, -fTexelSize, 0.0f, 0.0f );
+   vTexCoords[5] = IN.vTexCoord + <SPAN class="codekeyword">float4</SPAN>(  fTexelSize, -fTexelSize, 0.0f, 0.0f );
+   vTexCoords[7] = IN.vTexCoord + <SPAN class="codekeyword">float4</SPAN>( -fTexelSize,  fTexelSize, 0.0f, 0.0f );
+   vTexCoords[8] = IN.vTexCoord + <SPAN class="codekeyword">float4</SPAN>(  fTexelSize,  fTexelSize, 0.0f, 0.0f );
+   <SPAN class="codecomment">// Sample each of them checking whether the pixel under test is shadowed or not</SPAN>
+   <SPAN class="codekeyword">float</SPAN> fShadowTerms[9];
+   <SPAN class="codekeyword">float</SPAN> fShadowTerm = 0.0f;
+   <SPAN class="codekeyword">for</SPAN>( <SPAN class="codekeyword">int</SPAN> i = 0; i &lt; 9; i++ )
+   {
+      <SPAN class="codekeyword">float</SPAN> A = <SPAN class="codekeyword">tex2Dproj</SPAN>( ShadowSampler, vTexCoords[i] ).r;
+      <SPAN class="codekeyword">float</SPAN> B = (IN.fDepth – 0.1f);
+
+      <SPAN class="codecomment">// Texel is shadowed</SPAN>
+      fShadowTerms[i] = A &lt; B ? 0.0f : 1.0f;
+      fShadowTerm     += fShadowTerms[i];
+   }
+   <SPAN class="codecomment">// Get the average</SPAN>
+   fShadowTerm /= 9.0f;
+   <SPAN class="codekeyword">return</SPAN> fShadowTerm;
+}
+</PRE>
+
+<P>The screen buffer is good to go! Now all we need to do is blur this and project it back onto the scene in screen space.</P>
+<P><IMG height="384" src="./GameDev.net - Soft-Edged Shadows_files/ScreenMap.jpg" width="512" border="0"></P>
+
+<H1>Step 3: Blurring the screen buffer</H1>
+<P>We use a seperable gaussian filter to blur the screen buffer, but one could also use a Poisson filter. The render targets this time are A8R8G8B8 textures accompanied by corresponding surfaces. We need 2 render targets, one for the horizontal pass and the other for the vertical pass.</P>
+
+<PRE class="code"><SPAN class="codecomment">// Create the blur maps</SPAN>
+<SPAN class="codekeyword">for</SPAN>( <SPAN class="codekeyword">int</SPAN> i = 0; i &lt; 2; i++ )
+{
+   <SPAN class="codekeyword">if</SPAN>( FAILED( g_pd3dDevice-&gt;CreateTexture( SCREEN_WIDTH, SCREEN_HEIGHT, 1,
+                                            D3DUSAGE_RENDERTARGET,
+                                            D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT,
+                                            &amp;g_pBlurMap[i], NULL ) ) )
+   {
+      MessageBox( g_hWnd, "Unable to create blur map!",
+                  "Error", MB_OK | MB_ICONERROR );
+      <SPAN class="codekeyword">return</SPAN> E_FAIL;
+   }
+  <SPAN class="codecomment">// Grab the texture's surface</SPAN>
+   g_pBlurMap[i]-&gt;GetSurfaceLevel( 0, &amp; g_pBlurSurf[i] );
+}
+</PRE>
+
+<P>We generate 15 Gaussian offsets and their corresponding weights using the following functions.</P>
+
+<PRE class="code"><SPAN class="codekeyword">float</SPAN> GetGaussianDistribution( <SPAN class="codekeyword">float</SPAN> x, <SPAN class="codekeyword">float</SPAN> y, <SPAN class="codekeyword">float</SPAN> rho )
+{
+   <SPAN class="codekeyword">float</SPAN> g = 1.0f / sqrt( 2.0f * 3.141592654f * rho * rho );
+   <SPAN class="codekeyword">return</SPAN> g * exp( -(x * x + y * y) / (2 * rho * rho) );
+}
+
+<SPAN class="codekeyword">void</SPAN> GetGaussianOffsets( <SPAN class="codekeyword">bool</SPAN> bHorizontal, D3DXVECTOR2 vViewportTexelSize,
+                         D3DXVECTOR2* vSampleOffsets, <SPAN class="codekeyword">float</SPAN>* fSampleWeights )
+{
+   <SPAN class="codecomment">// Get the center texel offset and weight</SPAN>
+   fSampleWeights[0] = 1.0f * GetGaussianDistribution( 0, 0, 2.0f );
+   vSampleOffsets[0] = D3DXVECTOR2( 0.0f, 0.0f );
+   <SPAN class="codecomment">// Get the offsets and weights for the remaining taps</SPAN>
+   <SPAN class="codekeyword">if</SPAN>( bHorizontal )
+   {
+      <SPAN class="codekeyword">for</SPAN>( <SPAN class="codekeyword">int</SPAN> i = 1; i &lt; 15; i += 2 )
+      {
+         vSampleOffsets[i + 0] = D3DXVECTOR2( i * vViewportTexelSize.x, 0.0f );
+         vSampleOffsets[i + 1] = D3DXVECTOR2( -i * vViewportTexelSize.x, 0.0f );
+         fSampleWeights[i + 0] = 2.0f * GetGaussianDistribution( <SPAN class="codekeyword">float</SPAN>(i + 0), 0.0f, 3.0f );
+         fSampleWeights[i + 1] = 2.0f * GetGaussianDistribution( <SPAN class="codekeyword">float</SPAN>(i + 1), 0.0f, 3.0f );
+      }
+   }
+   <SPAN class="codekeyword">else</SPAN> 
+   {
+      <SPAN class="codekeyword">for</SPAN>( <SPAN class="codekeyword">int</SPAN> i = 1; i &lt; 15; i += 2 )
+      {
+         vSampleOffsets[i + 0] = D3DXVECTOR2( 0.0f, i * vViewportTexelSize.y );
+         vSampleOffsets[i + 1] = D3DXVECTOR2( 0.0f, -i * vViewportTexelSize.y );
+         fSampleWeights[i + 0] = 2.0f * GetGaussianDistribution( 0.0f, <SPAN class="codekeyword">float</SPAN>(i + 0), 3.0f );
+         fSampleWeights[i + 1] = 2.0f * GetGaussianDistribution( 0.0f, <SPAN class="codekeyword">float</SPAN>(i + 1), 3.0f );
+      }
+   }
+}
+</PRE>
+
+<P>To blur the screen buffer, we set the blur map as the render target and render a screen sized quad with the following vertex and pixel shaders.</P>
+
+<PRE class="code"><SPAN class="codecomment">// Gaussian filter vertex shader</SPAN>
+<SPAN class="codekeyword">struct</SPAN> VSOUTPUT_BLUR
+{
+   <SPAN class="codekeyword">float4</SPAN> vPosition    : POSITION;
+   <SPAN class="codekeyword">float2</SPAN> vTexCoord    : TEXCOORD0;
+};
+
+VSOUTPUT_BLUR VS_Blur( <SPAN class="codekeyword">float4</SPAN> inPosition : POSITION, <SPAN class="codekeyword">float2</SPAN> inTexCoord : TEXCOORD0 )
+{
+   <SPAN class="codecomment">// Output struct</SPAN>
+   VSOUTPUT_BLUR OUT = (VSOUTPUT_BLUR)0;
+   <SPAN class="codecomment">// Output the position</SPAN>
+   OUT.vPosition = inPosition;
+   <SPAN class="codecomment">// Output the texture coordinates</SPAN>
+   OUT.vTexCoord = inTexCoord;
+   <SPAN class="codekeyword">return</SPAN> OUT;
+}
+<SPAN class="codecomment">// Horizontal blur pixel shader</SPAN>
+<SPAN class="codekeyword">float4 </SPAN>PS_BlurH( VSOUTPUT_BLUR IN ): COLOR0
+{
+   <SPAN class="codecomment">// Accumulated color</SPAN>
+   <SPAN class="codekeyword">float4</SPAN> vAccum = <SPAN class="codekeyword">float4</SPAN>( 0.0f, 0.0f, 0.0f, 0.0f );
+   <SPAN class="codecomment">// Sample the taps (g_vSampleOffsets holds the texel offsets
+   // and g_fSampleWeights holds the texel weights)</SPAN>
+   <SPAN class="codekeyword">for</SPAN>(<SPAN class="codekeyword">int</SPAN> i = 0; i &lt; 15; i++ )
+   {
+      vAccum += tex2D( ScreenSampler, IN.vTexCoord + g_vSampleOffsets[i] ) * g_fSampleWeights[i];
+   }
+   <SPAN class="codekeyword">return</SPAN> vAccum;
+}
+<SPAN class="codecomment">// Vertical blur pixel shader</SPAN>
+<SPAN class="codekeyword">float4</SPAN> PS_BlurV( VSOUTPUT_BLUR IN ): COLOR0
+{
+   <SPAN class="codecomment">// Accumulated color</SPAN>
+   <SPAN class="codekeyword">float4</SPAN> vAccum = <SPAN class="codekeyword">float4</SPAN>( 0.0f, 0.0f, 0.0f, 0.0f );
+   <SPAN class="codecomment">// Sample the taps (g_vSampleOffsets holds the texel offsets and
+   // g_fSampleWeights holds the texel weights)</SPAN>
+   <SPAN class="codekeyword">for</SPAN>( <SPAN class="codekeyword">int</SPAN> i = 0; i &lt; 15; i++ )
+   {
+      vAccum += tex2D( BlurHSampler, IN.vTexCoord + g_vSampleOffsets[i] ) * g_fSampleWeights[i];
+   }
+   <SPAN class="codekeyword">return</SPAN> vAccum;
+}
+</PRE>
+
+<P>There, the blur maps are ready. To increase the blurriness of the shadows, increase the texel sampling distance. The last step, of course, is to project the blurred map back onto the scene in screen space.</P>
+<P class="caption"><IMG height="384" src="./GameDev.net - Soft-Edged Shadows_files/BlurMap0.jpg" width="512" border="0">
+<BR>After first Gaussian pass)</P>
+<P class="caption"><IMG height="384" src="./GameDev.net - Soft-Edged Shadows_files/BlurMap1.jpg" width="512" border="0">
+<BR>After second Gaussian pass</P>
+
+<H1>Step 4: Rendering the shadowed scene</H1>
+<P>To project the blur map onto the scene, we render the scene as usual, but project the blur map using screen-space coordinates. We use the clip space position with some hard-coded math to generate the screen-space coordinates. The vertex and pixel shaders shown below render the scene with per-pixel lighting along with shadows.</P>
+
+<PRE class="code"><SPAN class="codekeyword">struct</SPAN> VSOUTPUT_SCENE
+{
+   <SPAN class="codekeyword">float4</SPAN> vPosition      : POSITION;
+   <SPAN class="codekeyword">float2</SPAN> vTexCoord      : TEXCOORD0;
+   <SPAN class="codekeyword">float4</SPAN> vProjCoord     : TEXCOORD1;
+   <SPAN class="codekeyword">float4</SPAN> vScreenCoord   : TEXCOORD2;
+   <SPAN class="codekeyword">float3</SPAN> vNormal        : TEXCOORD3;
+   <SPAN class="codekeyword">float3</SPAN> vLightVec      : TEXCOORD4;
+   <SPAN class="codekeyword">float3</SPAN> vEyeVec        : TEXCOORD5;
+};
+<SPAN class="codecomment">// Scene vertex shader</SPAN>
+VSOUTPUT_SCENE VS_Scene( <SPAN class="codekeyword">float4</SPAN> inPosition : POSITION, <SPAN class="codekeyword">float3</SPAN> inNormal : NORMAL,
+                         <SPAN class="codekeyword">float2</SPAN> inTexCoord : TEXCOORD0 )
+{
+   VSOUTPUT_SCENE OUT = (VSOUTPUT_SCENE)0;
+   <SPAN class="codecomment">// Output the transformed position</SPAN>
+   OUT.vPosition = <SPAN class="codekeyword">mul</SPAN>( inPosition, g_matWorldViewProj );
+   <SPAN class="codecomment">// Output the texture coordinates</SPAN>
+   OUT.vTexCoord = inTexCoord;
+   <SPAN class="codecomment">// Output the projective texture coordinates
+   // (we use this to project the spot texture down onto the scene)</SPAN>
+   OUT.vProjCoord = <SPAN class="codekeyword">mul</SPAN>( inPosition, g_matTexture );
+   <SPAN class="codecomment">// Output the screen-space texture coordinates</SPAN>
+   OUT.vScreenCoord.x = ( OUT.vPosition.x * 0.5 + OUT.vPosition.w * 0.5 );
+   OUT.vScreenCoord.y = ( OUT.vPosition.w * 0.5 - OUT.vPosition.y * 0.5 );
+   OUT.vScreenCoord.z = OUT.vPosition.w;
+   OUT.vScreenCoord.w = OUT.vPosition.w;
+   <SPAN class="codecomment">// Get the world space vertex position</SPAN>
+   float4 vWorldPos = <SPAN class="codekeyword">mul</SPAN>( inPosition, g_matWorld );
+   <SPAN class="codecomment">// Output the world space normal</SPAN>
+   OUT.vNormal = <SPAN class="codekeyword">mul</SPAN>( inNormal, g_matWorldIT );
+   <SPAN class="codecomment">// Move the light vector into tangent space</SPAN>
+   OUT.vLightVec = g_vLightPos.xyz - vWorldPos.xyz;
+   <SPAN class="codecomment">// Move the eye vector into tangent space</SPAN>
+   OUT.vEyeVec = g_vEyePos.xyz - vWorldPos.xyz;
+   <SPAN class="codekeyword">return</SPAN> OUT;
+}
+</PRE>
+
+<P>We add an additional spot term by projecting down a spot texture from the light. This not only simulates a spot lighting effect, it also cuts out parts of the scene outside the shadow map. The spot map is projected down using standard projective texturing.</P>
+
+<PRE class="code"><SPAN class="codekeyword">float4</SPAN> PS_Scene( VSOUTPUT_SCENE IN ) : COLOR0
+{
+   <SPAN class="codecomment">// Normalize the normal, light and eye vectors</SPAN>
+   IN.vNormal   = <SPAN class="codekeyword">normalize</SPAN>( IN.vNormal );
+   IN.vLightVec = <SPAN class="codekeyword">normalize</SPAN>( IN.vLightVec );
+   IN.vEyeVec   = <SPAN class="codekeyword">normalize</SPAN>( IN.vEyeVec );
+   <SPAN class="codecomment">// Sample the color and normal maps</SPAN>
+   <SPAN class="codekeyword">float4</SPAN> vColor  = <SPAN class="codekeyword">tex2D</SPAN>( ColorSampler, IN.vTexCoord );
+   <SPAN class="codecomment">// Compute the ambient, diffuse and specular lighting terms</SPAN>
+   <SPAN class="codekeyword">float</SPAN> ambient  = 0.0f;
+   <SPAN class="codekeyword">float</SPAN> diffuse  = <SPAN class="codekeyword">max</SPAN>( <SPAN class="codekeyword">dot</SPAN>( IN.vNormal, IN.vLightVec ), 0 );
+   <SPAN class="codekeyword">float</SPAN> specular = <SPAN class="codekeyword">pow</SPAN>(<SPAN class="codekeyword">max</SPAN>(<SPAN class="codekeyword">dot</SPAN>( 2 * <SPAN class="codekeyword">dot</SPAN>( IN.vNormal, IN.vLightVec ) * IN.vNormal
+                                 - IN.vLightVec, IN.vEyeVec ), 0 ), 8 );
+   <SPAN class="codekeyword">if</SPAN>( diffuse == 0 ) specular = 0;
+   <SPAN class="codecomment">// Grab the shadow term</SPAN>
+   <SPAN class="codekeyword">float</SPAN> fShadowTerm = <SPAN class="codekeyword">tex2Dproj</SPAN>( BlurVSampler, IN.vScreenCoord );
+   <SPAN class="codecomment">// Grab the spot term</SPAN>
+   <SPAN class="codekeyword">float</SPAN> fSpotTerm = <SPAN class="codekeyword">tex2Dproj</SPAN>( SpotSampler, IN.vProjCoord );
+   <SPAN class="codecomment">// Compute the final color</SPAN>
+   <SPAN class="codekeyword">return</SPAN> (ambient * vColor) +
+          (diffuse * vColor * g_vLightColor * fShadowTerm * fSpotTerm) +
+          (specular * vColor * g_vLightColor.a * fShadowTerm * fSpotTerm);
+}
+</PRE>
+
+<P>That's it! We have soft edged shadows that look quite nice! The advantage of this technique is that it completely removes edge-aliasing artifacts that the shadow mapping technique suffers from. Another advantage is that one can generate soft shadows for multiple lights with a small memory overhead. When dealing with multiple lights, all you need is one shadow map per light, whereas the screen and blur buffers can be common to all the lights! Finally, this technique can be applied to both shadow maps and shadow volumes, so irrespective of the shadowing technique, you can generate soft-edged shadows with this method. One disadvantage is that this method is a wee bit fill-rate intensive due to the Gaussian filter. This can be minimized by using smaller blur buffers and slightly sacrificing the visual quality.</P>
+<P>Here's a comparison between the approach mentioned here, 3x3 percentage closer filtering and normal shadow mapping.</P>
+<P><IMG height="320" src="./GameDev.net - Soft-Edged Shadows_files/Comparison.jpg" width="768" align="absMiddle" border="0"></P>
+<P>Thank you for reading my article. I hope you liked it. If you have any doubts, questions or comments, please feel free to mail me at <A href="mailto:anidex@yahoo.com">anidex@yahoo.com</A>. Here's the <A href="http://downloads.gamedev.net/features/hardcore/softedgeshadow/SoftShadows.zip">source code</A>.</P>
+
+<H1>References</H1>
+<UL>
+  <LI>Hardware Shadow Mapping. Cass Everitt, Ashu Rege and Cem Cebenoyan.
+  </LI><LI>Hardware-accelerated Rendering of Antialiased Shadows with Shadow Maps. Stefan Brabec and Hans-Peter Seidel.
+</LI></UL>
+<P align="center"><B><A href="http://www.gamedev.net/community/forums/topic.asp?key=featart&uid=2193&forum_id=35&Topic_Title=Soft%2DEdged+Shadows">Discuss this article in the forums</A></B></P>
+<P>
+<BR><SPAN class="maintext-2">Date this article was posted to GameDev.net: <B>1/18/2005</B>
+<BR>(Note that this date does not necessarily correspond to the date the article was written)</SPAN>
+</P><P><B>See Also:</B><BR>
+
+<A href="http://www.gamedev.net/reference/list.asp?categoryid=303">Hardcore Game Programming  </A><BR>
+
+<A href="http://www.gamedev.net/reference/list.asp?categoryid=232">Shadows  </A><BR>
+
+</P><P align="center">© 1999-2009 Gamedev.net. All rights reserved. <A href="http://www.gamedev.net/info/legal.htm#copyright"><U>Terms of Use</U></A> <A href="http://www.gamedev.net/info/legal.htm#privacy"><U>Privacy Policy</U></A>
+<BR><SPAN class="maintext-1">Comments? Questions? Feedback? <A href="http://www.gamedev.net/info/faq.asp">Click here!</A></SPAN></P>
+
+</TD></TR></TBODY></TABLE>
+
+
+<!-- start Vibrant Media IntelliTXT Tooltip style sheet -->
+<STYLE type="text/css">
+.iTt{
+    FONT-FAMILY:       Verdana, Arial, Helvetica;
+    FONT-SIZE:         11px;
+    FONT-STYLE:        normal;
+    FONT-WEIGHT:       normal;
+    COLOR:             black;
+    BACKGROUND-COLOR:  lightyellow;
+    BORDER:            black 1px solid;
+    PADDING:           2px;
+}
+.iTt a {
+    COLOR:             0000CC;
+}
+.iTt a:visited {
+    COLOR:             0000CC;
+}
+.iTt a:hover {
+    COLOR:             6666CC;
+}
+.iTt TD {
+   COLOR:              999999;
+}
+</STYLE>
+<!-- end Vibrant Media IntelliTXT style sheet -->
+<!-- start Vibrant Media IntelliTXT script section -->
+<SCRIPT type="text/javascript" src="./GameDev.net - Soft-Edged Shadows_files/front.asp"></SCRIPT>
+<!-- end Vibrant Media IntelliTXT script section -->
+
+<SCRIPT src="./GameDev.net - Soft-Edged Shadows_files/urchin.js" type="text/javascript">
+</SCRIPT>
+<SCRIPT type="text/javascript">
+_uacct = "UA-279474-1";
+urchinTracker();
+</SCRIPT>
+
+
+</BODY></HTML>
