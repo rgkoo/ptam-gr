@@ -32,6 +32,7 @@ protected:
 	bool GotoTargetAnimation(GoType type);
 	bool ActionAnimation();
 	void RenderPlaneGrids();
+	void RenderTargetMarker();
 	void RenderFrame();
 
 	GLuint mnShadowTex;
