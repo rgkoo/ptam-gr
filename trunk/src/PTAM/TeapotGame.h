@@ -31,6 +31,7 @@ protected:
 	void Turn(GoType type);
 	bool GotoTargetAnimation(GoType type);
 	bool ActionAnimation();
+	void RenderPlaneGrids();
 	void RenderFrame();
 
 	GLuint mnShadowTex;

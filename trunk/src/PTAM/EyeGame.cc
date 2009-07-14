@@ -41,6 +41,7 @@ void EyeGame::DrawStuff(Vector<3> v3CameraPos)
 
 	glMatrixMode(GL_MODELVIEW);
 
+	//make i-th eye-ball look at camera position
 	for(int i=0; i<4; i++)
 	{
 		if(mnFrameCounter < 100)
@@ -49,13 +50,17 @@ void EyeGame::DrawStuff(Vector<3> v3CameraPos)
 			LookAt(i, v3CameraPos, 0.02 );
 
 		glLoadIdentity();
+		//set up i-th eyeball translation and rotation
 		glMultMatrix(ase3WorldFromEye[i]);
+		//scale to eyeball size
 		glScaled(mdEyeRadius, mdEyeRadius, mdEyeRadius);
+		//draw eyeball
 		glCallList(mnEyeDisplayList);
 	}
 
 	glDisable(GL_LIGHTING);
 
+	//draw shadow texture
 	glLoadIdentity();
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, mnShadowTex);
@@ -183,22 +188,26 @@ void EyeGame::Init()
 	MakeShadowTex();
 };
 
-
+//let n-th eye look at camera position(v3) (rot limit = 0.02)
 void EyeGame::LookAt(int nEye, Vector<3> v3, double dRotLimit)
 {
+
 	Vector<3> v3E = ase3WorldFromEye[nEye].inverse() * v3;
 	if(v3E * v3E == 0.0)
 		return;
 
 	normalize(v3E);
+
 	Matrix<3> m3Rot;
 	Identity(m3Rot);
 	m3Rot[2] = v3E;
 	m3Rot[0] -= m3Rot[2]*(m3Rot[0]*m3Rot[2]); 
 	normalize(m3Rot[0]);
+	//cross-product
 	m3Rot[1] = m3Rot[2] ^ m3Rot[0];
 
 	SO3 so3Rotator = m3Rot;
+	//logarithm of the rotation matrix
 	Vector<3> v3Log = so3Rotator.ln();
 	v3Log[2] = 0.0;
 	double dMagn = sqrt(v3Log * v3Log);
@@ -209,6 +218,7 @@ void EyeGame::LookAt(int nEye, Vector<3> v3, double dRotLimit)
 	ase3WorldFromEye[nEye].get_rotation() = ase3WorldFromEye[nEye].get_rotation() * SO3::exp(-v3Log);
 };
 
+//make eye shadow texture
 void EyeGame::MakeShadowTex()
 {
 	const int nTexSize = 256;
@@ -240,3 +250,8 @@ void EyeGame::MakeShadowTex()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 };
+
+void EyeGame::onGesture( GestureData& gesture )
+{
+
+}
