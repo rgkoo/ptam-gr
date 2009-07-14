@@ -76,7 +76,7 @@ bool Init(void)
 	glGenTextures(1, &shadowMapTexture);
 	glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
 	glTexImage2D(	GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowMapSize, shadowMapSize, 0,
-					GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
+		GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -93,20 +93,24 @@ bool Init(void)
 	//Calculate & save matrices
 	glPushMatrix();
 	
+	//Save camera projection matrix( original matrix was created on model view matrix stack)
 	glLoadIdentity();
 	gluPerspective(45.0f, (float)windowWidth/windowHeight, 1.0f, 100.0f);
 	glGetFloatv(GL_MODELVIEW_MATRIX, cameraProjectionMatrix);
 	
+	//Save camera view matrix
 	glLoadIdentity();
 	gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
 				0.0f, 0.0f, 0.0f,
 				0.0f, 1.0f, 0.0f);
 	glGetFloatv(GL_MODELVIEW_MATRIX, cameraViewMatrix);
 	
+	//Save light projection matrix, note that near plane and far plane are close to get better precision, and that aspect ratio is set to 1 
 	glLoadIdentity();
 	gluPerspective(45.0f, 1.0f, 2.0f, 8.0f);
 	glGetFloatv(GL_MODELVIEW_MATRIX, lightProjectionMatrix);
-	
+
+	//Save light view matrix
 	glLoadIdentity();
 	gluLookAt(	lightPosition.x, lightPosition.y, lightPosition.z,
 				0.0f, 0.0f, 0.0f,
