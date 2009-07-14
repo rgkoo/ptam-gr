@@ -354,6 +354,7 @@ void TeapotGame::RenderFrame()
 
 	RenderPlaneGrids();
 	RenderTargetMarker();
+	RenderLightMarker();
 
 	if(lastIdleType==IDLETYPE_TURN)
 	{  //turn
@@ -565,5 +566,10 @@ void TeapotGame::RenderTargetMarker()
 	glEnable(GL_LIGHTING);
 
 	glPopMatrix();
+
+}
+
+void TeapotGame::RenderLightMarker()
+{
 
 }

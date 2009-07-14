@@ -33,6 +33,7 @@ protected:
 	bool ActionAnimation();
 	void RenderPlaneGrids();
 	void RenderTargetMarker();
+	void RenderLightMarker();
 	void RenderFrame();
 
 	GLuint mnShadowTex;
