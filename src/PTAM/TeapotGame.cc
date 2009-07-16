@@ -5,6 +5,27 @@
 #include "md2.h"
 #include "tga.h"
 
+
+
+
+
+#include "GLee/GLee.h"	//GL header file, including extensions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using namespace CVD;
 
 double mdEyeRadius;
@@ -152,6 +173,9 @@ void TeapotGame::DrawDog(int frame1, int frame2, float pol)
 	glRotatef(90,1,0,0);
 	glRotatef(90+theta,0,1,0);
 
+
+	glEnable(GL_LIGHTING);
+
 	glPushMatrix();
 	glScalef(dogsize,dogsize,dogsize);
 	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
@@ -162,27 +186,30 @@ void TeapotGame::DrawDog(int frame1, int frame2, float pol)
 	glPopMatrix();
 
 
-	glDisable(GL_LIGHTING);
+	///*Very fake shadow*/
+	//glDisable(GL_LIGHTING);
+	////glLoadIdentity();
+	//glRotatef(90,1,0,0);
+	//glEnable(GL_TEXTURE_2D);
+	//glBindTexture(GL_TEXTURE_2D, mnShadowTex);
+	//glDisable(GL_DEPTH_TEST);
+	//glEnable(GL_BLEND);
+	//glColor4f(0,0,0,0.5);
+	//glBegin(GL_QUADS);
+	//glTexCoord2f(0.0,0.0);
+	//glVertex2d(-mdShadowHalfSize, -mdShadowHalfSize);
+	//glTexCoord2f(0.0,1);
+	//glVertex2d(-mdShadowHalfSize,  mdShadowHalfSize);
+	//glTexCoord2f(1,1);
+	//glVertex2d( mdShadowHalfSize,  mdShadowHalfSize);
+	//glTexCoord2f(1,0.0);
+	//glVertex2d( mdShadowHalfSize, -mdShadowHalfSize);
+	//glEnd();
+	//glDisable(GL_TEXTURE_2D);
+	//glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_CULL_FACE);
 
-	//glLoadIdentity();
-	glRotatef(90,1,0,0);
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, mnShadowTex);
-	glEnable(GL_BLEND);
-	glColor4f(0,0,0,0.1);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0,0.0);
-	glVertex2d(-mdShadowHalfSize, -mdShadowHalfSize);
-	glTexCoord2f(0.0,1);
-	glVertex2d(-mdShadowHalfSize,  mdShadowHalfSize);
-	glTexCoord2f(1,1);
-	glVertex2d( mdShadowHalfSize,  mdShadowHalfSize);
-	glTexCoord2f(1,0.0);
-	glVertex2d( mdShadowHalfSize, -mdShadowHalfSize);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_CULL_FACE);
+
 
 	//glScalef(1/dogsize,1/dogsize,1/dogsize);
 	glPopMatrix();
@@ -352,9 +379,7 @@ void TeapotGame::RenderFrame()
 	//根据狗的位置和朝向来回走
 	//0:turn, 1:walk to virtual marker 2:bored
 
-	RenderPlaneGrids();
-	RenderTargetMarker();
-	RenderLightMarker();
+
 
 	if(lastIdleType==IDLETYPE_TURN)
 	{  //turn
@@ -437,11 +462,14 @@ void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, af);
 	glMaterialf(GL_FRONT, GL_SHININESS, 50.0);
 
-	glMatrixMode(GL_MODELVIEW);
 
+
+	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 	glScaled(mdEyeRadius, mdEyeRadius, mdEyeRadius);
-	//glCallList(mnEyeDisplayList);
+	
+	glCallList(mnEyeDisplayList);
 	DrawTeapot();
 	
 };
@@ -456,6 +484,9 @@ void TeapotGame::Reset()
 
 void TeapotGame::DrawTeapot()
 {
+	RenderLightMarker();
+	RenderPlaneGrids();
+	RenderTargetMarker();
 
 	RenderFrame();
 //  	glPushMatrix();
@@ -571,5 +602,16 @@ void TeapotGame::RenderTargetMarker()
 
 void TeapotGame::RenderLightMarker()
 {
+	glPushMatrix();
 
+	glDisable(GL_LIGHTING);
+	//red ball 
+	glColor3f(1.0f,1.0f,0.0f);
+	//move to target marker
+	glTranslatef(1.0, 1.0, 1.0);
+	//draw sphere
+	gluSphere(quadratic,0.1f,8,8);
+	glEnable(GL_LIGHTING);
+
+	glPopMatrix();
 }
