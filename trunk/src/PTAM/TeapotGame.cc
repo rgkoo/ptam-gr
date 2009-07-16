@@ -664,41 +664,41 @@ void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
 
 	mnFrameCounter ++;
 
-	renderShadowedScene();
+	//renderShadowedScene();
 
 
 
 
-	////glDisable(GL_BLEND);
-	////glEnable(GL_CULL_FACE);
-	////glFrontFace(GL_CW);
-	//glEnable(GL_DEPTH_TEST);
-	//glDepthFunc(GL_LEQUAL);
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
-	//glEnable(GL_NORMALIZE);
-	//glEnable(GL_COLOR_MATERIAL);
+	//glDisable(GL_BLEND);
+	//glEnable(GL_CULL_FACE);
+	//glFrontFace(GL_CW);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_COLOR_MATERIAL);
 
-	////set up light and material
-	//GLfloat af[4]; 
-	//af[0]=0.3; af[1]=0.3; af[2]=0.3; af[3]=1.0;
-	//glLightfv(GL_LIGHT0, GL_AMBIENT, af);
-	//glLightfv(GL_LIGHT0, GL_DIFFUSE, af);
-	//af[0]=1.0; af[1]=0.0; af[2]=1.0; af[3]=0.0;
-	//glLightfv(GL_LIGHT0, GL_POSITION, af);
-	//af[0]=1.0; af[1]=1.0; af[2]=1.0; af[3]=1.0;
-	//glMaterialfv(GL_FRONT, GL_SPECULAR, af);
-	//glMaterialf(GL_FRONT, GL_SHININESS, 50.0);
+	//set up light and material
+	GLfloat af[4]; 
+	af[0]=0.3; af[1]=0.3; af[2]=0.3; af[3]=1.0;
+	glLightfv(GL_LIGHT0, GL_AMBIENT, af);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, af);
+	af[0]=1.0; af[1]=0.0; af[2]=1.0; af[3]=0.0;
+	glLightfv(GL_LIGHT0, GL_POSITION, af);
+	af[0]=1.0; af[1]=1.0; af[2]=1.0; af[3]=1.0;
+	glMaterialfv(GL_FRONT, GL_SPECULAR, af);
+	glMaterialf(GL_FRONT, GL_SHININESS, 50.0);
 
 
 
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 
-	//glScaled(mdEyeRadius, mdEyeRadius, mdEyeRadius);
-	//
-	////glCallList(mnEyeDisplayList);
-	//DrawTeapot();
+	glScaled(mdEyeRadius, mdEyeRadius, mdEyeRadius);
+	
+	//glCallList(mnEyeDisplayList);
+	DrawTeapot();
 	
 };
 

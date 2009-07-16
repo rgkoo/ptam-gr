@@ -58,6 +58,7 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,mnFrameBuffer);
   CheckFramebufferStatus();
   glViewport(0,0,mirFBSize.x,mirFBSize.y);
+  //Frame buffer background, i.e. the camera captured image
   DrawFBBackGround();
   glClearDepth(1);
   glClear(GL_DEPTH_BUFFER_BIT);
@@ -84,7 +85,7 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
   // Set up for drawing 2D stuff:
   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,0);
   
-  //
+  // nothing will be displayed without this line
   DrawDistortedFB();
   
   glMatrixMode(GL_MODELVIEW);
