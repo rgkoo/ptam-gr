@@ -68,7 +68,8 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
   glMultMatrix(mCamera.MakeUFBLinearFrustumMatrix(0.005, 100));
   glMultMatrix(se3CfromW);
   
-  DrawFadingGrid();
+  
+  //DrawFadingGrid();
 
   //This is where ARGame draw its interactive objects
   mGame.DrawStuff(se3CfromW.inverse().get_translation());
@@ -83,6 +84,7 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
   // Set up for drawing 2D stuff:
   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,0);
   
+  //
   DrawDistortedFB();
   
   glMatrixMode(GL_MODELVIEW);
@@ -240,7 +242,45 @@ void ARDriver::DrawDistortedFB()
 
 void ARDriver::DrawFadingGrid()
 {
-  
+	double dStrength;
+	if(mnCounter >= 60)
+		return;
+	if(mnCounter < 30)
+		dStrength = 1.0;
+	dStrength = (60 - mnCounter) / 30.0;
+
+	glColor4f(1,1,1,dStrength);
+	int nHalfCells = 8;
+	if(mnCounter < 8)
+		nHalfCells = mnCounter + 1;
+	int nTot = nHalfCells * 2 + 1;
+	Vector<3>  aaVertex[17][17];
+	for(int i=0; i<nTot; i++)
+		for(int j=0; j<nTot; j++)
+		{
+			Vector<3> v3;
+			v3[0] = (i - nHalfCells) * 0.1;
+			v3[1] = (j - nHalfCells) * 0.1;
+			v3[2] = 0.0;
+			aaVertex[i][j] = v3;
+		}
+
+		glEnable(GL_LINE_SMOOTH);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glLineWidth(2);
+		for(int i=0; i<nTot; i++)
+		{
+			glBegin(GL_LINE_STRIP);
+			for(int j=0; j<nTot; j++)
+				glVertex(aaVertex[i][j]);
+			glEnd();
+
+			glBegin(GL_LINE_STRIP);
+			for(int j=0; j<nTot; j++)
+				glVertex(aaVertex[j][i]);
+			glEnd();
+		};
 };
 
 
