@@ -666,6 +666,9 @@ void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
 
 	renderShadowedScene();
 
+
+
+
 	////glDisable(GL_BLEND);
 	////glEnable(GL_CULL_FACE);
 	////glFrontFace(GL_CW);
