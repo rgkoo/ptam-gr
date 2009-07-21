@@ -705,6 +705,15 @@ void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
 	
 };
 
+void TeapotGame::DrawStuff( SE3 cameraSE3FromWorld )
+{
+	if(!mbInitialised)
+		Init();
+
+	mnFrameCounter ++;
+
+	renderShadowedScene();
+}
 
 void TeapotGame::Reset()
 {
