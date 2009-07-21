@@ -8,7 +8,7 @@
 
 
 
-#define __DEBUG
+//#define __DEBUG
 
 #ifdef __DEBUG
 #include "gvars3/instances.h"

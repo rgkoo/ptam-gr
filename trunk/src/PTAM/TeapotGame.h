@@ -22,6 +22,11 @@ public:
 
 
 protected:
+	bool InitShadowMap();
+	void renderShadowedScene();
+	void DrawScene();
+
+
 	bool mbInitialised;
 	void DrawTeapot();
 	void MakeShadowTex();
