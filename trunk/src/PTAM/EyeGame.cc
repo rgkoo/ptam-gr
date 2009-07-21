@@ -191,7 +191,7 @@ void EyeGame::Init()
 //let n-th eye look at camera position(v3) (rot limit = 0.02)
 void EyeGame::LookAt(int nEye, Vector<3> v3, double dRotLimit)
 {
-
+	//
 	Vector<3> v3E = ase3WorldFromEye[nEye].inverse() * v3;
 	if(v3E * v3E == 0.0)
 		return;

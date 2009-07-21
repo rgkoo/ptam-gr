@@ -71,7 +71,9 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
 	  // Set up 3D projection
 	  glMatrixMode(GL_PROJECTION);
 	  glLoadIdentity();
+	  // Set up projection(Camera specific)
 	  glMultMatrix(mCamera.MakeUFBLinearFrustumMatrix(0.005, 100));
+	  // Set up according to camera pose
 	  glMultMatrix(se3CfromW);
 	  
 	  
