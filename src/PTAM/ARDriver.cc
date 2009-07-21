@@ -73,7 +73,8 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
 	  glMatrixMode(GL_PROJECTION);
 	  glLoadIdentity();
 	  // Set up projection(Camera specific)
-	  glMultMatrix(mCamera.MakeUFBLinearFrustumMatrix(0.005, 100));
+	  Matrix<4>& UFBLinearFrustumMatrix = mCamera.MakeUFBLinearFrustumMatrix(0.005, 100);
+	  glMultMatrix(UFBLinearFrustumMatrix);
 	  // Set up according to camera pose
 	  glMultMatrix(se3CfromW);
 	  
@@ -82,7 +83,7 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
 
 	  //This is where ARGame draw its interactive objects
 	  //mGame.DrawStuff(se3CfromW.inverse().get_translation());
-	  mGame.DrawStuff(se3CfromW);
+	  mGame.DrawStuff(UFBLinearFrustumMatrix, se3CfromW);
 	  
 	  glDisable(GL_DEPTH_TEST);
 	  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
