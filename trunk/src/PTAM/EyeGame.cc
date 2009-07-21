@@ -81,7 +81,7 @@ void EyeGame::DrawStuff(Vector<3> v3CameraPos)
 	glDisable(GL_CULL_FACE);
 };
 
-void EyeGame::DrawStuff(Matrix<4> UFBLinearFrustumMatrix,SE3 cameraSE3FromWorld )
+void EyeGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromWorld )
 {	
 	if(!mbInitialised)
 		Init();

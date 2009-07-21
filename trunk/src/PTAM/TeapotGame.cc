@@ -6,12 +6,18 @@
 #include "OpenGL.h"
 #include <gl/glut.h>
 #include <cvd/convolution.h>
+#include <cvd/gl_helpers.h>
+
+
 #include "md2.h"
 #include "tga.h"
 
 
+
 #include "Maths/Maths.h"
 
+
+using namespace CVD;
 
 
 
@@ -37,7 +43,7 @@ float angle;
 
 
 //Called for initiation
-bool TeapotGame::InitShadowMap(void)
+bool TeapotGame::InitShadowMap(Matrix<4>& UFBLinearFrustumMatrix, SE3& cameraSE3FromWorld)
 {
 	//Check for necessary extensions
 	if(!GLEW_ARB_depth_texture || !GLEW_ARB_shadow)
@@ -89,14 +95,19 @@ bool TeapotGame::InitShadowMap(void)
 
 	//Save camera projection matrix( original matrix was created on model view matrix stack)
 	glLoadIdentity();
-	gluPerspective(45.0f, (float)windowWidth/windowHeight, 1.0f, 100.0f);
+	
+	//gluPerspective(45.0f, (float)windowWidth/windowHeight, 1.0f, 100.0f);
+					glMultMatrix(UFBLinearFrustumMatrix);
+					// Set up according to camera pose
+					glMultMatrix(cameraSE3FromWorld);
+	
 	glGetFloatv(GL_MODELVIEW_MATRIX, cameraProjectionMatrix);
 
 	//Save camera view matrix
 	glLoadIdentity();
-	gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
-		0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f);
+	//gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
+	//	0.0f, 0.0f, 0.0f,
+	//	0.0f, 1.0f, 0.0f);
 	glGetFloatv(GL_MODELVIEW_MATRIX, cameraViewMatrix);
 
 	//Save light projection matrix, note that near plane and far plane are close to get better precision, and that aspect ratio is set to 1 
@@ -117,10 +128,10 @@ bool TeapotGame::InitShadowMap(void)
 }
 
 
-void TeapotGame::renderShadowedScene(){
+void TeapotGame::renderShadowedScene(Matrix<4>& UFBLinearFrustumMatrix, SE3& cameraSE3FromWorld){
 	angle++;
 
-	InitShadowMap();
+	InitShadowMap(UFBLinearFrustumMatrix, cameraSE3FromWorld);
 
 	//First pass - from light's point of view
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -669,7 +680,7 @@ void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
 
 	mnFrameCounter ++;
 
-	renderShadowedScene();
+	//renderShadowedScene();
 
 
 
@@ -708,7 +719,7 @@ void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
 	
 };
 
-void TeapotGame::DrawStuff(Matrix<4> UFBLinearFrustumMatrix,SE3 cameraSE3FromWorld )
+void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromWorld )
 {
 	if(!mbInitialised)
 		Init();
@@ -719,7 +730,7 @@ void TeapotGame::DrawStuff(Matrix<4> UFBLinearFrustumMatrix,SE3 cameraSE3FromWor
 	Vector<3>& v3cameraPos = cameraSE3FromWorld.inverse().get_translation();
 	////std::cout<<"v3camerapos:"<<v3cameraPos<<std::endl;
 	cameraPosition.Set(v3cameraPos[0], v3cameraPos[1], v3cameraPos[2]);
-	renderShadowedScene();
+	renderShadowedScene(UFBLinearFrustumMatrix, cameraSE3FromWorld);
 }
 
 void TeapotGame::Reset()
@@ -767,8 +778,8 @@ void TeapotGame::Init()
 	gluQuadricNormals(quadratic, GLU_SMOOTH);		// 使用平滑法线
 	gluQuadricTexture(quadratic, GL_TRUE);		// 使用纹理
 
-	if(! InitShadowMap())	
-		exit(0);
+	/*if(! InitShadowMap())	
+		exit(0);*/
 };
 
 
