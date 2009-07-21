@@ -23,11 +23,12 @@ using namespace CVD;
 
 //Camera & light positions
 VECTOR3D cameraPosition(-2.5f, 3.5f,2.5f);
-//VECTOR3D lightPosition(2.0f, 3.0f,2.0f);
-VECTOR3D lightPosition(1.0f, 1.0f,1.0f);
+VECTOR3D lightPosition(2.0f, 3.0f,2.0f);
+//VECTOR3D lightPosition(1.0f, 1.0f,1.0f);
 
 //Size of shadow map
-const int shadowMapSize=512;
+//const int shadowMapSize=512;
+const int shadowMapSize=1024;
 
 
 //Textures
@@ -111,9 +112,9 @@ bool TeapotGame::InitShadowMap(Matrix<4>& UFBLinearFrustumMatrix, SE3& cameraSE3
 
 	//Save camera view matrix
 	glLoadIdentity();
-	//gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
-	//	0.0f, 0.0f, 0.0f,
-	//	0.0f, 1.0f, 0.0f);
+	/*gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
+		0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f);*/
 	glGetFloatv(GL_MODELVIEW_MATRIX, cameraViewMatrix);
 
 	//Save light projection matrix, note that near plane and far plane are close to get better precision, and that aspect ratio is set to 1 
@@ -740,7 +741,9 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 	//update camera position
 	Vector<3>& v3cameraPos = cameraSE3FromWorld.inverse().get_translation();
 	////std::cout<<"v3camerapos:"<<v3cameraPos<<std::endl;
-	cameraPosition.Set(v3cameraPos[0], v3cameraPos[1], v3cameraPos[2]);
+
+	//cameraPosition.Set(v3cameraPos[0], v3cameraPos[1], v3cameraPos[2]);
+	
 	renderShadowedScene(UFBLinearFrustumMatrix, cameraSE3FromWorld);
 }
 
@@ -846,7 +849,7 @@ void TeapotGame::onGesture( GestureData& gesture )
 void TeapotGame::RenderPlaneGrids()
 {
 	glColor3f(1.0f,1.0f,1.0f);
-	glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHTING);
 
 	//glBegin(GL_LINES);
 	//for(float x = SCREEN_MIN_X; x <= SCREEN_MAX_X; x += (SCREEN_MAX_X-SCREEN_MIN_X)/20){
@@ -866,21 +869,21 @@ void TeapotGame::RenderPlaneGrids()
 	glVertex3f(SCREEN_MIN_X, SCREEN_MAX_Y, 0);
 	glEnd();
 
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 }
 
 void TeapotGame::RenderTargetMarker()
 {
 	glPushMatrix();
 
-	glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHTING);
 	//red ball 
 	glColor3f(1.0f,0.0f,0.0f);
 	//move to target marker
 	glTranslatef(dog->targetmarker.X, dog->targetmarker.Y, dog->targetmarker.Z);
 	//draw sphere
 	gluSphere(quadratic,0.1f,32,32);
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 
 	glPopMatrix();
 
@@ -890,14 +893,14 @@ void TeapotGame::RenderLightMarker()
 {
 	glPushMatrix();
 
-	glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHTING);
 	//red ball 
 	glColor3f(1.0f,1.0f,0.0f);
 	//move to target marker
-	glTranslatef(1.0, 1.0, 1.0);
+	glTranslatef(lightPosition.x, lightPosition.y, lightPosition.z);
 	//draw sphere
 	gluSphere(quadratic,0.1f,8,8);
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 
 	glPopMatrix();
 }
@@ -905,6 +908,8 @@ void TeapotGame::RenderLightMarker()
 
 void TeapotGame::DrawScene()
 {
+
+
 	/*glPushMatrix();
 	DrawTeapot();
 	glPopMatrix();*/
@@ -950,7 +955,7 @@ void TeapotGame::DrawScene()
 			glPushMatrix();
 
 			glTranslatef(0.0f, 0.5f, 0.0f);
-			glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+			//glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
 			glutSolidTorus(0.2, 0.5, 24, 48);
 
 			glPopMatrix();
@@ -967,7 +972,8 @@ void TeapotGame::DrawScene()
 			glColor3f(0.0f, 0.0f, 1.0f);
 			glPushMatrix();
 
-			glScalef(1.0f, 0.05f, 1.0f);
+			//glScalef(1.0f, 0.05f, 1.0f);
+			glScalef(1.0f, 1.0f, 0.05f);
 			glutSolidCube(3.0f);
 
 			glPopMatrix();
@@ -977,12 +983,28 @@ void TeapotGame::DrawScene()
 
 
 	//Draw objects
-	glCallList(baseList);
-	glCallList(torusList);
+	//glCallList(baseList);
 
-	glPushMatrix();
+
+	//glCallList(torusList);
+
+	/*glPushMatrix();
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
 	glCallList(spheresList);
+	glPopMatrix();*/
+
+
+	//RenderLightMarker();
+	RenderPlaneGrids();
+	//RenderTargetMarker();
+
+	RenderFrame();
+
+	//test shadow
+	glPushMatrix();
+	glTranslatef(0.5f,0.5f,0.5f);
+	glutSolidTeapot(0.2);
 	glPopMatrix();
+
 }
 
