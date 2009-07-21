@@ -47,7 +47,7 @@ System::System()
   mpMap = new Map;
   mpMapMaker = new MapMaker(*mpMap, *mpCamera);
   mpTracker = new Tracker(mVideoSource.Size(), *mpCamera, *mpMap, *mpMapMaker);
-  TeapotGame* teapotGame =  new TeapotGame;
+  TeapotGame* teapotGame =  new TeapotGame();
   mpGame = teapotGame;
   mpARDriver = new ARDriver(*mpCamera, mVideoSource.Size(), mGLWindow, *mpGame);
   mpMapViewer = new MapViewer(*mpMap, mGLWindow);

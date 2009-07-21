@@ -27,17 +27,17 @@ const int shadowMapSize=512;
 GLuint shadowMapTexture;
 
 //window size
-int windowWidth = 640, windowHeight = 480;
+int windowWidth = 800, windowHeight = 600;
 
 //Matrices
 MATRIX4X4 lightProjectionMatrix, lightViewMatrix;
 MATRIX4X4 cameraProjectionMatrix, cameraViewMatrix;
 
 float angle;
-void DrawScene();
+
 
 //Called for initiation
-bool InitShadowMap(void)
+bool TeapotGame::InitShadowMap(void)
 {
 	//Check for necessary extensions
 	if(!GLEW_ARB_depth_texture || !GLEW_ARB_shadow)
@@ -117,7 +117,7 @@ bool InitShadowMap(void)
 }
 
 
-void renderShadowedScene(){
+void TeapotGame::renderShadowedScene(){
 	angle++;
 
 	InitShadowMap();
@@ -657,6 +657,9 @@ TeapotGame::TeapotGame()
 	mdEyeRadius = 0.1;
 	mdShadowHalfSize = 2.5 * mdEyeRadius;
 	mbInitialised = false;
+
+	windowWidth = 1200;
+	windowHeight = 900;
 }
 
 void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
@@ -712,6 +715,10 @@ void TeapotGame::DrawStuff( SE3 cameraSE3FromWorld )
 
 	mnFrameCounter ++;
 
+	//update camera position
+	Vector<3>& v3cameraPos = cameraSE3FromWorld.inverse().get_translation();
+	////std::cout<<"v3camerapos:"<<v3cameraPos<<std::endl;
+	cameraPosition.Set(v3cameraPos[0], v3cameraPos[1], v3cameraPos[2]);
 	renderShadowedScene();
 }
 
@@ -859,80 +866,86 @@ void TeapotGame::RenderLightMarker()
 }
 
 
-void DrawScene()
+void TeapotGame::DrawScene()
 {
-	//Display lists for objects
-	static GLuint spheresList=0, torusList=0, baseList=0;
-
-	//Create spheres list if necessary
-	if(!spheresList)
-	{
-		spheresList=glGenLists(1);
-		glNewList(spheresList, GL_COMPILE);
-		{
-			glColor3f(0.0f, 1.0f, 0.0f);
-			glPushMatrix();
-
-			glTranslatef(0.45f, 1.0f, 0.45f);
-			glutSolidSphere(0.2, 24, 24);
-
-			glTranslatef(-0.9f, 0.0f, 0.0f);
-			glutSolidSphere(0.2, 24, 24);
-
-			glTranslatef(0.0f, 0.0f,-0.9f);
-			glutSolidSphere(0.2, 24, 24);
-
-			glTranslatef(0.9f, 0.0f, 0.0f);
-			glutSolidSphere(0.2, 24, 24);
-
-			glPopMatrix();
-		}
-		glEndList();
-	}
-
-	//Create torus if necessary
-	if(!torusList)
-	{
-		torusList=glGenLists(1);
-		glNewList(torusList, GL_COMPILE);
-		{
-			glColor3f(1.0f, 0.0f, 0.0f);
-			glPushMatrix();
-
-			glTranslatef(0.0f, 0.5f, 0.0f);
-			glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-			glutSolidTorus(0.2, 0.5, 24, 48);
-
-			glPopMatrix();
-		}
-		glEndList();
-	}
-
-	//Create base if necessary
-	if(!baseList)
-	{
-		baseList=glGenLists(1);
-		glNewList(baseList, GL_COMPILE);
-		{
-			glColor3f(0.0f, 0.0f, 1.0f);
-			glPushMatrix();
-
-			glScalef(1.0f, 0.05f, 1.0f);
-			glutSolidCube(3.0f);
-
-			glPopMatrix();
-		}
-		glEndList();
-	}
-
-
-	//Draw objects
-	glCallList(baseList);
-	glCallList(torusList);
-
 	glPushMatrix();
-	glRotatef(angle, 0.0f, 1.0f, 0.0f);
-	glCallList(spheresList);
+	DrawTeapot();
 	glPopMatrix();
+
+	////Codes below draw some rotating balls
+
+	////Display lists for objects
+	//static GLuint spheresList=0, torusList=0, baseList=0;
+
+	////Create spheres list if necessary
+	//if(!spheresList)
+	//{
+	//	spheresList=glGenLists(1);
+	//	glNewList(spheresList, GL_COMPILE);
+	//	{
+	//		glColor3f(0.0f, 1.0f, 0.0f);
+	//		glPushMatrix();
+
+	//		glTranslatef(0.45f, 1.0f, 0.45f);
+	//		glutSolidSphere(0.2, 24, 24);
+
+	//		glTranslatef(-0.9f, 0.0f, 0.0f);
+	//		glutSolidSphere(0.2, 24, 24);
+
+	//		glTranslatef(0.0f, 0.0f,-0.9f);
+	//		glutSolidSphere(0.2, 24, 24);
+
+	//		glTranslatef(0.9f, 0.0f, 0.0f);
+	//		glutSolidSphere(0.2, 24, 24);
+
+	//		glPopMatrix();
+	//	}
+	//	glEndList();
+	//}
+
+	////Create torus if necessary
+	//if(!torusList)
+	//{
+	//	torusList=glGenLists(1);
+	//	glNewList(torusList, GL_COMPILE);
+	//	{
+	//		glColor3f(1.0f, 0.0f, 0.0f);
+	//		glPushMatrix();
+
+	//		glTranslatef(0.0f, 0.5f, 0.0f);
+	//		glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+	//		glutSolidTorus(0.2, 0.5, 24, 48);
+
+	//		glPopMatrix();
+	//	}
+	//	glEndList();
+	//}
+
+	////Create base if necessary
+	//if(!baseList)
+	//{
+	//	baseList=glGenLists(1);
+	//	glNewList(baseList, GL_COMPILE);
+	//	{
+	//		glColor3f(0.0f, 0.0f, 1.0f);
+	//		glPushMatrix();
+
+	//		glScalef(1.0f, 0.05f, 1.0f);
+	//		glutSolidCube(3.0f);
+
+	//		glPopMatrix();
+	//	}
+	//	glEndList();
+	//}
+
+
+	////Draw objects
+	//glCallList(baseList);
+	//glCallList(torusList);
+
+	//glPushMatrix();
+	//glRotatef(angle, 0.0f, 1.0f, 0.0f);
+	//glCallList(spheresList);
+	//glPopMatrix();
 }
 

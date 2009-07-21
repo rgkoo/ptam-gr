@@ -60,6 +60,7 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
 
 	  // Must do this check to ensure ext func is good
 	  CheckFramebufferStatus();
+	  // Set up viewport
 	  glViewport(0,0,mirFBSize.x,mirFBSize.y);
 	  //Frame buffer background, i.e. the camera captured image
 	  //Ortho projection
