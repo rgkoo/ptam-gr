@@ -708,7 +708,7 @@ void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
 	
 };
 
-void TeapotGame::DrawStuff( SE3 cameraSE3FromWorld )
+void TeapotGame::DrawStuff(Matrix<4> UFBLinearFrustumMatrix,SE3 cameraSE3FromWorld )
 {
 	if(!mbInitialised)
 		Init();

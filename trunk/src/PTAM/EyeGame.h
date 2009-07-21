@@ -18,7 +18,7 @@ class EyeGame : public ARGame, public GestureGame
 {
  public:
   EyeGame();
-  void DrawStuff(SE3 cameraSE3FromWorld);
+  void DrawStuff(Matrix<4> UFBLinearFrustumMatrix,SE3 cameraSE3FromWorld);
   void DrawStuff(Vector<3> v3CameraPos);
   void Reset();
   void Init();

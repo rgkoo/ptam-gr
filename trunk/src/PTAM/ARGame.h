@@ -9,7 +9,7 @@
 class ARGame
 {
 public:
-	virtual void DrawStuff(SE3 cameraSE3FromWorld) = 0;
+	virtual void DrawStuff(Matrix<4> UFBLinearFrustumMatrix, SE3 cameraSE3FromWorld) = 0;
 	virtual void DrawStuff(Vector<3> v3CameraPos) = 0;
 	virtual void Reset() = 0;
 	virtual void Init() = 0;
