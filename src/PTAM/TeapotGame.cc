@@ -16,8 +16,8 @@
 
 
 //Camera & light positions
-VECTOR3D cameraPosition(-2.5f, 3.5f,-2.5f);
-VECTOR3D lightPosition(2.0f, 3.0f,-2.0f);
+VECTOR3D cameraPosition(-2.5f, 3.5f,2.5f);
+VECTOR3D lightPosition(2.0f, 3.0f,2.0f);
 
 //Size of shadow map
 const int shadowMapSize=512;
