@@ -80,7 +80,8 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
 	  //DrawFadingGrid();
 
 	  //This is where ARGame draw its interactive objects
-	  mGame.DrawStuff(se3CfromW.inverse().get_translation());
+	  //mGame.DrawStuff(se3CfromW.inverse().get_translation());
+	  mGame.DrawStuff(se3CfromW);
 	  
 	  glDisable(GL_DEPTH_TEST);
 	  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
