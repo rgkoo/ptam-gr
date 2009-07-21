@@ -24,7 +24,8 @@ void ARDriver::Init()
   glBindTexture(GL_TEXTURE_RECTANGLE_ARB,mnFrameTex);
   glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, 
 	       GL_RGBA, mirFrameSize.x, mirFrameSize.y, 0, 
-	       GL_RGBA, GL_UNSIGNED_BYTE, NULL); 
+	       GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+  //frame buffer initialization
   MakeFrameBuffer();
   mGame.Init();
 };
@@ -56,36 +57,40 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
   
   // Set up rendering to go the FBO, draw undistorted video frame into BG
   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,mnFrameBuffer);
-  CheckFramebufferStatus();
-  glViewport(0,0,mirFBSize.x,mirFBSize.y);
-  //Frame buffer background, i.e. the camera captured image
-  DrawFBBackGround();
-  glClearDepth(1);
-  glClear(GL_DEPTH_BUFFER_BIT);
-  
-  // Set up 3D projection
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glMultMatrix(mCamera.MakeUFBLinearFrustumMatrix(0.005, 100));
-  glMultMatrix(se3CfromW);
-  
-  
-  //DrawFadingGrid();
 
-  //This is where ARGame draw its interactive objects
-  mGame.DrawStuff(se3CfromW.inverse().get_translation());
-  
-  glDisable(GL_DEPTH_TEST);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glDisable(GL_BLEND);
-  
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  
+	  // Must do this check to ensure ext func is good
+	  CheckFramebufferStatus();
+	  glViewport(0,0,mirFBSize.x,mirFBSize.y);
+	  //Frame buffer background, i.e. the camera captured image
+	  //Ortho projection
+	  DrawFBBackGround();
+
+	  glClearDepth(1);
+	  glClear(GL_DEPTH_BUFFER_BIT);
+	  
+	  // Set up 3D projection
+	  glMatrixMode(GL_PROJECTION);
+	  glLoadIdentity();
+	  glMultMatrix(mCamera.MakeUFBLinearFrustumMatrix(0.005, 100));
+	  glMultMatrix(se3CfromW);
+	  
+	  
+	  //DrawFadingGrid();
+
+	  //This is where ARGame draw its interactive objects
+	  mGame.DrawStuff(se3CfromW.inverse().get_translation());
+	  
+	  glDisable(GL_DEPTH_TEST);
+	  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	  glDisable(GL_BLEND);
+	  
+	  glMatrixMode(GL_MODELVIEW);
+	  glLoadIdentity();
+	  
   // Set up for drawing 2D stuff:
   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,0);
   
-  // nothing will be displayed without this line
+  // Render frame buffer texture to screen
   DrawDistortedFB();
   
   glMatrixMode(GL_MODELVIEW);
@@ -102,6 +107,7 @@ void ARDriver::MakeFrameBuffer()
   // Needs nvidia drivers >= 97.46
   cout << "  ARDriver: Creating FBO... ";
   
+  //generate and bind frame buffer texture.
   glGenTextures(1, &mnFrameBufferTex);
   glBindTexture(GL_TEXTURE_RECTANGLE_ARB,mnFrameBufferTex);
   glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, 
@@ -110,6 +116,7 @@ void ARDriver::MakeFrameBuffer()
   glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+  //generate and bind depth buffer as a render buffer.
   GLuint DepthBuffer;
   glGenRenderbuffersEXT(1, &DepthBuffer);
   glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, DepthBuffer);
@@ -122,6 +129,7 @@ void ARDriver::MakeFrameBuffer()
   glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, 
   			       GL_RENDERBUFFER_EXT, DepthBuffer);
   
+  //check if frame buffer extension complete
   CheckFramebufferStatus();
   cout << " .. created FBO." << endl;
   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
@@ -139,12 +147,14 @@ static bool CheckFramebufferStatus()
   return false;
 };
 
+//TODO: what's the difference between drawfbbackground and draw undistortedfb???
 void ARDriver::DrawFBBackGround()
 {
   static bool bFirstRun = true;
   static GLuint nList;
   mGLWindow.SetupUnitOrtho();
   
+  //draw frame texture grids
   glEnable(GL_TEXTURE_RECTANGLE_ARB);
   glBindTexture(GL_TEXTURE_RECTANGLE_ARB, mnFrameTex);  
   glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -153,9 +163,9 @@ void ARDriver::DrawFBBackGround()
   glDisable(GL_BLEND);
   // Cache the cpu-intesive projections in a display list..
   if(bFirstRun)
-    {
-      bFirstRun = false;
-      nList = glGenLists(1);
+  {
+	  bFirstRun = false;
+	  nList = glGenLists(1);
       glNewList(nList, GL_COMPILE_AND_EXECUTE);
       glColor3f(1,1,1);
       // How many grid divisions in the x and y directions to use?
@@ -195,7 +205,7 @@ void ARDriver::DrawFBBackGround()
 
 void ARDriver::DrawDistortedFB()
 {
-  static bool bFirstRun = true;
+	static bool bFirstRun = true;
   static GLuint nList;
   mGLWindow.SetupViewport();
   mGLWindow.SetupUnitOrtho();
