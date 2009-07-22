@@ -1,0 +1,34 @@
+Shadow mapping demo. It is using a 4-samples PCF to smooth the final shadow.
+
+q or ESC to exit
+The arrow keys rotate the light
+The ASWD keys zooms in or out and sidestep
+The mouse+button 1 rotate the perspective
+The mouse+button 2 rotate the scene
+The mouse scroll-wheel zooms in or out
+
+0 - increase dr. freak animation
+9 - decrease dr. freak animation
+p - toggle ogros running
+h - kill dr. freak!
+r - toggle wireframe
+f - toggle fps on/off
+g - switch bump-mapping and shadowing on/off
+o/i - increase/decrease polygon offset (scale factor)
+l/k - increase/decrease polygon offset (bias factor)
+
+The following switches on the command line are available:
+
+ --full or -s         : display full screen
+ --fps[=t]  or -f[t]  : average frames per second every t seconds (default 5)
+                        and displays both to stdout and, if possible, to screen.
+ --info  or -i        : display X11/OpenGL and program info
+ --fsaa  or -m        : enable anti-aliasing
+ --aniso[=l] or-a[l]  : enable xl anisotropic filtering (default 16)
+ --runlength=L or -rL : run the demo for L secs, then exit
+ --version or -v      : display version and exit
+ --help or -h         : display help information
+
+The application can terminate gracefully on receiving a SIGINT, SIGTERM or
+SIGHUP signal.
+Averaged fps are displayed at program termination.
