@@ -457,6 +457,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LineSegment.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Maths\Maths.h"
 				>
 			</File>
