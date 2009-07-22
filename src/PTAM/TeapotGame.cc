@@ -24,6 +24,10 @@ using namespace CVD;
 //Camera & light positions
 VECTOR3D cameraPosition(-2.5f, 3.5f,2.5f);
 VECTOR3D lightPosition(2.0f, 3.0f,2.0f);
+
+VECTOR3D startPoint;
+VECTOR3D endPoint;
+
 //VECTOR3D lightPosition(1.0f, 1.0f,1.0f);
 
 //Size of shadow map
@@ -738,11 +742,54 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 
 	mnFrameCounter ++;
 
-	//update camera position
-	Vector<3>& v3cameraPos = cameraSE3FromWorld.inverse().get_translation();
-	////std::cout<<"v3camerapos:"<<v3cameraPos<<std::endl;
+	////update camera position
+	//Vector<3>& v3cameraPos = cameraSE3FromWorld.inverse().get_translation();
+	//////std::cout<<"v3camerapos:"<<v3cameraPos<<std::endl;
 
-	//cameraPosition.Set(v3cameraPos[0], v3cameraPos[1], v3cameraPos[2]);
+	////cameraPosition.Set(v3cameraPos[0], v3cameraPos[1], v3cameraPos[2]);
+
+	GLdouble    modelview[16];
+	GLdouble    projection[16];
+	GLint       viewport[4];
+	glGetDoublev (GL_MODELVIEW_MATRIX, modelview);
+	glGetDoublev (GL_PROJECTION_MATRIX, projection);
+	glGetIntegerv (GL_VIEWPORT, viewport);
+
+	GLdouble world_x, world_y, world_z;  
+
+	int x=0,y=150;
+	// 获取近裁剪面上的交点
+	gluUnProject( (GLdouble) x, (GLdouble) y, 0.0, 
+		modelview, projection, viewport, 
+		&world_x, &world_y, &world_z); 
+   startPoint.Set(world_x, world_y, world_z);
+
+	// 获取远裁剪面上的交点
+	gluUnProject( (GLdouble) x, (GLdouble) y, 1.0, 
+		modelview, projection, viewport, 
+		&world_x, &world_y, &world_z); 
+	endPoint.Set(world_x, world_y, world_z);
+
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	//glPushMatrix();
+
+	//glLoadIdentity();
+	//glTranslatef(startPoint.x, startPoint.y, startPoint.z);
+	//gluSphere(quadratic,0.2f,16,16);
+	////glutSolidCube(0.1f);
+
+	//glPopMatrix();
+
+	glPushMatrix();
+
+	glLoadIdentity();
+	glTranslatef(endPoint.x, endPoint.y, endPoint.z);
+	gluSphere(quadratic,0.2f,16,16);
+	//glutSolidCube(0.1f);
+
+	glPopMatrix();
+
+	glPopAttrib();
 	
 	renderShadowedScene(UFBLinearFrustumMatrix, cameraSE3FromWorld);
 }
@@ -1011,19 +1058,20 @@ void TeapotGame::DrawScene()
 
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 	glPushMatrix();
-
-
+		
 	
 	glScaled(mdEyeRadius, mdEyeRadius, mdEyeRadius);
 
 	RenderPlaneGrids();
 	RenderTargetMarker();
 
+
 	//glPushAttrib(GL_ALL_ATTRIB_BITS);
 	//
 	//glPopAttrib();
 
 	RenderFrame();
+
 
 	//DrawDog(Walk_End_Frame,Walk_End_Frame,0);
 
