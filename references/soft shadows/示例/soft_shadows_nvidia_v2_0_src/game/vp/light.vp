@@ -1,0 +1,35 @@
+!!ARBvp1.0
+
+ATTRIB v0 = vertex.position;				# vertex position
+ATTRIB v1 = vertex.normal;					# normal
+ATTRIB v2 = vertex.texcoord;
+
+PARAM WVP[4] = { state.matrix.mvp };
+PARAM World[3] = { program.local[0..2] };
+
+PARAM T[4] = {	{ 0.5, 0.0, 0.0, 0.5 },
+				{ 0.0, 0.5, 0.0, 0.5 },
+				{ 0.0, 0.0, 1.0, 0.0 },
+				{ 0.0, 0.0, 0.0, 1.0 }};
+
+TEMP screenpos;
+
+DP4 screenpos.x, WVP[0], v0;			# output screen positon
+DP4 screenpos.y, WVP[1], v0;
+DP4 screenpos.z, WVP[2], v0;
+DP4 screenpos.w, WVP[3], v0;
+
+DP4 result.texcoord[0].x, T[0], screenpos;
+DP4 result.texcoord[0].y, T[1], screenpos;
+DP4 result.texcoord[0].z, T[2], screenpos;
+DP4 result.texcoord[0].w, T[3], screenpos;
+
+MOV result.position, screenpos;
+
+DP3 result.texcoord[1].x, World[0], v1;
+DP3 result.texcoord[1].y, World[1], v1;
+DP3 result.texcoord[1].z, World[2], v1;
+
+MOV result.texcoord[2], v2;
+
+END

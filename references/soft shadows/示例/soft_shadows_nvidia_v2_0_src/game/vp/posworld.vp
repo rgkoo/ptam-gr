@@ -1,0 +1,23 @@
+!!ARBvp1.0
+
+ATTRIB v0 = vertex.position;				# vertex position
+
+PARAM WVP[4] = { state.matrix.mvp };		# bla... program.local[0..3] };
+PARAM WORLD[4] = { program.local[0..3] };
+
+DP4 result.position.x, WVP[0], v0;			# ouput screen space position
+DP4 result.position.y, WVP[1], v0;
+DP4 result.position.z, WVP[2], v0;
+DP4 result.position.w, WVP[3], v0;
+
+DP4 result.texcoord[0].x, WORLD[0], v0;		# output world position
+DP4 result.texcoord[0].y, WORLD[1], v0;
+DP4 result.texcoord[0].z, WORLD[2], v0;
+DP4 result.texcoord[0].w, WORLD[3], v0;
+
+#MOV result.texcoord[0].w, One.x;
+
+END
+
+
+

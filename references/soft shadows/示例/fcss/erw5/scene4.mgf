@@ -1,0 +1,122 @@
+v qv0 =
+	p -0.05 2.9 -0.05
+v qv1 =
+	p -0.05 2.9 0.05
+v qv2 =
+	p 0.05 2.9 0.05
+v qv3 =
+	p 0.05 2.9 -0.05
+m
+	c
+	rd 0.5000
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p -0.05 2.8 0.05
+v qv1 =
+	p 0.05 2.8 0.05
+v qv2 =
+	p 0.05 2.9 0.05
+v qv3 =
+	p -0.05 2.9 0.05
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p -0.05 2.8 -0.05
+v qv1 =
+	p -0.05 2.9 -0.05
+v qv2 =
+	p 0.05 2.9 -0.05
+v qv3 =
+	p 0.05 2.8 -0.05
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p 0.05 2.8 -0.05
+v qv1 =
+	p 0.05 2.9 -0.05
+v qv2 =
+	p 0.05 2.9 0.05
+v qv3 =
+	p 0.05 2.8 0.05
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p -0.05 2.8 -0.05
+v qv1 =
+	p -0.05 2.8 0.05
+v qv2 =
+	p -0.05 2.9 0.05
+v qv3 =
+	p -0.05 2.9 -0.05
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p -0.05 2.8 -0.05
+v qv1 =
+	p 0.05 2.8 -0.05
+v qv2 =
+	p 0.05 2.8 0.05
+v qv3 =
+	p -0.05 2.8 0.05
+m
+	c
+	sides 1
+	rd 0.5000
+	ed 1012221.15
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p -3 0 -3
+v qv1 =
+	p -3 0 3
+v qv2 =
+	p 3 0 3
+v qv3 =
+	p 3 0 -3
+m
+	c
+	rd 0.3000
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p -3 3 -3
+v qv1 =
+	p 3 3 -3
+v qv2 =
+	p 3 3 3
+v qv3 =
+	p -3 3 3
+m
+	c
+	rd 0.7000
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p -3 0 -3
+v qv1 =
+	p 3 0 -3
+v qv2 =
+	p 3 3 -3
+v qv3 =
+	p -3 3 -3
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p -3 0 3
+v qv1 =
+	p -3 3 3
+v qv2 =
+	p 3 3 3
+v qv3 =
+	p 3 0 3
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p -3 0 -3
+v qv1 =
+	p -3 3 -3
+v qv2 =
+	p -3 3 3
+v qv3 =
+	p -3 0 3
+f qv0 qv1 qv2 qv3
+v qv0 =
+	p 3 0 -3
+v qv1 =
+	p 3 0 3
+v qv2 =
+	p 3 3 3
+v qv3 =
+	p 3 3 -3
+f qv0 qv1 qv2 qv3

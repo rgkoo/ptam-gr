@@ -1,0 +1,277 @@
+[DynamicObject0]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 1.25, -5 }
+type = "box"
+
+[DynamicObject1]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 1.25, -2.5 }
+type = "box"
+
+[DynamicObject10]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 6.25, 0 }
+type = "box"
+
+[DynamicObject11]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 6.25, 2.5 }
+type = "box"
+
+[DynamicObject12]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 8.75, -5 }
+type = "box"
+
+[DynamicObject13]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 8.75, -2.5 }
+type = "box"
+
+[DynamicObject14]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 8.75, 0 }
+type = "box"
+
+[DynamicObject15]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 8.75, 2.5 }
+type = "box"
+
+[DynamicObject16]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 11.25, -5 }
+type = "box"
+
+[DynamicObject17]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 11.25, -2.5 }
+type = "box"
+
+[DynamicObject18]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 11.25, 0 }
+type = "box"
+
+[DynamicObject19]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 11.25, 2.5 }
+type = "box"
+
+[DynamicObject2]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 1.25, 0 }
+type = "box"
+
+[DynamicObject20]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 13.75, -5 }
+type = "box"
+
+[DynamicObject21]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 13.75, -2.5 }
+type = "box"
+
+[DynamicObject22]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 13.75, 0 }
+type = "box"
+
+[DynamicObject23]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 13.75, 2.5 }
+type = "box"
+
+[DynamicObject24]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 16.25, -5 }
+type = "box"
+
+[DynamicObject25]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 16.25, -2.5 }
+type = "box"
+
+[DynamicObject26]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 16.25, 0 }
+type = "box"
+
+[DynamicObject27]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 16.25, 2.5 }
+type = "box"
+
+[DynamicObject28]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 18.75, -5 }
+type = "box"
+
+[DynamicObject29]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 18.75, -2.5 }
+type = "box"
+
+[DynamicObject3]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 1.25, 2.5 }
+type = "box"
+
+[DynamicObject30]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 18.75, 0 }
+type = "box"
+
+[DynamicObject31]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 18.75, 2.5 }
+type = "box"
+
+[DynamicObject4]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 3.75, -5 }
+type = "box"
+
+[DynamicObject5]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 3.75, -2.5 }
+type = "box"
+
+[DynamicObject6]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 3.75, 0 }
+type = "box"
+
+[DynamicObject7]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 3.75, 2.5 }
+type = "box"
+
+[DynamicObject8]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 6.25, -5 }
+type = "box"
+
+[DynamicObject9]
+dimensions = {2.5, 2.5, 2.5 }
+disable = false
+mass = 0.1
+meshfile = "cbox.msh"
+position = {-20, 6.25, -2.5 }
+type = "box"
+
+[DynamicObjects]
+count = 32
+
+[Light0]
+ambient = { 0.25, 0.25, 0.25, 0 }
+diffuse = { 0.75, 0.75, 0.75, 0 }
+position = {0, 18, 0 }
+radius = 1
+type = "spherical"
+
+[Lights]
+count = 1
+
+[Map]
+gravity = {0, -19.82, 0 }
+name = "Pile 'o Cardboard Boxes"
+meshfile = "ware.msh"
+
+[Player]
+position = {0, 5, 0 }
+
