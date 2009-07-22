@@ -28,7 +28,7 @@ VECTOR3D lightPosition(2.0f, 3.0f,2.0f);
 
 //Size of shadow map
 //const int shadowMapSize=512;
-const int shadowMapSize=1024;
+const int shadowMapSize=2048;
 
 
 //Textures
@@ -995,16 +995,33 @@ void TeapotGame::DrawScene()
 
 
 	//RenderLightMarker();
-	RenderPlaneGrids();
+	
 	//RenderTargetMarker();
 
-	RenderFrame();
+	//DrawDog(Walk_End_Frame,Walk_End_Frame,0);
+	//RenderFrame();
 
 	//test shadow
-	glPushMatrix();
-	glTranslatef(0.5f,0.5f,0.5f);
-	glutSolidTeapot(0.2);
-	glPopMatrix();
+	//glPushMatrix();
+	//glTranslatef(0.5f,0.5f,0.5f);
+	//glutSolidTeapot(0.2);
+	//glPopMatrix();
 
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	glPushMatrix();
+
+	RenderPlaneGrids();
+
+	glScaled(mdEyeRadius, mdEyeRadius, mdEyeRadius);
+
+	RenderTargetMarker();
+	RenderFrame();
+
+	//DrawDog(Walk_End_Frame,Walk_End_Frame,0);
+
+	//glTranslatef(-0.5f,-0.5f,0.5f);
+	//glutSolidCube(0.2f);
+	glPopMatrix();
+	glPopAttrib();
 }
 

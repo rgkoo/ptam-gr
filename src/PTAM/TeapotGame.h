@@ -25,6 +25,8 @@ protected:
 	bool InitShadowMap(Matrix<4>& UFBLinearFrustumMatrix, SE3& cameraSE3FromWorld);
 	void renderShadowedScene(Matrix<4>& UFBLinearFrustumMatrix, SE3& cameraSE3FromWorld);
 	void DrawScene();
+	
+	// Get camera to viewport ray
 
 
 	bool mbInitialised;
