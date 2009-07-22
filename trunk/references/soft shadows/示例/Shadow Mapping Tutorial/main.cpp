@@ -253,34 +253,34 @@ void Display(void)
 	glDisable(GL_ALPHA_TEST);
 
 
+	//All about print fps
+		//Update frames per second counter
+		fpsCounter.Update();
 
-	//Update frames per second counter
-	fpsCounter.Update();
+		//Print fps
+		static char fpsString[32];
+		sprintf(fpsString, "%.2f", fpsCounter.GetFps());
+		
+		//Set matrices for ortho
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		gluOrtho2D(-1.0f, 1.0f, -1.0f, 1.0f);
 
-	//Print fps
-	static char fpsString[32];
-	sprintf(fpsString, "%.2f", fpsCounter.GetFps());
-	
-	//Set matrices for ortho
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	gluOrtho2D(-1.0f, 1.0f, -1.0f, 1.0f);
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
 
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
+		//Print text
+		glRasterPos2f(-1.0f, 0.9f);
+		for(unsigned int i=0; i<strlen(fpsString); ++i)
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, fpsString[i]);
 
-	//Print text
-	glRasterPos2f(-1.0f, 0.9f);
-	for(unsigned int i=0; i<strlen(fpsString); ++i)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, fpsString[i]);
-
-	//reset matrices
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
+		//reset matrices
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
 
 	glFinish();
 	glutSwapBuffers();

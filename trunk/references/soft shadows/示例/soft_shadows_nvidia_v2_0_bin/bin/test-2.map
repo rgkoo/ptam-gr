@@ -1,0 +1,261 @@
+[DynamicObject0]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 1.25, -4.375 }
+type = "box"
+
+[DynamicObject1]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 1.25, -0.775 }
+type = "box"
+
+[DynamicObject10]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 2.87, 0.0349998 }
+type = "box"
+
+[DynamicObject11]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 3.41, -3.295 }
+type = "box"
+
+[DynamicObject12]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 3.41, 0.305 }
+type = "box"
+
+[DynamicObject13]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 3.95, -3.025 }
+type = "box"
+
+[DynamicObject14]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 3.95, 0.575 }
+type = "box"
+
+[DynamicObject15]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 4.49, -2.755 }
+type = "box"
+
+[DynamicObject16]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 4.49, 0.845 }
+type = "box"
+
+[DynamicObject17]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 5.03, -2.485 }
+type = "box"
+
+[DynamicObject18]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 5.03, 1.115 }
+type = "box"
+
+[DynamicObject19]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 5.57, -2.215 }
+type = "box"
+
+[DynamicObject2]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 1.25, 2.825 }
+type = "box"
+
+[DynamicObject20]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 5.57, 1.385 }
+type = "box"
+
+[DynamicObject21]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 6.11, -1.945 }
+type = "box"
+
+[DynamicObject22]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 6.11, 1.655 }
+type = "box"
+
+[DynamicObject23]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 6.65, -1.675 }
+type = "box"
+
+[DynamicObject24]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 7.19, -1.405 }
+type = "box"
+
+[DynamicObject25]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 7.73, -1.135 }
+type = "box"
+
+[DynamicObject26]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 8.27, -0.865 }
+type = "box"
+
+[DynamicObject27]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 8.81, -0.595 }
+type = "box"
+
+[DynamicObject28]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 9.35, -0.325 }
+type = "box"
+
+[DynamicObject29]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 9.89, -0.0550003 }
+type = "box"
+
+[DynamicObject3]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 1.79, -4.105 }
+type = "box"
+
+[DynamicObject4]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 1.79, -0.505 }
+type = "box"
+
+[DynamicObject5]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 1.79, 3.095 }
+type = "box"
+
+[DynamicObject6]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 2.33, -3.835 }
+type = "box"
+
+[DynamicObject7]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 2.33, -0.235 }
+type = "box"
+
+[DynamicObject8]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 2.33, 3.365 }
+type = "box"
+
+[DynamicObject9]
+dimensions = {3.6, 0.54, 3.6 }
+disable = false
+mass = 0.5
+meshfile = "lastpall.msh"
+position = {-20, 2.87, -3.565 }
+type = "box"
+
+[DynamicObjects]
+count = 10
+
+[Light0]
+ambient = { 0.25, 0.25, 0.25, 0 }
+diffuse = { 0.75, 0.75, 0.75, 0 }
+position = {0, 18, 0 }
+radius = 1
+type = "spherical"
+
+[Lights]
+count = 1
+
+[Map]
+gravity = {0, -19.82, 0 }
+name = "Pile 'o Lastpalls"
+meshfile = "ware.msh"
+
+[Player]
+position = {0, 5, 0 }
+

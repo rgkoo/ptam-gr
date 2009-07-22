@@ -1,0 +1,28 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bleifrei", "bleifrei\bleifrei.vcproj", "{A497F75E-42EB-4A45-8A75-9C7967CCA789}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game", "game\game.vcproj", "{420AB465-FF4C-4965-B3BC-8CE7EA108551}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+		{420AB465-FF4C-4965-B3BC-8CE7EA108551}.0 = {A497F75E-42EB-4A45-8A75-9C7967CCA789}
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{A497F75E-42EB-4A45-8A75-9C7967CCA789}.Debug.ActiveCfg = Debug|Win32
+		{A497F75E-42EB-4A45-8A75-9C7967CCA789}.Debug.Build.0 = Debug|Win32
+		{A497F75E-42EB-4A45-8A75-9C7967CCA789}.Release.ActiveCfg = Release|Win32
+		{A497F75E-42EB-4A45-8A75-9C7967CCA789}.Release.Build.0 = Release|Win32
+		{420AB465-FF4C-4965-B3BC-8CE7EA108551}.Debug.ActiveCfg = Debug|Win32
+		{420AB465-FF4C-4965-B3BC-8CE7EA108551}.Debug.Build.0 = Debug|Win32
+		{420AB465-FF4C-4965-B3BC-8CE7EA108551}.Release.ActiveCfg = Release|Win32
+		{420AB465-FF4C-4965-B3BC-8CE7EA108551}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
