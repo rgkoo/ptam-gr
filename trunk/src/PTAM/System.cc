@@ -47,10 +47,16 @@ System::System()
   mpMap = new Map;
   mpMapMaker = new MapMaker(*mpMap, *mpCamera);
   mpTracker = new Tracker(mVideoSource.Size(), *mpCamera, *mpMap, *mpMapMaker);
+  
   TeapotGame* teapotGame =  new TeapotGame();
   mpGame = teapotGame;
   mpARDriver = new ARDriver(*mpCamera, mVideoSource.Size(), mGLWindow, *mpGame);
+  teapotGame->mARDriver = mpARDriver;
   mpMapViewer = new MapViewer(*mpMap, mGLWindow);
+
+
+
+  mpGame = teapotGame;
 
   mpGestureAnalyzer = new GestureAnalyzer();
   mpGestureGameDriver = new GestureGameDriver(teapotGame, mpGestureAnalyzer);
@@ -63,6 +69,10 @@ System::System()
   GUI.ParseLine("DrawMap=0");
   GUI.ParseLine("Menu.AddMenuToggle Root \"View Map\" DrawMap Root");
   GUI.ParseLine("Menu.AddMenuToggle Root \"Draw AR\" DrawAR Root");
+
+  GUI.ParseLine("DrawShadow=1");
+  GUI.ParseLine("Menu.AddMenuToggle Root \"Draw Shadow\" DrawShadow Root");
+
   
   mbDone = false;
 };

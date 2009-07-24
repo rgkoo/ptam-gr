@@ -103,6 +103,8 @@ void ARDriver::Render(Image<Rgb<byte> > &imFrame, SE3 se3CfromW)
   mGLWindow.SetupViewport();
   mGLWindow.SetupVideoOrtho();
   mGLWindow.SetupVideoRasterPosAndZoom();
+
+  mGame.Draw2DStuff();
 }
 
 

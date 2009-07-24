@@ -134,7 +134,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcvd.lib gvars3.lib glew32.lib opengl32.lib blas_win32.lib lapack_win32.lib pthreadVCE2.lib cv.lib cxcore.lib highgui.lib"
+				AdditionalDependencies="libcvd.lib gvars3.lib glew32.lib opengl32.lib blas_win32.lib lapack_win32.lib pthreadVCE2.lib cv.lib cxcore.lib highgui.lib gesrec.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="lib"
 				GenerateDebugInformation="true"
