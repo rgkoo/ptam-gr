@@ -12,13 +12,17 @@
 #include "md2.h"
 #include "tga.h"
 
+//lexical cast
+#include <boost/lexical_cast.hpp>
 
 
 #include "Maths/Maths.h"
-
+#include "ARDriver.h"
 
 using namespace CVD;
 
+
+GestureData gestureData;
 
 
 //Camera & light positions
@@ -748,48 +752,59 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 
 	////cameraPosition.Set(v3cameraPos[0], v3cameraPos[1], v3cameraPos[2]);
 
-	GLdouble    modelview[16];
-	GLdouble    projection[16];
-	GLint       viewport[4];
-	glGetDoublev (GL_MODELVIEW_MATRIX, modelview);
-	glGetDoublev (GL_PROJECTION_MATRIX, projection);
-	glGetIntegerv (GL_VIEWPORT, viewport);
 
-	GLdouble world_x, world_y, world_z;  
 
-	int x=0,y=150;
-	// 获取近裁剪面上的交点
-	gluUnProject( (GLdouble) x, (GLdouble) y, 0.0, 
-		modelview, projection, viewport, 
-		&world_x, &world_y, &world_z); 
-   startPoint.Set(world_x, world_y, world_z);
 
-	// 获取远裁剪面上的交点
-	gluUnProject( (GLdouble) x, (GLdouble) y, 1.0, 
-		modelview, projection, viewport, 
-		&world_x, &world_y, &world_z); 
-	endPoint.Set(world_x, world_y, world_z);
 
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	//GLdouble    modelview[16];
+	//GLdouble    projection[16];
+	//GLint       viewport[4];
+	//glGetDoublev (GL_MODELVIEW_MATRIX, modelview);
+	//glGetDoublev (GL_PROJECTION_MATRIX, projection);
+	//glGetIntegerv (GL_VIEWPORT, viewport);
+
+	//GLdouble world_x, world_y, world_z;  
+
+	//int x=0,y=150;
+	//// 获取近裁剪面上的交点
+	//gluUnProject( (GLdouble) x, (GLdouble) y, 0.0, 
+	//	modelview, projection, viewport, 
+	//	&world_x, &world_y, &world_z); 
+ //  startPoint.Set(world_x, world_y, world_z);
+
+	//// 获取远裁剪面上的交点
+	//gluUnProject( (GLdouble) x, (GLdouble) y, 1.0, 
+	//	modelview, projection, viewport, 
+	//	&world_x, &world_y, &world_z); 
+	//endPoint.Set(world_x, world_y, world_z);
+
+	//glPushAttrib(GL_ALL_ATTRIB_BITS);
+	////glPushMatrix();
+
+	////glLoadIdentity();
+	////glTranslatef(startPoint.x, startPoint.y, startPoint.z);
+	////gluSphere(quadratic,0.2f,16,16);
+	//////glutSolidCube(0.1f);
+
+	////glPopMatrix();
+
 	//glPushMatrix();
 
 	//glLoadIdentity();
-	//glTranslatef(startPoint.x, startPoint.y, startPoint.z);
+	//glTranslatef(endPoint.x, endPoint.y, endPoint.z);
 	//gluSphere(quadratic,0.2f,16,16);
 	////glutSolidCube(0.1f);
 
 	//glPopMatrix();
 
-	glPushMatrix();
+	//glPopAttrib();
 
-	glLoadIdentity();
-	glTranslatef(endPoint.x, endPoint.y, endPoint.z);
-	gluSphere(quadratic,0.2f,16,16);
-	//glutSolidCube(0.1f);
 
-	glPopMatrix();
 
-	glPopAttrib();
+
+	cout<<gestureData.left<<" "<<gestureData.top<<" "<<gestureData.width<<" "<<gestureData.height<<endl;
+	//mARDriver->mGLWindow.PrintString(ImageRef(0,20),string("Position:") + boost::lexical_cast<string>( gestureData.left ));
 	
 	renderShadowedScene(UFBLinearFrustumMatrix, cameraSE3FromWorld);
 }
@@ -890,6 +905,9 @@ void TeapotGame::MakeShadowTex()
 
 void TeapotGame::onGesture( GestureData& gesture )
 {
+	//TODO:synchronize here
+	gestureData = gesture;
+
 
 }
 
@@ -1072,7 +1090,7 @@ void TeapotGame::DrawScene()
 
 	RenderFrame();
 
-
+	
 	//DrawDog(Walk_End_Frame,Walk_End_Frame,0);
 
 	//glTranslatef(-0.5f,-0.5f,0.5f);
@@ -1081,3 +1099,29 @@ void TeapotGame::DrawScene()
 	glPopAttrib();
 }
 
+void TeapotGame::Draw2DStuff()
+{
+	glDisable(GL_STENCIL_TEST);
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_RECTANGLE_ARB);
+	glDisable(GL_LINE_SMOOTH);
+	glDisable(GL_POLYGON_SMOOTH);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColorMask(1,1,1,1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	
+	//SetupWindowOrtho();
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0,1,1,0,0,1);
+
+	glLineWidth(1);
+
+	glColor4f(0,1,0,1);
+	mARDriver->mGLWindow.PrintString(ImageRef(30,30),string("FPS:") + boost::lexical_cast<string>( 1/100 ));
+	mARDriver->mGLWindow.PrintString(ImageRef(0,20),string("Position:") + boost::lexical_cast<string>( gestureData.left ));
+
+}

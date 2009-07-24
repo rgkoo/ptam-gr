@@ -26,12 +26,16 @@ class ARDriver
 {
  public:
   ARDriver(const ATANCamera &cam, ImageRef irFrameSize, GLWindow2 &glw, ARGame &game);
-  void Render(Image<Rgb<byte> > &imFrame, SE3 se3CamFromWorld);
+  void Render(Image<Rgb<CVD::byte> > &imFrame, SE3 se3CamFromWorld);
   void Reset();
   void Init();
- protected:
-  ATANCamera mCamera;
-  GLWindow2 &mGLWindow;
+
+public:
+	ATANCamera mCamera;
+	GLWindow2 &mGLWindow;
+
+protected:
+ 
   void DrawFadingGrid();
   void MakeFrameBuffer();
   void DrawFBBackGround();

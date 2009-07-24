@@ -7,6 +7,7 @@
 struct GestureData{
 	Vector<3> mCenterPosition;
 
+	int left,top,width,height;
 	bool mbIsValid;	//validity of the gesture
 };
 

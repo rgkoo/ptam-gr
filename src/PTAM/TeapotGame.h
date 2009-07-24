@@ -2,12 +2,14 @@
 #define __TEAPOT_H
 #include <TooN/numerics.h>
 #include "OpenGL.h"
+
 #include "ARGame.h"
 #include "Dog.h"
 
 #include "GestureGame.h"
 
 
+class ARDriver;
 
 class TeapotGame : public ARGame, public GestureGame
 {
@@ -15,6 +17,7 @@ public:
 	TeapotGame();
 	void DrawStuff(Matrix<4>& UFBLinearFrustumMatrix, SE3& cameraSE3FromWorld);
 	void DrawStuff(Vector<3> v3CameraPos);
+	void Draw2DStuff();
 	void Reset();
 	void Init();
 

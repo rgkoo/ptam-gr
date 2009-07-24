@@ -96,18 +96,28 @@ void GestureAnalyzer::analyze() /* Invoked by run(), fake method generating */
 		pthread_mutex_unlock(&imageQueueMutex);
 
 
+		//Convert to ipl image
 		IplImage* pCVImage = ::ToIplImage(image);
+		
+		CvRect rect;
+		gesARDetectHand(pCVImage, &rect);
+		int left = rect.x;
+		int top = rect.y;
+		int width = rect.width;
+		int height = rect.height;
 
-
-
-		//TODO: do real gesture recognition
-		for(int i=0;i<50000000;i++){
-			;	
-		}
-		gestureData.mCenterPosition = makeVector(4,4,0);
+		////TODO: do real gesture recognition
+		//for(int i=0;i<50000000;i++){
+		//	;	
+		//}
+		gestureData.mCenterPosition = makeVector( left + width/2 ,top + height/2,0);
+		gestureData.left = left;
+		gestureData.top = top;
+		gestureData.width = width;
+		gestureData.height = height;
 
 	
-		//must release image here
+		//must release image here to avoid memory leak
 		cvReleaseImage(&pCVImage);
 
 

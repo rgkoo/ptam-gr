@@ -26,6 +26,8 @@ class GestureAnalyzer:protected CVD::Thread{
 public:
 	GestureAnalyzer();		// Reset initial parameters and starts thread
 
+	void AddGestureListener(); // Add gesture listener
+
 	void RequestReset();   // Request that the we reset. Called by the system.
 	bool ResetDone();      // Returns true if the has been done.
 
