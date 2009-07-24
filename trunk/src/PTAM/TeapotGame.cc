@@ -1113,15 +1113,38 @@ void TeapotGame::Draw2DStuff()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
+	//mARDriver->mGLWindow.SetupWindowOrtho();//Runtime error??
 	//SetupWindowOrtho();
-	glMatrixMode(GL_PROJECTION);
+	/*glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0,1,1,0,0,1);
+	glOrtho(0,1,1,0,0,1);*/
 
 	glLineWidth(1);
 
+
+	glColor4f(1,0,0,1);
+	glBegin(GL_LINE_STRIP);
+	glVertex2i(10,10);
+	glVertex2i(630,10);
+	glVertex2i(630,470);
+	glVertex2i(10,470);
+	glVertex2i(10,10);
+	glEnd();
+
 	glColor4f(0,1,0,1);
-	mARDriver->mGLWindow.PrintString(ImageRef(30,30),string("FPS:") + boost::lexical_cast<string>( 1/100 ));
-	mARDriver->mGLWindow.PrintString(ImageRef(0,20),string("Position:") + boost::lexical_cast<string>( gestureData.left ));
+
+	glBegin(GL_LINE_STRIP);
+	glVertex2i(gestureData.left, gestureData.top);
+	glVertex2i(gestureData.left + gestureData.width, gestureData.top);
+	glVertex2i(gestureData.left + gestureData.width, gestureData.top + gestureData.height);
+	glVertex2i(gestureData.left ,gestureData.top + gestureData.height);
+	glVertex2i(gestureData.left, gestureData.top);
+	glEnd();
+
+	//mARDriver->mGLWindow.PrintString(ImageRef(30,30),string("FPS:") + boost::lexical_cast<string>( 1/100 ));
+	mARDriver->mGLWindow.PrintString(ImageRef(0,20),string("left:") + boost::lexical_cast<string>( gestureData.left ) + 
+		string(" top:") + boost::lexical_cast<string>( gestureData.top ) +
+		string(" width:") + boost::lexical_cast<string>( gestureData.width ) +
+		string(" height:") + boost::lexical_cast<string>( gestureData.height ));
 
 }
