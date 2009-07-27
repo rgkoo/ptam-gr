@@ -106,10 +106,7 @@ void GestureAnalyzer::analyze() /* Invoked by run(), fake method generating */
 		int width = rect.width;
 		int height = rect.height;
 
-		////TODO: do real gesture recognition
-		//for(int i=0;i<50000000;i++){
-		//	;	
-		//}
+		//gesture recognition
 		gestureData.mCenterPosition = makeVector( left + width/2 ,top + height/2,0);
 		gestureData.left = left;
 		gestureData.top = top;

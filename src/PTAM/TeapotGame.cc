@@ -689,8 +689,8 @@ TeapotGame::TeapotGame()
 
 
 
-	windowWidth = 1200;
-	windowHeight = 900;
+	/*windowWidth = 1200;
+	windowHeight = 900;*/
 }
 
 void TeapotGame::DrawStuff(Vector<3> v3CameraPos)
@@ -757,48 +757,54 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 
 
 
-	//GLdouble    modelview[16];
-	//GLdouble    projection[16];
-	//GLint       viewport[4];
-	//glGetDoublev (GL_MODELVIEW_MATRIX, modelview);
-	//glGetDoublev (GL_PROJECTION_MATRIX, projection);
-	//glGetIntegerv (GL_VIEWPORT, viewport);
+	GLdouble    modelview[16];
+	GLdouble    projection[16];
+	GLint       viewport[4];
+	glGetDoublev (GL_MODELVIEW_MATRIX, modelview);
+	glGetDoublev (GL_PROJECTION_MATRIX, projection);
+	glGetIntegerv (GL_VIEWPORT, viewport);
 
-	//GLdouble world_x, world_y, world_z;  
+	GLdouble world_x, world_y, world_z;  
 
-	//int x=0,y=150;
-	//// 获取近裁剪面上的交点
-	//gluUnProject( (GLdouble) x, (GLdouble) y, 0.0, 
-	//	modelview, projection, viewport, 
-	//	&world_x, &world_y, &world_z); 
- //  startPoint.Set(world_x, world_y, world_z);
+	int x=600, y=450;
+	// 获取近裁剪面上的交点
+	gluUnProject( (GLdouble) x, (GLdouble) y, 0.0, 
+		modelview, projection, viewport, 
+		&world_x, &world_y, &world_z); 
+   startPoint.Set(world_x, world_y, world_z);
 
-	//// 获取远裁剪面上的交点
-	//gluUnProject( (GLdouble) x, (GLdouble) y, 1.0, 
-	//	modelview, projection, viewport, 
-	//	&world_x, &world_y, &world_z); 
-	//endPoint.Set(world_x, world_y, world_z);
+	// 获取远裁剪面上的交点
+	gluUnProject( (GLdouble) x, (GLdouble) y, 1.0, 
+		modelview, projection, viewport, 
+		&world_x, &world_y, &world_z); 
+	endPoint.Set(world_x, world_y, world_z);
 
-	//glPushAttrib(GL_ALL_ATTRIB_BITS);
-	////glPushMatrix();
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-	////glLoadIdentity();
-	////glTranslatef(startPoint.x, startPoint.y, startPoint.z);
-	////gluSphere(quadratic,0.2f,16,16);
-	//////glutSolidCube(0.1f);
-
-	////glPopMatrix();
-
+	glMatrixMode(GL_MODELVIEW);
 	//glPushMatrix();
-
 	//glLoadIdentity();
-	//glTranslatef(endPoint.x, endPoint.y, endPoint.z);
 	//gluSphere(quadratic,0.2f,16,16);
 	////glutSolidCube(0.1f);
-
 	//glPopMatrix();
 
-	//glPopAttrib();
+
+	glPushMatrix();
+	glLoadIdentity();
+	glTranslatef(startPoint.x, startPoint.y, startPoint.z);
+	gluSphere(quadratic,0.2f,16,16);
+	//glutSolidCube(0.1f);
+	glPopMatrix();
+
+
+	glPushMatrix();
+	glLoadIdentity();
+	glTranslatef(endPoint.x, endPoint.y, endPoint.z);
+	gluSphere(quadratic,20.2f,16,16);
+	//glutSolidCube(0.1f);
+	glPopMatrix();
+
+	glPopAttrib();
 
 
 
@@ -1130,6 +1136,15 @@ void TeapotGame::Draw2DStuff()
 	glVertex2i(10,470);
 	glVertex2i(10,10);
 	glEnd();
+
+	glBegin(GL_LINE_STRIP);
+	glVertex2i(95,95);
+	glVertex2i(105,95);
+	glVertex2i(105,105);
+	glVertex2i(95,105);
+	glVertex2i(95,95);
+	glEnd();
+
 
 	glColor4f(0,1,0,1);
 
