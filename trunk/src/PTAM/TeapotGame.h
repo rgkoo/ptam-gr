@@ -30,6 +30,10 @@ protected:
 	void DrawScene();
 	
 	// Get camera to viewport ray
+	void CameraCoordToFrameCoord(int cameraX, int cameraY, int& frameX, int& frameY){
+		frameX = cameraX * 1200 / 640;
+		frameY = (480 - cameraY) * 900 / 480;
+	}
 
 
 	bool mbInitialised;

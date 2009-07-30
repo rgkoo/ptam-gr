@@ -15,6 +15,7 @@ VideoSource::VideoSource()
 	CvCapture* capture;
 	capture = cvCaptureFromCAM(0);
 	cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, 640 );
+	//cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, 320 );
 	//cvSetCaptureProperty(capture, CV_CAP_PROP_CONVERT_RGB,1);
 	if( !capture )
 	{
@@ -26,6 +27,8 @@ VideoSource::VideoSource()
 	
 	mirSize.x = 640; //cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_WIDTH);
 	mirSize.y = 480; //cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_HEIGHT);
+	//mirSize.x = 320; //cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_WIDTH);
+	//mirSize.y = 240; //cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_HEIGHT);
 };
 
 void VideoSource::GetAndFillFrameBWandRGB(Image<CVD::byte> &imBW, Image<CVD::Rgb<CVD::byte> > &imRGB)

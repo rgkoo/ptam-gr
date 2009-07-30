@@ -98,20 +98,30 @@ void GestureAnalyzer::analyze() /* Invoked by run(), fake method generating */
 
 		//Convert to ipl image
 		IplImage* pCVImage = ::ToIplImage(image);
+		cvCvtColor(pCVImage, pCVImage, CV_RGB2BGR);
 		
 		CvRect rect;
-		gesARDetectHand(pCVImage, &rect);
-		int left = rect.x;
-		int top = rect.y;
-		int width = rect.width;
-		int height = rect.height;
+
+		if(gesARDetectHand(pCVImage, &rect))
+			;
+		//TODO:set valid
+		//gestureData.mbIsValid = true;
+
+
+		//int left = rect.x;
+		//int top = rect.y;
+		//int width = rect.width;
+		//int height = rect.height;
 
 		//gesture recognition
-		gestureData.mCenterPosition = makeVector( left + width/2 ,top + height/2,0);
-		gestureData.left = left;
-		gestureData.top = top;
-		gestureData.width = width;
-		gestureData.height = height;
+		gestureData.mCenterPosition = makeVector(  rect.x + rect.width/2 ,rect.y + rect.height/2,0);
+		
+		gestureData.left = rect.x;
+		gestureData.top = rect.y;
+		gestureData.width = rect.width;
+		gestureData.height = rect.height;
+
+		//cvSaveImage("result.jpg", pCVImage);
 
 	
 		//must release image here to avoid memory leak
@@ -132,6 +142,7 @@ void GestureAnalyzer::addImage( RGBImage& imageRef ) /* Invoked by system thread
 
 		//RGBImage* image = new RGBImage;
 		//*image = imageRef;
+		//RGBImage image = imageRef;
 		mqRGBImageQueue.push_back(imageRef);
 
 	//release lock

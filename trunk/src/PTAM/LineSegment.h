@@ -1,6 +1,9 @@
-#pragma once
+#ifndef __LINESEGMENT_H_
+#define __LINESEGMENT_H_
 
 #include "Vector3D.h"
+
+class Plane;
 
 class LineSegment
 {
@@ -21,6 +24,10 @@ public:
 		return mEnd - mStart;
 	}
 
+	VECTOR3D getIntersectPoint(Plane& plane);
+
 protected:
 	VECTOR3D mStart, mEnd;
 };
+
+#endif
