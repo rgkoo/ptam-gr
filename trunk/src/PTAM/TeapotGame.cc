@@ -475,7 +475,8 @@ void TeapotGame::DrawDog(int frame1, int frame2, float pol)
 void TeapotGame::SetVirtualTarget()
 {
 	Marker* virtualmarker = &dog->targetmarker;
-	GetRadomPosition(virtualmarker->X,virtualmarker->Y,virtualmarker->Z,0.1);
+	//TODO:
+	//GetRadomPosition(virtualmarker->X,virtualmarker->Y,virtualmarker->Z,0.1);
 }
 
 
@@ -786,7 +787,14 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 	endPoint.Set(world_x, world_y, world_z);
 
 	LineSegment cameraToViewportRay(startPoint, endPoint);
+	PLANE plane(0,0,1,0);
 	// 求与 交互物体所在平面(z = 0) 交点
+	VECTOR3D& intersectPoint = cameraToViewportRay.getIntersectPoint(plane);
+
+	// Set dog target marker
+	dog->targetmarker.X = intersectPoint.x;
+	dog->targetmarker.Y = intersectPoint.y;
+	dog->targetmarker.Z = intersectPoint.z;
 	
 
 	
@@ -794,27 +802,29 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
 	glMatrixMode(GL_MODELVIEW);
+
+	
 	//glPushMatrix();
 	//glLoadIdentity();
+	//glTranslatef(intersectPoint.x, intersectPoint.y, intersectPoint.z);
+	//gluSphere(quadratic,0.2f,16,16);
+	////glutSolidCube(0.1f);
+	//glPopMatrix();
+
+	//glPushMatrix();
+	//glLoadIdentity();
+	//glTranslatef(startPoint.x, startPoint.y, startPoint.z);
 	//gluSphere(quadratic,0.2f,16,16);
 	////glutSolidCube(0.1f);
 	//glPopMatrix();
 
 
-	glPushMatrix();
-	glLoadIdentity();
-	glTranslatef(startPoint.x, startPoint.y, startPoint.z);
-	gluSphere(quadratic,0.2f,16,16);
-	//glutSolidCube(0.1f);
-	glPopMatrix();
-
-
-	glPushMatrix();
-	glLoadIdentity();
-	glTranslatef(endPoint.x, endPoint.y, endPoint.z);
-	gluSphere(quadratic,20.2f,16,16);
-	//glutSolidCube(0.1f);
-	glPopMatrix();
+	//glPushMatrix();
+	//glLoadIdentity();
+	//glTranslatef(endPoint.x, endPoint.y, endPoint.z);
+	//gluSphere(quadratic,20.2f,16,16);
+	////glutSolidCube(0.1f);
+	//glPopMatrix();
 
 	glPopAttrib();
 
