@@ -8,8 +8,8 @@ class PLANE;
 class LineSegment
 {
 public:
-	LineSegment(void);
-	virtual ~LineSegment(void);
+	LineSegment(void){}
+	virtual ~LineSegment(void){}
 	LineSegment(VECTOR3D& start, VECTOR3D& end):mStart(start), mEnd(end){}
 
 	VECTOR3D& getStartPoint(){
