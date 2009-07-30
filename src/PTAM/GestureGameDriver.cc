@@ -11,13 +11,13 @@ using namespace std;
 void GestureGameDriver::update()
 {
 	//fetch gesture result from analyzer
-	GestureData& gesture = mpGestureAnalyzer->getGesture();
+	GestureData gestureData = mpGestureAnalyzer->getGesture();
 	//valid gesture data
-	if(gesture.mbIsValid){
-		cout<<"gesture ok"<<endl;
+	if(gestureData.mbIsValid){
+		cout<<"gesture ok:"<<gestureData.left<<" "<<gestureData.top<<" "<<gestureData.width<<" "<<gestureData.height<<endl;
 
 		//drive gesture game
-		mpGame->onGesture(gesture);
+		mpGame->onGesture(gestureData);
 	}
 
 }

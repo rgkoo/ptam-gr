@@ -17,6 +17,7 @@
 
 
 #include "Maths/Maths.h"
+#include "LineSegment.h"
 #include "ARDriver.h"
 
 using namespace CVD;
@@ -251,8 +252,12 @@ void TeapotGame::renderShadowedScene(Matrix<4>& UFBLinearFrustumMatrix, SE3& cam
 	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE_ARB, GL_INTENSITY);
 
 	//Set alpha test to discard false comparisons
-	glAlphaFunc(GL_GEQUAL, 0.99f);
-	glEnable(GL_ALPHA_TEST);
+	/*glAlphaFunc(GL_GEQUAL, 0.99f);
+	glEnable(GL_ALPHA_TEST);*/
+
+	//TODO:blend shadow into background
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	DrawScene();
 
@@ -752,7 +757,8 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 
 	////cameraPosition.Set(v3cameraPos[0], v3cameraPos[1], v3cameraPos[2]);
 
-
+	int x=600, y=450;
+	CameraCoordToFrameCoord(gestureData.left + gestureData.width / 2, gestureData.top + gestureData.height/2, x, y);
 
 
 
@@ -766,7 +772,7 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 
 	GLdouble world_x, world_y, world_z;  
 
-	int x=600, y=450;
+
 	// 获取近裁剪面上的交点
 	gluUnProject( (GLdouble) x, (GLdouble) y, 0.0, 
 		modelview, projection, viewport, 
@@ -778,6 +784,12 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 		modelview, projection, viewport, 
 		&world_x, &world_y, &world_z); 
 	endPoint.Set(world_x, world_y, world_z);
+
+	LineSegment cameraToViewportRay(startPoint, endPoint);
+	// 求与 交互物体所在平面(z = 0) 交点
+	
+
+	
 
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
@@ -919,7 +931,7 @@ void TeapotGame::onGesture( GestureData& gesture )
 
 void TeapotGame::RenderPlaneGrids()
 {
-	glColor3f(1.0f,1.0f,1.0f);
+	glColor4f(1.0f,1.0f,1.0f,1.0f);
 	//glDisable(GL_LIGHTING);
 
 	//glBegin(GL_LINES);
@@ -1137,13 +1149,13 @@ void TeapotGame::Draw2DStuff()
 	glVertex2i(10,10);
 	glEnd();
 
-	glBegin(GL_LINE_STRIP);
-	glVertex2i(95,95);
-	glVertex2i(105,95);
-	glVertex2i(105,105);
-	glVertex2i(95,105);
-	glVertex2i(95,95);
-	glEnd();
+	//glBegin(GL_LINE_STRIP);
+	//glVertex2i(95,95);
+	//glVertex2i(105,95);
+	//glVertex2i(105,105);
+	//glVertex2i(95,105);
+	//glVertex2i(95,95);
+	//glEnd();
 
 
 	glColor4f(0,1,0,1);

@@ -457,6 +457,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LineSegment.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LineSegment.h"
 				>
 			</File>
@@ -474,6 +478,10 @@
 			</File>
 			<File
 				RelativePath=".\Maths\PLANE.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Plane.h"
 				>
 			</File>
 			<File
