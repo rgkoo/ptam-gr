@@ -25,6 +25,7 @@
 #include "VECTOR3D.h"
 #include "VECTOR4D.h"
 #include "MATRIX4X4.h"
+#include "LineSegment.h"
 #include "PLANE.h"
 
 #include "COLOR.h"

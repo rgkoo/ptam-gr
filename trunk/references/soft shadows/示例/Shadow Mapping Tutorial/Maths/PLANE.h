@@ -22,6 +22,7 @@ public:
 	{}
 	PLANE(VECTOR3D newNormal, float newIntercept)	: normal(newNormal), intercept(newIntercept)
 	{}
+	PLANE(float _a, float _b, float _c, float _d):a(_a), b(_b), c(_c), d(_d){}
 	PLANE(const PLANE & rhs)
 	{	normal=rhs.normal;	intercept=rhs.intercept;	}
 
@@ -58,6 +59,9 @@ public:
 	//member variables
 	VECTOR3D normal;	//X.N+intercept=0
 	float intercept;
+
+/**Ax+By+Cz+D=0*/
+	float a,b,c,d;
 };
 
 //constants for ClassifyPoint()
