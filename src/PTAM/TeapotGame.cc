@@ -17,7 +17,7 @@
 
 
 #include "Maths/Maths.h"
-#include "LineSegment.h"
+
 #include "ARDriver.h"
 
 using namespace CVD;
