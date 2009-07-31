@@ -827,12 +827,12 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 	glMatrixMode(GL_MODELVIEW);
 
 	
-	glPushMatrix();
-	glLoadIdentity();
-	glTranslatef(intersectPoint.x, intersectPoint.y, intersectPoint.z);
-	gluSphere(quadratic,0.05f,16,16);
-	//glutSolidCube(0.1f);
-	glPopMatrix();
+	//glPushMatrix();
+	//glLoadIdentity();
+	//glTranslatef(intersectPoint.x, intersectPoint.y, intersectPoint.z);
+	//gluSphere(quadratic,0.05f,16,16);
+	////glutSolidCube(0.1f);
+	//glPopMatrix();
 
 	//glPushMatrix();
 	//glLoadIdentity();
