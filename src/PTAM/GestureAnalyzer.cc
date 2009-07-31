@@ -88,7 +88,7 @@ void GestureAnalyzer::analyze() /* Invoked by run(), fake method generating */
 			mqRGBImageQueue.pop_front();
 
 			//in case that image processing is too slow
-			if(mqRGBImageQueue.size() > 10){
+			if(mqRGBImageQueue.size() > 5){
 				mqRGBImageQueue.clear();
 			}
 
@@ -163,6 +163,10 @@ GestureData GestureAnalyzer::getGesture()
 		gesture = mqGestureDataQueue.front();
 		//pop from the queue
 		mqGestureDataQueue.pop_front();
+
+		if(mqGestureDataQueue.size() > 5)
+			mqGestureDataQueue.clear();
+
 	//release lock
 	pthread_mutex_unlock(&resultQueueMutex);
 

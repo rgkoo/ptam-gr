@@ -53,6 +53,10 @@ MATRIX4X4 cameraProjectionMatrix, cameraViewMatrix;
 float angle;
 
 
+//DEBUG
+float calcAngle = 0;
+
+
 //Called for initiation
 bool TeapotGame::InitShadowMap(Matrix<4>& UFBLinearFrustumMatrix, SE3& cameraSE3FromWorld)
 {
@@ -517,6 +521,11 @@ float TeapotGame::CalAngelDiff()
 		return 0;
 
 	float result=acosf(up/down)*180/PI;
+
+
+	//DEBUG
+	calcAngle = result;
+
 	return result;
 }
 
@@ -660,7 +669,16 @@ void TeapotGame::RenderFrame()
 		return;
 	}else if(lastIdleType==IDLETYPE_WALKTOVIRTUALMARKER)
 	{
-		if(GotoTargetAnimation(By_Walk))
+
+		//turn
+		float an;
+		if((an=CalAngelDiff())>10)
+		{		
+			Turn(By_Walk);
+			lastIdleType=IDLETYPE_TURN;			
+		}
+
+		else if(GotoTargetAnimation(By_Walk))
 		{
 			lastIdleType=IDLETYPE_BORED;
 			SetAnimation(Action_Bored);			
@@ -672,6 +690,7 @@ void TeapotGame::RenderFrame()
 	{
 		if(ActionAnimation())
 		{
+			//set a random target
 			SetVirtualTarget();
 			lastIdleType=IDLETYPE_TURN;
 			cur_go_frame=Walk_Start_Frame;
@@ -1187,5 +1206,7 @@ void TeapotGame::Draw2DStuff()
 		string(" top:") + boost::lexical_cast<string>( gestureData.top ) +
 		string(" width:") + boost::lexical_cast<string>( gestureData.width ) +
 		string(" height:") + boost::lexical_cast<string>( gestureData.height ));
+
+	mARDriver->mGLWindow.PrintString(ImageRef(0,30),string("Angle:") + boost::lexical_cast<string>(calcAngle));
 
 }
