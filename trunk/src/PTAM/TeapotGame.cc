@@ -788,13 +788,17 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 
 	LineSegment cameraToViewportRay(startPoint, endPoint);
 	PLANE plane(0,0,1,0);
-	// 求与 交互物体所在平面(z = 0) 交点
+	// 求与 交互物体所在平面(y = 0) 交点
 	VECTOR3D& intersectPoint = cameraToViewportRay.getIntersectPoint(plane);
 
 	// Set dog target marker
-	dog->targetmarker.X = intersectPoint.x;
-	dog->targetmarker.Y = intersectPoint.y;
-	dog->targetmarker.Z = intersectPoint.z;
+
+	dog->targetmarker.X = intersectPoint.x / mdEyeRadius;
+	dog->targetmarker.Y = intersectPoint.y / mdEyeRadius;
+	dog->targetmarker.Z = intersectPoint.z / mdEyeRadius;
+	/*dog->targetmarker.X = 0;
+	dog->targetmarker.Y = 0;
+	dog->targetmarker.Z = 0;*/
 	
 
 	
@@ -804,12 +808,12 @@ void TeapotGame::DrawStuff(Matrix<4>& UFBLinearFrustumMatrix,SE3& cameraSE3FromW
 	glMatrixMode(GL_MODELVIEW);
 
 	
-	//glPushMatrix();
-	//glLoadIdentity();
-	//glTranslatef(intersectPoint.x, intersectPoint.y, intersectPoint.z);
-	//gluSphere(quadratic,0.2f,16,16);
-	////glutSolidCube(0.1f);
-	//glPopMatrix();
+	glPushMatrix();
+	glLoadIdentity();
+	glTranslatef(intersectPoint.x, intersectPoint.y, intersectPoint.z);
+	gluSphere(quadratic,0.05f,16,16);
+	//glutSolidCube(0.1f);
+	glPopMatrix();
 
 	//glPushMatrix();
 	//glLoadIdentity();
